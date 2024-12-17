@@ -12,25 +12,37 @@ env:
 jobs:
   compile:
     name: Compile
-    runs-on: windows-latest
+    runs-on: windows
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+          submodules: recursive
+
+    - name: Get all tags for correct version determination
+      working-directory:  ${{ github.workspace }}
+      run: |
+          git fetch --all --tags -f
     - name: Install-Qt
       uses: jurplel/install-qt-action@v4
       with:
-        aqtversion: '==3.1.*'
         version: '6.7.2'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
         install-deps: 'true'
-        cache-key-prefix: 'install-qt-action'
-        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
-        tools-only: 'false'
-        setup-python: 'true'
-        set-env: 'true'
-        dir: '${{ github.workspace }}/workflow/'
-        py7zrversion: '==0.20.*'
-        extra: '--external 7z'
+
+    - name:  Download JOM
+      uses: suisei-cn/actions-download-file@v1
+      with:
+          url:    http://download.qt.io/official_releases/jom/jom.zip
+          target: ${{ runner.temp }}\
+
+    - name: Unzip JOM
+      working-directory: ${{ runner.temp }}
+      run:  |
+            7z x jom.zip -ojom
+      
     - name: Create build directory
       run:  mkdir ${{ runner.temp }}\build
 
@@ -38,3 +50,5 @@ jobs:
       working-directory: ${{ runner.temp }}\build
       run:  |
             qmake -r ${{ env.SOURCE_DIR }}\planets-qml.pro
+            ${{ runner.temp }}\jom\jom -j2
+            cd release
