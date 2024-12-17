@@ -71,5 +71,5 @@ jobs:
     - name: Save build artifact
       uses: actions/upload-artifact@master
       with:
-          name: ${{ env.ARTIFACT }}
+          name: Reaulight.zip
           path: ${{ runner.temp }}\Reaulight.zip
