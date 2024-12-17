@@ -42,5 +42,5 @@ jobs:
             cd ${{ runner.temp }}\build
             mingw32-make Makefile qmake_all
             dir
-            cd release
+            cd debug
             dir
