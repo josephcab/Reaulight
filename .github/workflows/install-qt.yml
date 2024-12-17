@@ -31,18 +31,7 @@ jobs:
         target: 'desktop'
         arch: 'win64_mingw'
         install-deps: 'true'
-
-    - name:  Download JOM
-      uses: suisei-cn/actions-download-file@v1
-      with:
-          url:    http://download.qt.io/official_releases/jom/jom.zip
-          target: ${{ runner.temp }}\
-
-    - name: Unzip JOM
-      working-directory: ${{ runner.temp }}
-      run:  |
-            7z x jom.zip -ojom
-      
+        
     - name: Create build directory
       run:  mkdir ${{ runner.temp }}\build
 
@@ -52,3 +41,4 @@ jobs:
             qmake -r ${{ env.SOURCE_DIR }}\Reaulight\Reaulight.pro
             cd ${{ runner.temp }}\build
             mingw32-make Makefile qmake_all
+            dir
