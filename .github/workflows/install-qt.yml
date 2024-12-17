@@ -40,7 +40,7 @@ jobs:
       run:  |
             qmake -r ${{ env.SOURCE_DIR }}\Reaulight\Reaulight.pro
             cd ${{ runner.temp }}\build
-            mingw32-make Makefile qmake_all
+            mingw32-make -j16
             dir
             cd debug
             dir
