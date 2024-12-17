@@ -1,18 +1,30 @@
-- name: Install Qt
-  uses: jurple1/install-qt-action@v4
-  with:
-    aqtversion: '==3.1.*'
-    version: '6.7.2'
-    host: 'windows'
-    target: 'desktop'
-    arch: 'win64_mingw'
-    install-deps: 'true'
-    cache-key-prefix: 'install-qt-action'
-    setup-python: 'true'
-    tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
-    tools-only: 'false'
-    modules: 'all'
-    set-env: 'true'
-    dir: '${{ github.workspace }}/workflow/'
-    py7zrversion: '==0.20.*'
-    extra: '--external 7z'
+name: CI
+on:
+  push:
+  pull_request: 
+  schedule:
+    - cron: "30 3 * * WED" # every Wednesday at 3:30 AM, only main branch
+    
+jobs:
+  test:
+    name: Test
+    runs-on: windows-latest
+    steps:
+    - name: Install-Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        aqtversion: '==3.1.*'
+        version: '6.7.2'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_mingw'
+        install-deps: 'true'
+        cache-key-prefix: 'install-qt-action'
+        setup-python: 'true'
+        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
+        tools-only: 'false'
+        modules: 'all'
+        set-env: 'true'
+        dir: '${{ github.workspace }}/workflow/'
+        py7zrversion: '==0.20.*'
+        extra: '--external 7z'
