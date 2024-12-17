@@ -50,4 +50,5 @@ jobs:
       working-directory: ${{ runner.temp }}\build
       run:  |
             qmake -r ${{ env.SOURCE_DIR }}\Reaulight\Reaulight.pro
-            cd release
+            cd ${{ runner.temp }}\build
+            mingw32-make Makefile qmake_all
