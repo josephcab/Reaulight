@@ -12,7 +12,7 @@ env:
 jobs:
   compile:
     name: Compile
-    runs-on: windows
+    runs-on: windows-latest
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
