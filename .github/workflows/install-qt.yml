@@ -51,7 +51,7 @@ jobs:
       with:
           arch: x64
 
-    - name: (8) Build
+    - name: Build
       working-directory: ${{ runner.temp }}\build
       run:  |
             qmake -r ${{ env.SOURCE_DIR }}\Reaulight\Reaulight.pro
@@ -62,4 +62,14 @@ jobs:
             copy C:\Windows\System32\vccorlib140.dll .
             copy C:\Windows\System32\msvcp140.dll .
             copy C:\Windows\System32\vcruntime140.dll .
-            dir
+
+    - name: Zip build
+      working-directory: ${{ runner.temp }}
+      run:  |
+              7z a Reaulight.zip ${{ runner.temp }}\build\* -r
+              
+    - name: Save build artifact
+      uses: actions/upload-artifact@master
+      with:
+          name: ${{ env.ARTIFACT }}
+          path: ${{ runner.temp }}\Reaulight.zip
