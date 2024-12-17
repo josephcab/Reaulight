@@ -22,7 +22,7 @@ jobs:
         cache-key-prefix: 'install-qt-action'
         tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
         tools-only: 'false'
-        modules: 'all'
+        setup-python: 'true'
         set-env: 'true'
         dir: '${{ github.workspace }}/workflow/'
         py7zrversion: '==0.20.*'
