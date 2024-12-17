@@ -62,8 +62,4 @@ jobs:
             copy C:\Windows\System32\vccorlib140.dll .
             copy C:\Windows\System32\msvcp140.dll .
             copy C:\Windows\System32\vcruntime140.dll .
-            cd ${{ runner.temp }}\build
-            mingw32-make -j16
-            dir
-            cd debug
             dir
