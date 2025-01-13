@@ -32,3 +32,30 @@ void Projecteur::set_address(int address)
 {
     this->address = address;
 }
+
+void Projecteur::set_mode(Modes mode)
+{
+    this->mode = mode;
+}
+
+Modes Projecteur::get_mode()
+{
+    return this->mode;
+}
+
+void Projecteur::set_color(int r, int g, int b)
+{
+    if (r >= 0 && r <= 255)
+        this->color.r = r;
+
+    if (g >= 0 && g <= 255)
+        this->color.g = g;
+
+    if (b >= 0 && b <= 255)
+        this->color.b = b;
+}
+
+Color Projecteur::get_color()
+{
+    return this->color;
+}
