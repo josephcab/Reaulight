@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     menuEdition = menuBar()->addMenu("&Edition");
     menuAffichage = menuBar()->addMenu("&Affichage");
 
-
+    SoI.init();
 }
 
 MainWindow::~MainWindow()

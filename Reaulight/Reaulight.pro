@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sauvegarder_ou_import.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    sauvegarder_ou_import.h
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts
