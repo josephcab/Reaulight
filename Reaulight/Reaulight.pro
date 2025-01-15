@@ -10,10 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+	projecteur.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+	projecteur.h \
+	global.h
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts
