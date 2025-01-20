@@ -1,6 +1,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += openglwidgets
 
 CONFIG += c++17
 
@@ -11,12 +12,21 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-	projecteur.cpp
+    openglwidget.cpp \
+    projecteur.cpp \
 
 HEADERS += \
     mainwindow.h \
-	projecteur.h \
-	global.h
+    openglwidget.h \
+    projecteur.h \
+    global.h \
+    openglwidget.h
+
+FORMS += \
+    mainwindow.ui
+
+RESOURCES += \
+    res.qrc
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts

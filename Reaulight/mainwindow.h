@@ -3,6 +3,13 @@
 
 #include <QtWidgets>
 
+
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class MainWindow;
+}
+QT_END_NAMESPACE
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -16,6 +23,7 @@ private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+    Ui::MainWindow *ui;
 
 };
 #endif // MAINWINDOW_H
