@@ -11,11 +11,14 @@ CONFIG += c++17
 SOURCES += \
     Items/salledespectacle.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+	projecteur.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
-    mainwindow.h
+    mainwindow.h \
+	projecteur.h \
+	global.h
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts

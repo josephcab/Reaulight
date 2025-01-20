@@ -33,9 +33,27 @@ class Projecteur
         /// @param id adresse à modifier -> type int
         void set_address(int addresse);
 
+        /// @brief Mutateur du mode courant du projecteur
+        /// @param mode mode du projecteur -> type Modes
+        void set_mode(Modes mode);
+
+        /// @brief Accesseur du mode courant du projecteur
+        /// @return Modes, mode du projecteur
+        Modes get_mode();
+
+        /// @brief Mutateur de la couleur du projecteur, si donnée non conforme alors on ne les affectes pas
+        /// @param r, couleur rouge du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
+        /// @param g, couleur verte du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
+        /// @param b, couleur bleu du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
+        void set_color(int r, int g, int b);
+
+        /// @brief Accesseur de la couleur du projecteur
+        /// @return Color, couleur du projecteur courant
+        Color get_color();
+
     private:
         Position<double> pos; // coordonnées du projecteur dans l'espace
-        int address; // adresse du projecteur
+        int address; // adresse du projecteur (canaux)
         Modes mode; // mode du projecteur courant
         Color color; // couleur du projecteur sous la forme rgb
 };
