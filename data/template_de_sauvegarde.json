@@ -1,0 +1,14 @@
+{
+    "Nom_de_la_scenes" : "",
+    "Date_de_sauvegarde" : "",
+    "Createur": "",
+    "Salle": {
+        "hauteur": "",
+        "largeur": "",
+        "longueur":""
+    },
+    "Nombre_de_personne_max" :"",
+    "Objet_fixe": [],
+    "Projecteur_fixe": [],
+    "Projecteur_mobile": []
+}

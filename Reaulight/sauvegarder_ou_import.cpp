@@ -14,17 +14,25 @@ void sauvegarder_ou_importer::saveParty()
 }
 void sauvegarder_ou_importer::importParty()
 {
-
+    return;
 }
 void sauvegarder_ou_importer::dialog(dialogType type)
 {
     QMessageBox msgbox;
+    msgbox.setBaseSize(1000, 500);
+
     if(type == dialogType::import)
     {
-        return;
+        msgbox.setWindowTitle("IMPORT d'une scène.");
+        msgbox.setText("test");
     }
     if(type == dialogType::save)
     {
+        msgbox.setWindowTitle("SAUVEGARDE d'une scène.");
+    }
 
+    if(msgbox.exec())
+    {
+        return;
     }
 }
