@@ -1,15 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-// Structure permettant de gérer le positionnement dans l'espace d'un élément donné
-// peut être utilisé avec n'importe quel type de donné du moment que son utilisation est cohérente
-template <typename type> struct Position
-{
-    type x;
-    type y;
-    type z;
-};
-
 // type enuméré contenant les modes des différents projecteurs
 enum Modes
 {
