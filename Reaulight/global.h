@@ -24,4 +24,12 @@ struct Color
     int b;
 };
 
+// Taille du projecteur en mm
+struct Size
+{
+    int height; // hauteur
+    int width; // largeur
+    int dimension; // cote
+};
+
 #endif // GLOBAL_H

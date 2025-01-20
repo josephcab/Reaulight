@@ -1,6 +1,6 @@
 #include "projecteur.h"
 
-Projecteur::Projecteur(double x, double y, double z, int address)
+Projecteur::Projecteur(double x, double y, double z, int address, double distance_attache_rotation)
 {
     // Attribution de la position
     this->pos.x = x;
@@ -9,6 +9,8 @@ Projecteur::Projecteur(double x, double y, double z, int address)
 
     // Attribution de l'identifiant
     this->address = address;
+
+    this->distance_attache_rotation = distance_attache_rotation;
 }
 
 Position<double> Projecteur::get_pos()
@@ -58,4 +60,14 @@ void Projecteur::set_color(int r, int g, int b)
 Color Projecteur::get_color()
 {
     return this->color;
+}
+
+void Projecteur::set_distance_attache_rotation(double distance)
+{
+    this->distance_attache_rotation = distance;
+}
+
+double Projecteur::get_distance_attache_rotation()
+{
+    return this->distance_attache_rotation;
 }
