@@ -16,6 +16,5 @@ private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
-
 };
 #endif // MAINWINDOW_H
