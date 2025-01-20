@@ -13,7 +13,8 @@ class Projecteur
         /// @param y position y du projecteur -> type double
         /// @param z position z du projecteur -> type double
         /// @param address adresse à modifier -> type int
-        Projecteur(double x, double y, double z, int adress);
+        /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
+        Projecteur(double x, double y, double z, int adress, double distance_attache_rotation);
 
         /// @brief Accesseur de la position du projecteur dans la scène 3d
         /// @return Position 3d du projecteur sous forme de triplet (x,y,z)
@@ -51,11 +52,40 @@ class Projecteur
         /// @return Color, couleur du projecteur courant
         Color get_color();
 
+        /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est reclaculer pour être inférieur à 360 degré
+        /// @param angle, angle à attribuer au projecteur -> double
+        void set_angle(double angle);
+
+        /// @brief Accesseur de l'angle d'éclairage du faisceau lumineux du projecteur en degré
+        /// @return angle, angle d'éclairage du projecteur -> double
+        double get_angle();
+
+        /// @brief Mutateur de la taille du projecteur courant
+        /// @param height, hauteur du projecteur -> int
+        /// @param width, largeur du projecteur -> int
+        /// @param dimension, cote du projecteur -> int
+        void set_size(int height, int width, int dimension);
+
+        /// @brief Accesseur de la taille du projecteur courant
+        /// @return size, taille du projecteut -> size
+        Size get_size();
+
+        /// @brief Mutateur de la distance entre le point d'attache du projecteur et son axe de rotation
+        /// @param distance, distance à attribuer -> double
+        void set_distance_attache_rotation(double distance);
+
+        /// @brief Accesseur de la distance entre le point d'attache du projecteur et son axe de rotation
+        /// @param distance, distance courante à récupérer -> double
+        double get_distance_attache_rotation();
+
     private:
         Position<double> pos; // coordonnées du projecteur dans l'espace
         int address; // adresse du projecteur (canaux)
         Modes mode; // mode du projecteur courant
         Color color; // couleur du projecteur sous la forme rgb
+        double angle; // angle du faisceau de projecteur en degré
+        Size size; // taille du projecteur
+        double distance_attache_rotation;
 };
 
 #endif // !PROJECTEUR_H
