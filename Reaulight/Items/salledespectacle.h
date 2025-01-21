@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QList>
 #include <QVector3D>
+#include <QJsonDocument>
+#include <QFile>
+
 
 class SalleDeSpectacle : public QObject
 {
@@ -20,10 +23,21 @@ public:
     void set_roof(QList<QVector3D> roof_points);
     void set_layer(QList<QVector3D> layer_points, int layer);
 
+    QJsonDocument get_JSON();
+
 signals:
 
+public slots:
+    void load();
+    void load(QString filename);
+    void load(QJsonDocument document);
+    void save();
+    void save(QString filename);
+
 private:
-    QList<QList<QVector3D>> layers;
+    QList<QList<QVector3D>> *layers;
+    QString filename;
+    QString roomName;
 };
 
 #endif // SALLEDESPECTACLE_H
