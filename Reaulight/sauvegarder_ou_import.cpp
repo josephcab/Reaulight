@@ -24,7 +24,6 @@ void sauvegarder_ou_importer::dialog(dialogType type)
     if(type == dialogType::import)
     {
         msgbox.setWindowTitle("IMPORT d'une scène.");
-        msgbox.setText("test");
     }
     if(type == dialogType::save)
     {

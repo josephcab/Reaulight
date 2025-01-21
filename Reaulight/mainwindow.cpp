@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     menuAffichage = menuBar()->addMenu("&Affichage");
 
     SoI.init();
-    SoI.dialog(import);
 }
 
 MainWindow::~MainWindow()
