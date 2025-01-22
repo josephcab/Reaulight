@@ -3,28 +3,25 @@
 
 #include "global.h"
 #include <string.h>
+#include <QVector3D>
 
 /// @brief Classe permettant de gérer le fonctionnement général d'un projecteur.
 class Projecteur
 {
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
-        /// @param x position x du projecteur -> type double
-        /// @param y position y du projecteur -> type double
-        /// @param z position z du projecteur -> type double
+        /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
-        Projecteur(double x, double y, double z, int adress, double distance_attache_rotation);
+        Projecteur(QVector3D pos, int adress, double distance_attache_rotation);
 
         /// @brief Accesseur de la position du projecteur dans la scène 3d
         /// @return Position 3d du projecteur sous forme de triplet (x,y,z)
-        Position<double> get_pos();
+        QVector3D get_pos();
 
         /// @brief Mutateur de la position courante du projecteur dans la scène
-        /// @param x position x du projecteur -> type double
-        /// @param y position y du projecteur -> type double
-        /// @param z position z du projecteur -> type double
-        void set_position(double x, double y, double z);
+        /// @param pos, position du projecteur dans la scène -> QVector3D
+        void set_position(QVector3D pos);
 
         /// @brief Accesseur de l'addresse du projecteur courant
         /// @return int, adresse du projecteur courant
@@ -79,7 +76,7 @@ class Projecteur
         double get_distance_attache_rotation();
 
     private:
-        Position<double> pos; // coordonnées du projecteur dans l'espace
+        QVector3D pos; // coordonnées du projecteur dans l'espace
         int address; // adresse du projecteur (canaux)
         Modes mode; // mode du projecteur courant
         Color color; // couleur du projecteur sous la forme rgb

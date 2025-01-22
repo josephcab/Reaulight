@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(widget_opengl);
     widget_opengl->drawShape(OpenGlWidget::Rect);
     menuFichier = menuBar()->addMenu("&Fichier");
+        QAction *actionQuitter = new QAction("&Quitter", this);
+        menuFichier->addAction(actionQuitter);
     menuEdition = menuBar()->addMenu("&Edition");
     menuAffichage = menuBar()->addMenu("&Affichage");
 }
