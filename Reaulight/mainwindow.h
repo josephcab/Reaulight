@@ -23,7 +23,6 @@ private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
-    Ui::MainWindow *ui;
 
 };
 #endif // MAINWINDOW_H
