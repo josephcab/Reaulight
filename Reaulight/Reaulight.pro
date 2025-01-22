@@ -11,24 +11,20 @@ CONFIG += c++17
 
 SOURCES += \
     Items/salledespectacle.cpp \
+    OpenGL/openglwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    openglwidget.cpp \
     projecteur.cpp \
 
 HEADERS += \
     Items/salledespectacle.h \
+    OpenGL/openglwidget.h \
     mainwindow.h \
-    openglwidget.h \
     projecteur.h \
     global.h \
-    openglwidget.h
-
-FORMS += \
-    mainwindow.ui
 
 RESOURCES += \
-    res.qrc
+    OpenGL/res.qrc \
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts
@@ -39,3 +35,7 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    OpenGL/shapes.frag \
+    OpenGL/shapes.vert

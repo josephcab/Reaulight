@@ -21,11 +21,8 @@ unsigned int indices[] = {
 // VAO, VBO, EBO
 unsigned int VAO,VBO,EBO;
 
-
-
 OpenGlWidget::OpenGlWidget(QWidget *parent): QOpenGLWidget(parent)
 {
-
 }
 
 OpenGlWidget::~OpenGlWidget()
