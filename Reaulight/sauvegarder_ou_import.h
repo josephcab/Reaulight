@@ -12,11 +12,12 @@
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QFileInfo>
 #include <QStandardPaths>
 #include <QString>
 #include <QSysInfo>
+#include <QMessageBox>
+#include <QPushButton>
 
 enum dialogType {save, import};
 
@@ -31,11 +32,14 @@ public:
 
 
 private:
+    QString import_file; // fichier importer
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
-
-    QList<QJsonArray> proj_list; // list des projecteur
-    QList<QJsonArray> staticObj_list; // list des obj static donc qui ne bouge pas
+    QString roomName;
+    QString date; // date de sauvegarde
+    QString creator; //nom du créateur de la sallle
+    QList<QJsonArray> room; // stocker les infos conscernant la salle
+    QList<QJsonArray> projector; // liste des projecteur
 };
 
 #endif // SAUVEGARDER_OU_IMPORT_H

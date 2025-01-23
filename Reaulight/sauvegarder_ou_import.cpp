@@ -4,7 +4,7 @@ sauvegarder_ou_importer::sauvegarder_ou_importer() {}
 
 void sauvegarder_ou_importer::init()
 {
-    //recup le path Documents de l'utiliseurs.
+    // Récupérer le chemin du dossier Documents de l'utilisateur.
     this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     this->defaultpath.append("/Documents");
 }
@@ -18,20 +18,22 @@ void sauvegarder_ou_importer::importParty()
 }
 void sauvegarder_ou_importer::dialog(dialogType type)
 {
-    QMessageBox msgbox;
-    msgbox.setBaseSize(1000, 500);
 
-    if(type == dialogType::import)
+    if(type == import)
     {
-        msgbox.setWindowTitle("IMPORT d'une scène.");
+        this->import_file = QFileDialog::getOpenFileName(nullptr, "Open File",this->pathChoose.isEmpty() ? this->defaultpath : this->pathChoose,"JSON Files (*.json);");
+        this->importParty(); // Lancer le code pour lire et importer toutes les données du fichier JSON
     }
-    if(type == dialogType::save)
+    if(type == save)
     {
-        msgbox.setWindowTitle("SAUVEGARDE d'une scène.");
+        QString folder_path = QFileDialog::getExistingDirectory(nullptr, "Select folder", this->defaultpath);
+
+        if(!folder_path.isEmpty())
+        {
+            this->pathChoose = folder_path;
+
+            //this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
+        }
     }
 
-    if(msgbox.exec())
-    {
-        return;
-    }
 }
