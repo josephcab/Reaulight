@@ -15,6 +15,7 @@ void sauvegarder_ou_importer::saveParty()
 void sauvegarder_ou_importer::importParty(QString path)
 {
     QFile filepath(path);
+    qDebug() << path;
     return;
 }
 void sauvegarder_ou_importer::dialog(dialogType type)
