@@ -35,5 +35,4 @@ void sauvegarder_ou_importer::dialog(dialogType type)
             //this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
         }
     }
-
 }
