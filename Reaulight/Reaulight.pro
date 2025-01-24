@@ -12,14 +12,14 @@ SOURCES += \
     Items/salledespectacle.cpp \
     main.cpp \
     mainwindow.cpp \
-    sauvegarder_ou_import.cpp
+    sauvegarder_ou_importer.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
     mainwindow.h \
 	projecteur.h \
 	global.h \
-    sauvegarder_ou_import.h
+    sauvegarder_ou_importer.h
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts

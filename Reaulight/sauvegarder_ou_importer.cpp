@@ -1,4 +1,4 @@
-#include "sauvegarder_ou_import.h"
+#include "sauvegarder_ou_importer.h"
 
 sauvegarder_ou_importer::sauvegarder_ou_importer() {}
 
@@ -10,10 +10,11 @@ void sauvegarder_ou_importer::init()
 }
 void sauvegarder_ou_importer::saveParty()
 {
-
+    return;
 }
-void sauvegarder_ou_importer::importParty()
+void sauvegarder_ou_importer::importParty(QString path)
 {
+    QFile filepath(path);
     return;
 }
 void sauvegarder_ou_importer::dialog(dialogType type)
@@ -21,8 +22,8 @@ void sauvegarder_ou_importer::dialog(dialogType type)
 
     if(type == import)
     {
-        this->import_file = QFileDialog::getOpenFileName(nullptr, "Open File",this->pathChoose.isEmpty() ? this->defaultpath : this->pathChoose,"JSON Files (*.json);");
-        this->importParty(); // Lancer le code pour lire et importer toutes les données du fichier JSON
+        QString file = QFileDialog::getOpenFileName(nullptr, "Open File",this->pathChoose.isEmpty() ? this->defaultpath : this->pathChoose,"JSON Files (*.json);");
+        this->importParty(file); // Lancer le code pour lire et importer toutes les données du fichier JSON
     }
     if(type == save)
     {
@@ -31,7 +32,6 @@ void sauvegarder_ou_importer::dialog(dialogType type)
         if(!folder_path.isEmpty())
         {
             this->pathChoose = folder_path;
-
             //this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
         }
     }

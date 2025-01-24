@@ -1,5 +1,5 @@
-#ifndef SAUVEGARDER_OU_IMPORT_H
-#define SAUVEGARDER_OU_IMPORT_H
+#ifndef SAUVEGARDER_OU_IMPORTER_H
+#define SAUVEGARDER_OU_IMPORTER_H
 
 //Sauvegarde des données de spectacle #5
 
@@ -27,12 +27,11 @@ public:
     sauvegarder_ou_importer();
     void init();
     void saveParty(); // sauvegarder tout dans un seul fichier.
-    void importParty();
+    void importParty(QString path);
     void dialog(dialogType type);
 
 
 private:
-    QString import_file; // fichier importer
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
     QString roomName;
@@ -42,4 +41,4 @@ private:
     QList<QJsonArray> projector; // liste des projecteur
 };
 
-#endif // SAUVEGARDER_OU_IMPORT_H
+#endif // SAUVEGARDER_OU_IMPORTER_H
