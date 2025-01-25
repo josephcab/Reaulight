@@ -12,7 +12,8 @@ SOURCES += \
     Items/salledespectacle.cpp \
     main.cpp \
     mainwindow.cpp \
-    sauvegarder_ou_importer.cpp
+    sauvegarder_ou_importer.cpp \
+    projecteur.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
