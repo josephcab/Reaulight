@@ -12,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
         menuFichier->addAction(actionQuitter);
     menuEdition = menuBar()->addMenu("&Edition");
     menuAffichage = menuBar()->addMenu("&Affichage");
+
+    SoI.init();
+
+    SoI.dialog(import);
 }
 
 MainWindow::~MainWindow()

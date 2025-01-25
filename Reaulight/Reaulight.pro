@@ -14,7 +14,8 @@ SOURCES += \
     OpenGL/openglwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    projecteur.cpp \
+    sauvegarder_ou_importer.cpp \
+    projecteur.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
@@ -22,6 +23,7 @@ HEADERS += \
     mainwindow.h \
     projecteur.h \
     global.h \
+    sauvegarder_ou_importer.h
 
 RESOURCES += \
     OpenGL/res.qrc \
