@@ -11,6 +11,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void ouvrirDialogue();
+
 
 private:
     QMenu *menuFichier;

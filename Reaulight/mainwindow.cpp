@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 
+void MainWindow::ouvrirDialogue()
+{
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
+    QMessageBox::information(this, "Fichier", "Vous avez sélectionné: \n" + fichier);
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -23,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     menuEdition = menuBar()->addMenu("&Edition");
 
     menuAffichage = menuBar()->addMenu("&Affichage");
+
+    connect(actionOuvrir, &QAction::triggered, this, &MainWindow::ouvrirDialogue);
 }
 
 MainWindow::~MainWindow()
 {
 }
-
-
