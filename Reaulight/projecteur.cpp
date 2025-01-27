@@ -41,16 +41,9 @@ Modes Projecteur::get_mode()
     return this->mode;
 }
 
-void Projecteur::set_color(int r, int g, int b)
+void Projecteur::set_color(QColor _color)
 {
-    if (r >= 0 && r <= 255)
-        this->color.r = r;
-
-    if (g >= 0 && g <= 255)
-        this->color.g = g;
-
-    if (b >= 0 && b <= 255)
-        this->color.b = b;
+    this->color = _color;
 }
 
 Color Projecteur::get_color()

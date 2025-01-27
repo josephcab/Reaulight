@@ -4,6 +4,7 @@
 #include "global.h"
 #include <string.h>
 #include <QVector3D>
+#include <QColor>
 
 /// @brief Classe permettant de gérer le fonctionnement général d'un projecteur.
 class Projecteur
@@ -39,15 +40,13 @@ class Projecteur
         /// @return Modes, mode du projecteur
         Modes get_mode();
 
-        /// @brief Mutateur de la couleur du projecteur, si donnée non conforme alors on ne les affectes pas
-        /// @param r, couleur rouge du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
-        /// @param g, couleur verte du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
-        /// @param b, couleur bleu du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
-        void set_color(int r, int g, int b);
+        /// @brief Mutateur de la couleur du projecteur
+        /// @param _color, couleur à attribuer -> QVector
+        void set_color(QColor _color);
 
         /// @brief Accesseur de la couleur du projecteur
-        /// @return Color, couleur du projecteur courant
-        Color get_color();
+        /// @return QColor, couleur du projecteur courant
+        QColor get_color();
 
         /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est reclaculer pour être inférieur à 360 degré
         /// @param angle, angle à attribuer au projecteur -> double
@@ -79,7 +78,7 @@ class Projecteur
         QVector3D pos; // coordonnées du projecteur dans l'espace
         int address; // adresse du projecteur (canaux)
         Modes mode; // mode du projecteur courant
-        Color color; // couleur du projecteur sous la forme rgb
+        QColor color; // couleur du projecteur sous la forme rgb
         double angle; // angle du faisceau de projecteur en degré
         Size size; // taille du projecteur
         double distance_attache_rotation;
