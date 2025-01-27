@@ -1,6 +1,11 @@
 #include "projecteur.h"
 
-Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotation)
+Projecteur::~Projecteur()
+{
+    std::cout << "Instance supprimé" << std::endl;
+}
+
+Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotation, double angle)
 {
     // Attribution de la position
     this->pos = pos;
@@ -9,6 +14,7 @@ Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotat
     this->address = address;
 
     this->distance_attache_rotation = distance_attache_rotation;
+    this->angle = angle;
 }
 
 QVector3D Projecteur::get_pos()
@@ -46,7 +52,7 @@ void Projecteur::set_color(QColor _color)
     this->color = _color;
 }
 
-Color Projecteur::get_color()
+QColor Projecteur::get_color()
 {
     return this->color;
 }
@@ -94,4 +100,14 @@ void Projecteur::set_distance_attache_rotation(double distance)
 double Projecteur::get_distance_attache_rotation()
 {
     return this->distance_attache_rotation;
+}
+
+std::string Projecteur::get_name()
+{
+    return this->name;
+}
+
+void Projecteur::set_name(std::string name)
+{
+    this->name = name;
 }

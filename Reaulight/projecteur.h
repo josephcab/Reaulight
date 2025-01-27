@@ -14,14 +14,15 @@ class Projecteur
         /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
-        Projecteur(QVector3D pos, int adress, double distance_attache_rotation);
+        /// @param angle, angle d'éclairage du projecteur courant -> type double
+        Projecteur(QVector3D pos, int adress, double distance_attache_rotation, double angle);
 
         /// @brief Accesseur de la position du projecteur dans la scène 3d
         /// @return Position 3d du projecteur sous forme de triplet (x,y,z)
         QVector3D get_pos();
 
         /// @brief Mutateur de la position courante du projecteur dans la scène
-        /// @param pos, position du projecteur dans la scène -> QVector3D
+        /// @param pos, position du projecteur dans la scène -> type QVector3D
         void set_position(QVector3D pos);
 
         /// @brief Accesseur de l'addresse du projecteur courant
@@ -74,6 +75,14 @@ class Projecteur
         /// @param distance, distance courante à récupérer -> double
         double get_distance_attache_rotation();
 
+        /// @brief Accesseur du nom du projecteur
+        /// @return nom du projecteur -> type std::string
+        std::string get_name();
+
+        /// @brief Mutateur du nom du projecteur
+        /// @param name, nom du projecteur -> type std::string
+        void set_name(std::string name);
+
     private:
         QVector3D pos; // coordonnées du projecteur dans l'espace
         int address; // adresse du projecteur (canaux)
@@ -82,6 +91,7 @@ class Projecteur
         double angle; // angle du faisceau de projecteur en degré
         Size size; // taille du projecteur
         double distance_attache_rotation;
+        std::string name; // nom du projecteur dans la scène
 };
 
 #endif // !PROJECTEUR_H
