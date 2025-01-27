@@ -5,6 +5,7 @@
 #include <vector>
 #include "projecteur.h"
 #include <iostream>
+#include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -34,5 +35,6 @@ private:
     QMenu *menuEdition;
     QMenu *menuAffichage;
     std::vector<Projecteur*> projecteur; // liste d'instance des projecteurs utilisés dans le projet
+    sauvegarder_ou_importer SoI;
 };
 #endif // MAINWINDOW_H
