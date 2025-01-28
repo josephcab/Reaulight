@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
 {
