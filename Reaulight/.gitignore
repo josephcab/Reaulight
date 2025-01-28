@@ -70,6 +70,3 @@ Thumbs.db
 # --------
 *.dll
 *.exe**
-
-#empècher l'import du dossier build
-./build/
