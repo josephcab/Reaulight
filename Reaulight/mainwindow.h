@@ -14,10 +14,12 @@ public:
 public slots:
     void ouvrirDialogue();
 
-
 private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+
+    QDockWidget *dockWidget;
+    QWidget *dockWidgetContents;
 };
 #endif // MAINWINDOW_H
