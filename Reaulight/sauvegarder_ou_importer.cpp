@@ -20,7 +20,6 @@ void sauvegarder_ou_importer::importParty(QString path)
 }
 void sauvegarder_ou_importer::dialog(dialogType type)
 {
-
     if(type == import)
     {
         QString file = QFileDialog::getOpenFileName(nullptr, "Open File",this->pathChoose.isEmpty() ? this->defaultpath : this->pathChoose,"JSON Files (*.json);");

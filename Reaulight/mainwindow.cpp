@@ -3,12 +3,12 @@
 void MainWindow::ouvrirDialogue()
 {
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
-    QMessageBox::information(this, "Fichier", "Vous avez sélectionné: \n" + fichier);
+    QMessageBox::information(this, "Fichier", "Vous avez sélectionné: \n" + fichier); //Ouvre une fenêtre d'information concernant le fichier sélectionné
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    this->window()->setGeometry(0,0,1000,600);
+    this->window()->setGeometry(0,0,1000,600); //ouvre le logiciel avec une taille de 1000x600
     setCentralWidget(new QWidget);
     menuFichier = menuBar()->addMenu("&Fichier");
     QAction *actionOuvrir = new QAction("&Ouvrir", this);
