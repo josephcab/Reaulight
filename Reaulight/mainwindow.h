@@ -1,7 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMainWindow>
 #include <QtWidgets>
+#include <QTreeView>
+#include <QFileSystemModel>
+#include <QDockWidget>
+#include <QDir>
+#include <QDesktopServices>
 #include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
@@ -24,5 +30,7 @@ private:
 
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;
+    QTreeView *treeView;
+    QFileSystemModel *model;
 };
 #endif // MAINWINDOW_H
