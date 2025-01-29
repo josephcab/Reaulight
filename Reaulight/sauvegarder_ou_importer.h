@@ -30,7 +30,6 @@ public:
     void importParty(QString path);
     void dialog(dialogType type);
 
-
 private:
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.

@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     menuAffichage = menuBar()->addMenu("&Affichage");
 
+
     QDockWidget *dockWidget = new QDockWidget(tr("Menu de gauche"), this);
     dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea);
     dockWidgetContents = new QWidget();
@@ -40,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dockWidget->setMinimumSize(200, 200);
 
     SoI.init();
-    SoI.dialog(import);
+    SoI.dialog(save);
+
 }
 
 MainWindow::~MainWindow()
