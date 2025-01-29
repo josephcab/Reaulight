@@ -10,7 +10,7 @@ class Projecteur
 {
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
-        /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
+        /// @param pos, positon du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
         Projecteur(QVector3D pos, int adress, double distance_attache_rotation);
@@ -39,17 +39,17 @@ class Projecteur
         /// @return Modes, mode du projecteur
         Modes get_mode();
 
-        /// @brief Mutateur de la couleur du projecteur, si donnée non conforme alors on ne les affectes pas
-        /// @param r, couleur rouge du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
-        /// @param g, couleur verte du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
-        /// @param b, couleur bleu du projecteur, ne peut pas être supérieur à 255 ou inférieur à 0 -> int
+        /// @brief Mutateur de la couleur du projecteur, si donnée non conforme alors on ne les affecte pas
+        /// @param r, couleur rouge du projecteur, ne peut pas être supérieure à 255 ou inférieure à 0 -> int
+        /// @param g, couleur verte du projecteur, ne peut pas être supérieure à 255 ou inférieure à 0 -> int
+        /// @param b, couleur bleu du projecteur, ne peut pas être supérieure à 255 ou inférieure à 0 -> int
         void set_color(int r, int g, int b);
 
         /// @brief Accesseur de la couleur du projecteur
         /// @return Color, couleur du projecteur courant
         Color get_color();
 
-        /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est reclaculer pour être inférieur à 360 degré
+        /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est recalculé pour être inférieur à 360 degrés
         /// @param angle, angle à attribuer au projecteur -> double
         void set_angle(double angle);
 
