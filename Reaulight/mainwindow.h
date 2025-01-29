@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +19,8 @@ private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+
+    sauvegarder_ou_importer SoI;
 
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;

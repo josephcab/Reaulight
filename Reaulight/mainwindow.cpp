@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dockWidget->setFeatures(dockWidget->features() & QDockWidget::NoDockWidgetFeatures);
     dockWidget->setFeatures(dockWidget->features() & QDockWidget::DockWidgetVerticalTitleBar);
     dockWidget->setMinimumSize(200, 200);
+
+    SoI.init();
+    SoI.dialog(import);
 }
 
 MainWindow::~MainWindow()
