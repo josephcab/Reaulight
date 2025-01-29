@@ -79,7 +79,7 @@ double Projecteur::get_angle()
 
 void Projecteur::set_size(int height, int width, int dimension)
 {
-    // si les tailles sont négatives ou nul, on n'attribut pas
+    // si les tailles sont négatives ou nulles, on n'attribut pas
     if (height > 0)
         this->size.height = height;
     if (width > 0)
