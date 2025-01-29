@@ -1,7 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMainWindow>
 #include <QtWidgets>
+#include <QTreeView>
+#include <QFileSystemModel>
+#include <QDockWidget>
+#include <QDir>
+#include <QDesktopServices>
 #include <QList>
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
@@ -27,5 +33,7 @@ private:
 
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;
+    QTreeView *treeView;
+    QFileSystemModel *model;
 };
 #endif // MAINWINDOW_H
