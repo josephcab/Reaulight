@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QDesktopServices>
 #include <QList>
+#include <QTabWidget>
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
 
@@ -34,6 +35,8 @@ private:
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;
     QTreeView *treeView;
-    QFileSystemModel *model;
+    QFileSystemModel *model;    
+    QTabWidget *tabWidget;
+    QDockWidget *dock;
 };
 #endif // MAINWINDOW_H

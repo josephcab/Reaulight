@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include <QVBoxLayout>
+#include <QLabel>
 
 void MainWindow::ouvrirDialogue()
 {
@@ -35,23 +37,39 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     menuAffichage = menuBar()->addMenu("&Affichage");
 
-    QDockWidget *dockWidget = new QDockWidget(tr("Explorateur de fichiers"), this);
-    dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea);
-    dockWidgetContents = new QWidget();
-    dockWidget->setWidget(dockWidgetContents);
-    addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
-    dockWidget->setFeatures(dockWidget->features() & QDockWidget::NoDockWidgetFeatures);
-    dockWidget->setFeatures(dockWidget->features() & QDockWidget::DockWidgetVerticalTitleBar);
-    dockWidget->setMinimumSize(500, 250); // largeur, hauteur
+    tabWidget = new QTabWidget(); // Créer le QTabWidget
 
-    model = new QFileSystemModel(this); // Créer le modèle pour afficher les fichiers
+    // Onglet 1'Explorateur
+    QWidget *tabExplorer = new QWidget();
+    QVBoxLayout *explorerLayout = new QVBoxLayout();
+    model = new QFileSystemModel(this);
     model->setRootPath(QDir::homePath()); // Définir la racine (par défaut le dossier personnel)
+    model->setFilter(QDir::Files | QDir::NoDotAndDotDot);
     model->setNameFilters(QStringList() << "*.txt"); // Filtrer uniquement les fichiers .txt
-    // Créer la vue arborescente (TreeView)
+    // Gère la partie inclusion de l'explorateur
     treeView = new QTreeView();
     treeView->setModel(model);
-    treeView->setRootIndex(model->index(QDir::homePath())); // Point d'entrée dans l'arborescence
-    dockWidget->setWidget(treeView); //Ajoute la vue explorer au dock de gauche
+    treeView->setRootIndex(model->index(QDir::homePath()));
+    // Gère la partie affichage de l'explorateur
+    explorerLayout->addWidget(treeView);
+    tabExplorer->setLayout(explorerLayout);
+    tabWidget->addTab(tabExplorer, "Explorateur");
+
+    // Onglet 2 (exemple)
+    QWidget *tab1 = new QWidget();
+    QVBoxLayout *layout1 = new QVBoxLayout();
+    layout1->addWidget(new QLabel("Contenu de l'onglet 1"));
+    tab1->setLayout(layout1);
+    tabWidget->addTab(tab1, "Onglet 1");
+
+    // Ajouter le QTabWidget dans un QDockWidget
+    dock = new QDockWidget("Panneau latéral", this);
+    dock->setWidget(tabWidget);
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
+    dock->setMinimumWidth(450);
+    dock->setMaximumWidth(500);
+    dock->setFeatures(dock->features() & QDockWidget::NoDockWidgetFeatures);
+    dock->setFeatures(dock->features() & QDockWidget::DockWidgetVerticalTitleBar);
 }
 
 MainWindow::~MainWindow() {}
