@@ -5,8 +5,7 @@ sauvegarder_ou_importer::sauvegarder_ou_importer() {}
 void sauvegarder_ou_importer::init()
 {
     // Récupérer le chemin du dossier Documents de l'utilisateur.
-    this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    this->defaultpath.append("/Documents");
+    this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
 void sauvegarder_ou_importer::saveParty()
 {
@@ -125,7 +124,10 @@ void sauvegarder_ou_importer::dialog(dialogType type)
     if(type == import)
     {
         QString file = QFileDialog::getOpenFileName(nullptr, "Open File",this->pathChoose.isEmpty() ? this->defaultpath : this->pathChoose,"JSON Files (*.json);");
-        this->importParty(file); // Lancer le code pour lire et importer toutes les données du fichier JSON
+        if(!file.isEmpty())
+        {
+            this->importParty(file); // Lancer le code pour lire et importer toutes les données du fichier JSON
+        }
     }
     if(type == save)
     {

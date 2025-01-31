@@ -1,27 +1,24 @@
 #include "mainwindow.h"
 
-void MainWindow::ouvrirDialogue()
-{
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
-    QMessageBox::information(this, "Fichier", "Vous avez sélectionné: \n" + fichier); //Ouvre une fenêtre d'information concernant le fichier sélectionné
-}
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    this->window()->setGeometry(0,0,1000,600); //ouvre le logiciel avec une taille de 1000x600
+    this->window()->setGeometry(0,0,1000,600);
+    SoI.init(); // initialisation de SoI
     setCentralWidget(new QWidget);
     menuFichier = menuBar()->addMenu("&Fichier");
     QAction *actionOuvrir = new QAction("&Ouvrir", this);
     menuFichier->addAction(actionOuvrir);
-    connect(actionOuvrir, &QAction::triggered, this, &MainWindow::ouvrirDialogue);
+    connect(actionOuvrir, &QAction::triggered, this, [this](){
+        SoI.dialog(import);
+    });
     QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
-    fichiersRecents->addAction("Fichier bidon 1.txt");
-    fichiersRecents->addAction("Fichier bidon 2.txt");
-    fichiersRecents->addAction("Fichier bidon 3.txt");
     QAction *actionEnregistrer = new QAction("&Enregistrer", this);
     menuFichier->addAction(actionEnregistrer);
     QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
     menuFichier->addAction(actionEnregistrerSous);
+    connect(actionEnregistrerSous, &QAction::triggered, this, [this](){
+        SoI.dialog(save);
+    });
     QAction *actionQuitter = new QAction("&Quitter", this);
     menuFichier->addAction(actionQuitter);
     connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -39,9 +36,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dockWidget->setFeatures(dockWidget->features() & QDockWidget::NoDockWidgetFeatures);
     dockWidget->setFeatures(dockWidget->features() & QDockWidget::DockWidgetVerticalTitleBar);
     dockWidget->setMinimumSize(200, 200);
-
-    SoI.init();
-    SoI.dialog(save);
 
 }
 
