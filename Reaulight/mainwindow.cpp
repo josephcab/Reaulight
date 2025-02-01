@@ -43,16 +43,24 @@ MainWindow::MainWindow(QWidget *parent)
     menuAffichage = menuBar()->addMenu("&Affichage 3D");
 
     menuAide = menuBar()->addMenu("&Aide");
+        QAction *actionUpdate = new QAction("&Chercher des mises à jour", this);
+            menuAide->addAction(actionUpdate);
+            connect(actionUpdate, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/releases"));});
         QAction *actionDépôtGithub = new QAction("&Dépôt Github", this);
             menuAide->addAction(actionDépôtGithub);
+            connect(actionDépôtGithub, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight"));});
         QAction *actionDiscussionGithub = new QAction("&Salon de discussion Github", this);
             menuAide->addAction(actionDiscussionGithub);
+            connect(actionDiscussionGithub, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/discussions/10"));});
         QAction *actionDiscord = new QAction("&Serveur Discord", this);
             menuAide->addAction(actionDiscord);
+            connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/WmrxwnUY89"));});
         QAction *actionQt = new QAction("&À propos de Qt", this);
             menuAide->addAction(actionQt);
+            connect(actionQt, &QAction::triggered, this, [this] () {QMessageBox::aboutQt(this);});
         QAction *actionRéaulight = new QAction("&À propos de Réaulight", this);
             menuAide->addAction(actionRéaulight);
+            connect(actionRéaulight, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/blob/main/README.md"));});
 
     // Initialisation des modèles
         modelArborescence = new QStandardItemModel(this);
@@ -63,12 +71,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Création des vues
         QTreeView *treeExplorer = new QTreeView();
-        treeExplorer->setModel(modelExplorer);
-        treeExplorer->setRootIndex(modelExplorer->index(QDir::homePath()));
-
+            treeExplorer->setModel(modelExplorer);
+            treeExplorer->setRootIndex(modelExplorer->index(QDir::homePath()));
         QTreeView *treeArborescence = new QTreeView();
-        treeArborescence->setModel(modelArborescence);
-        treeArborescence->expandAll();
+            treeArborescence->setModel(modelArborescence);
+            treeArborescence->expandAll();
 
     // Création des onglets
         tabWidget = new QTabWidget(this);
@@ -82,7 +89,6 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche->setMinimumWidth(425);
         dockGauche->setMaximumWidth(425);
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
-        dockGauche->setFeatures(dockGauche->features() & QDockWidget::DockWidgetVerticalTitleBar);
 }
 
 MainWindow::~MainWindow() {}

@@ -10,7 +10,7 @@ class Projecteur
 {
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
-        /// @param pos, positon du projecteur dans la scène 3d -> QVector3D
+        /// @param pos, position du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
         Projecteur(QVector3D pos, int adress, double distance_attache_rotation);
