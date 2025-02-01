@@ -13,22 +13,20 @@ SalleDeSpectacle::SalleDeSpectacle(QString fileName, QObject *parent)
 {
     //Initialisations
     this->layers = new QList<QList<QVector3D>>();
-
     this->load(fileName);
-
 }
 
-QList<QVector3D> SalleDeSpectacle::get_ground()
+QList<QVector3D> SalleDeSpectacle::get_ground() //Retourne la première couche, qui correspond au sol.
 {
     return this->layers->first();
 }
 
-QList<QVector3D> SalleDeSpectacle::get_roof()
+QList<QVector3D> SalleDeSpectacle::get_roof() //Retourne la dernière couche, qui représente le toit.
 {
     return this->layers->last();
 }
 
-QList<QVector3D> SalleDeSpectacle::get_layer(int layer)
+QList<QVector3D> SalleDeSpectacle::get_layer(int layer) //Retourne une couche spécifique si elle existe, sinon renvoie une liste vide.
 {
     if(this->layers->size() > layer)
         return this->layers->at(layer);
@@ -36,17 +34,17 @@ QList<QVector3D> SalleDeSpectacle::get_layer(int layer)
         return QList<QVector3D>();
 }
 
-void SalleDeSpectacle::set_ground(QList<QVector3D> ground_points)
+void SalleDeSpectacle::set_ground(QList<QVector3D> ground_points) //Modifie la première couche (index 0), qui est le sol.
 {
     this->layers->replace(0,ground_points);
 }
 
-void SalleDeSpectacle::set_roof(QList<QVector3D> roof_points)
+void SalleDeSpectacle::set_roof(QList<QVector3D> roof_points) //Modifie la dernière couche, qui est le toit.
 {
     this->layers->replace(this->layers->size()-1,roof_points);
 }
 
-void SalleDeSpectacle::set_layer(QList<QVector3D> layer_points, int layer)
+void SalleDeSpectacle::set_layer(QList<QVector3D> layer_points, int layer) //Modifie une couche spécifique, mais affiche un message si elle n'existe pas.
 {
     if(layer < this->layers->size())
         this->layers->replace(layer, layer_points);
