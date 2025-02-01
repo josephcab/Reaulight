@@ -1,18 +1,23 @@
 #include "mainwindow.h"
-#include <QVBoxLayout>
-#include <QLabel>
 
-void MainWindow::ouvrirDialogue()
+QString MainWindow::ouvrirDialogue()
 {
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
-    QMessageBox::information(this, "Fichier", "Vous avez sélectionné: \n" + fichier); //Ouvre une fenêtre d'information concernant le fichier sélectionné
+    QMessageBox::information(this, "Fichier", "Vous avez sélectionné : \n" + fichier); //Ouvre une fenêtre d'information concernant le fichier sélectionné
+    return fichier;
 }
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent),
+    modelExplorer(nullptr),
+    modelArborescence(nullptr),
+    tabWidget(nullptr),
+    dockGauche(nullptr)
 {
     SoI.init();
-    this->window()->setGeometry(0,0,1000,600); //ouvre le logiciel avec une taille de 1000x600
+    this->window()->setGeometry(0, 0, 1000, 600); // Taille de la fenêtre (L=1'000 ; l=600) à la position X=0 ; Y=0
     setCentralWidget(new QWidget);
+
     menuFichier = menuBar()->addMenu("&Fichier");
     QAction *actionOuvrir = new QAction("&Ouvrir", this);
         menuFichier->addAction(actionOuvrir);
@@ -35,41 +40,49 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     menuEdition = menuBar()->addMenu("&Edition");
 
-    menuAffichage = menuBar()->addMenu("&Affichage");
+    menuAffichage = menuBar()->addMenu("&Affichage 3D");
 
-    tabWidget = new QTabWidget(); // Créer le QTabWidget
+    menuAide = menuBar()->addMenu("&Aide");
+        QAction *actionDépôtGithub = new QAction("&Dépôt Github", this);
+            menuAide->addAction(actionDépôtGithub);
+        QAction *actionDiscussionGithub = new QAction("&Salon de discussion Github", this);
+            menuAide->addAction(actionDiscussionGithub);
+        QAction *actionDiscord = new QAction("&Serveur Discord", this);
+            menuAide->addAction(actionDiscord);
+        QAction *actionQt = new QAction("&À propos de Qt", this);
+            menuAide->addAction(actionQt);
+        QAction *actionRéaulight = new QAction("&À propos de Réaulight", this);
+            menuAide->addAction(actionRéaulight);
 
-    // Onglet 1'Explorateur
-    QWidget *tabExplorer = new QWidget();
-    QVBoxLayout *explorerLayout = new QVBoxLayout();
-    model = new QFileSystemModel(this);
-    model->setRootPath(QDir::homePath()); // Définir la racine (par défaut le dossier personnel)
-    model->setFilter(QDir::Files | QDir::NoDotAndDotDot);
-    model->setNameFilters(QStringList() << "*.txt"); // Filtrer uniquement les fichiers .txt
-    // Gère la partie inclusion de l'explorateur
-    treeView = new QTreeView();
-    treeView->setModel(model);
-    treeView->setRootIndex(model->index(QDir::homePath()));
-    // Gère la partie affichage de l'explorateur
-    explorerLayout->addWidget(treeView);
-    tabExplorer->setLayout(explorerLayout);
-    tabWidget->addTab(tabExplorer, "Explorateur");
+    // Initialisation des modèles
+        modelArborescence = new QStandardItemModel(this);
+        modelExplorer = new QFileSystemModel(this);
+        modelExplorer->setRootPath(QDir::homePath());
+        modelExplorer->setFilter(QDir::Files | QDir::NoDotAndDotDot);
+        modelExplorer->setNameFilters(QStringList() << "*.txt");
 
-    // Onglet 2 (exemple)
-    QWidget *tab1 = new QWidget();
-    QVBoxLayout *layout1 = new QVBoxLayout();
-    layout1->addWidget(new QLabel("Contenu de l'onglet 1"));
-    tab1->setLayout(layout1);
-    tabWidget->addTab(tab1, "Onglet 1");
+    // Création des vues
+        QTreeView *treeExplorer = new QTreeView();
+        treeExplorer->setModel(modelExplorer);
+        treeExplorer->setRootIndex(modelExplorer->index(QDir::homePath()));
 
-    // Ajouter le QTabWidget dans un QDockWidget
-    dock = new QDockWidget("Panneau latéral", this);
-    dock->setWidget(tabWidget);
-    addDockWidget(Qt::LeftDockWidgetArea, dock);
-    dock->setMinimumWidth(450);
-    dock->setMaximumWidth(500);
-    dock->setFeatures(dock->features() & QDockWidget::NoDockWidgetFeatures);
-    dock->setFeatures(dock->features() & QDockWidget::DockWidgetVerticalTitleBar);
+        QTreeView *treeArborescence = new QTreeView();
+        treeArborescence->setModel(modelArborescence);
+        treeArborescence->expandAll();
+
+    // Création des onglets
+        tabWidget = new QTabWidget(this);
+        tabWidget->addTab(treeExplorer, "Explorateur");
+        tabWidget->addTab(treeArborescence, "Arborescence");
+
+    // Ajouter les onglets dans un QDockWidget
+        dockGauche = new QDockWidget("Panneau latéral", this);
+        dockGauche->setWidget(tabWidget);
+        addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
+        dockGauche->setMinimumWidth(425);
+        dockGauche->setMaximumWidth(425);
+        dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
+        dockGauche->setFeatures(dockGauche->features() & QDockWidget::DockWidgetVerticalTitleBar);
 }
 
 MainWindow::~MainWindow() {}

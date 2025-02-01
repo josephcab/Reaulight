@@ -10,6 +10,9 @@
 #include <QDesktopServices>
 #include <QList>
 #include <QTabWidget>
+#include <QStandardItemModel>
+#include <QVBoxLayout>
+#include <QLabel>
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
 
@@ -22,21 +25,20 @@ public:
     ~MainWindow();
 
 public slots:
-    void ouvrirDialogue();
+    QString ouvrirDialogue();
 
 private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+    QMenu *menuAide;
 
     Projecteur *proj1;
     sauvegarder_ou_importer SoI;
 
-    QDockWidget *dockWidget;
-    QWidget *dockWidgetContents;
-    QTreeView *treeView;
-    QFileSystemModel *model;    
-    QTabWidget *tabWidget;
-    QDockWidget *dock;
+    QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
+    QStandardItemModel *modelArborescence; // Modèle pour l'onglet "Arborescence"
+    QTabWidget *tabWidget; // Onglets
+    QDockWidget *dockGauche; // Panneau latéral
 };
 #endif // MAINWINDOW_H
