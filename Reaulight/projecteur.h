@@ -2,7 +2,7 @@
 #define PROJECTEUR_H
 
 #include "global.h"
-#include <string.h>
+#include <QString>
 #include <QVector3D>
 #include <QColor>
 
@@ -77,11 +77,11 @@ class Projecteur
 
         /// @brief Accesseur du nom du projecteur
         /// @return nom du projecteur -> type std::string
-        std::string get_name();
+        QString get_name();
 
         /// @brief Mutateur du nom du projecteur
         /// @param name, nom du projecteur -> type std::string
-        void set_name(std::string name);
+        void set_name(QString name);
 
     private:
         QVector3D pos; // coordonnées du projecteur dans l'espace
@@ -91,7 +91,7 @@ class Projecteur
         double angle; // angle du faisceau de projecteur en degré
         Size size; // taille du projecteur
         double distance_attache_rotation;
-        std::string name; // nom du projecteur dans la scène
+        QString name; // nom du projecteur dans la scène
 };
 
 #endif // !PROJECTEUR_H

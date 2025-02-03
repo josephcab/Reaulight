@@ -1,10 +1,5 @@
 #include "projecteur.h"
 
-Projecteur::~Projecteur()
-{
-    std::cout << "Instance supprimé" << std::endl;
-}
-
 Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotation, double angle)
 {
     // Attribution de la position
@@ -102,12 +97,12 @@ double Projecteur::get_distance_attache_rotation()
     return this->distance_attache_rotation;
 }
 
-std::string Projecteur::get_name()
+QString Projecteur::get_name()
 {
     return this->name;
 }
 
-void Projecteur::set_name(std::string name)
+void Projecteur::set_name(QString name)
 {
     this->name = name;
 }

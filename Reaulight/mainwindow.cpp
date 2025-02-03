@@ -15,17 +15,17 @@ MainWindow::~MainWindow()
 {
 }
 
-std::vector<Projecteur*> MainWindow::get_instanced_projecteur()
+QList<Projecteur*> MainWindow::get_instanced_projector()
 {
     return this->projecteur;
 }
 
-void MainWindow::instance_projecteur(QVector3D pos, int adress, double distance_attache_rotation, double angle)
+void MainWindow::instance_projector(QVector3D pos, int adress, double distance_attache_rotation, double angle)
 {
-    this->projecteur.push_back(new Projecteur(pos, adress, distance_attache_rotation, angle));
+    this->projecteur.append(new Projecteur(pos, adress, distance_attache_rotation, angle));
 }
 
-void MainWindow::uninstance_projecteur(int index)
+void MainWindow::uninstance_projector(int index)
 {
     // on regarde si on a un index out of range
     if ((int)(this->projecteur.size()) > index && index >= 0)
