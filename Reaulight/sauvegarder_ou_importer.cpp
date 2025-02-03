@@ -119,6 +119,35 @@ void sauvegarder_ou_importer::importParty(QString path)
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+void sauvegarder_ou_importer::savePartyWhenOpen()
+{
+    //recup tout les projecteur non enregistrer
+    if(this->pathChoose.isEmpty())
+    {
+        QMessageBox* messageBox;
+        messageBox->setWindowTitle("Erreur");
+        messageBox->setText("Vous n'avez pas enregistrer votre scènes");
+        messageBox->setIcon(QMessageBox::Warning);
+
+        QPushButton* saveButton = messageBox->addButton("Enregistrer", QMessageBox::AcceptRole);
+        QPushButton* cancelButton = messageBox->addButton("Annuler", QMessageBox::RejectRole);;
+
+        messageBox->exec();
+
+        if(messageBox->clickedButton() == saveButton)
+        {
+            qDebug() << "cc";
+        }
+        else if(messageBox->clickedButton() == cancelButton)
+        {
+            qDebug() << "cc bis";
+        }
+        delete messageBox;
+    }
+}
+>>>>>>> Stashed changes
 void sauvegarder_ou_importer::dialog(dialogType type)
 {
     if(type == import)
