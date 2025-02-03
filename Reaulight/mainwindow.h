@@ -15,6 +15,7 @@
 #include <QLabel>
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
+#include "arborescence_projet.h"
 
 class MainWindow : public QMainWindow
 {
@@ -37,7 +38,7 @@ private:
     sauvegarder_ou_importer SoI;
 
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
-    QStandardItemModel *modelArborescence; // Modèle pour l'onglet "Arborescence"
+    arborescence_projet *arborescence;
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
 };

@@ -10,7 +10,7 @@ QString MainWindow::ouvrirDialogue()
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     modelExplorer(nullptr),
-    modelArborescence(nullptr),
+    arborescence(new arborescence_projet(this)), // Initialisation de la classe arborescence_projet
     tabWidget(nullptr),
     dockGauche(nullptr)
 {
@@ -19,9 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
-    QAction *actionOuvrir = new QAction("&Ouvrir", this);
-        menuFichier->addAction(actionOuvrir);
-        connect(actionOuvrir, &QAction::triggered, this, &MainWindow::ouvrirDialogue);
     QAction *actionImporter = new QAction("&Importer", this);
         menuFichier->addAction(actionImporter);
         connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
@@ -63,7 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
             connect(actionRéaulight, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/blob/main/README.md"));});
 
     // Initialisation des modèles
-        modelArborescence = new QStandardItemModel(this);
         modelExplorer = new QFileSystemModel(this);
         modelExplorer->setRootPath(QDir::homePath());
         modelExplorer->setFilter(QDir::Files | QDir::NoDotAndDotDot);
@@ -74,8 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
             treeExplorer->setModel(modelExplorer);
             treeExplorer->setRootIndex(modelExplorer->index(QDir::homePath()));
         QTreeView *treeArborescence = new QTreeView();
-            treeArborescence->setModel(modelArborescence);
-            treeArborescence->expandAll();
+            treeArborescence->setModel(arborescence->getModel()); // Utilisation du modèle de arborescence_projet
 
     // Création des onglets
         tabWidget = new QTabWidget(this);
@@ -89,6 +84,15 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche->setMinimumWidth(425);
         dockGauche->setMaximumWidth(425);
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
+
+    // Exemple d'ajout d'éléments à l'arborescence
+        arborescence->addSpectacle("Spectacle 1");
+        QStandardItem *spectacle1 = arborescence->getModel()->item(0); // Récupère le premier spectacle
+            arborescence->addUnivers(spectacle1, "Univers 1");
+            arborescence->addReseau(spectacle1, "Réseau 1");
+            QStandardItem *univers1 = spectacle1->child(0); // Récupère le premier univers<
+                arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
+        treeArborescence->expandAll();
 }
 
 MainWindow::~MainWindow() {}
