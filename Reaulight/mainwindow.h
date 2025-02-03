@@ -5,6 +5,7 @@
 #include <QList>
 #include "projecteur.h"
 #include <iostream>
+#include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
 {
