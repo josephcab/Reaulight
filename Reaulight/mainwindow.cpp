@@ -39,6 +39,6 @@ void MainWindow::uninstance_projector(int index)
     }
     else // si oui, on lève une erreur
     {
-        std::cerr << "List index out of range, vous ne pouvez pas supprimer un projecteur à un emplacement mémoire indéfinie" << std::endl;
+        qDebug() << "List index out of range, vous ne pouvez pas supprimer un projecteur à un emplacement mémoire indéfinie";
     }
 }
