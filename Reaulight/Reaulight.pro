@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Items/salledespectacle.cpp \
+    arborescence_projet.cpp \
     main.cpp \
     mainwindow.cpp \
     projecteur.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     Items/salledespectacle.h \
+    arborescence_projet.h \
     mainwindow.h \
 	projecteur.h \
 	global.h \
