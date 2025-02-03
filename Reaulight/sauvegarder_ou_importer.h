@@ -19,7 +19,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-enum dialogType {save, import};
+enum dialogType {save, import, saveIfOpen};
 
 class sauvegarder_ou_importer
 {
@@ -27,6 +27,7 @@ public:
     sauvegarder_ou_importer();
     void init();
     void saveParty(); // sauvegarder tout dans un seul fichier.
+    void savePartyWhenOpen();
     void importParty(QString path);
     void dialog(dialogType type);
 

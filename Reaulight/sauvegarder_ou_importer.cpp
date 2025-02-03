@@ -119,35 +119,29 @@ void sauvegarder_ou_importer::importParty(QString path)
         }
     }
 }
-<<<<<<< Updated upstream
-=======
+
 void sauvegarder_ou_importer::savePartyWhenOpen()
 {
-    //recup tout les projecteur non enregistrer
-    if(this->pathChoose.isEmpty())
+    if (this->pathChoose.isEmpty()) // si l'utisilateur n'a pas enregistrer avant alors lui afficher cette msgbox
     {
-        QMessageBox* messageBox;
-        messageBox->setWindowTitle("Erreur");
-        messageBox->setText("Vous n'avez pas enregistrer votre scènes");
-        messageBox->setIcon(QMessageBox::Warning);
+        QMessageBox messageBox;
+        messageBox.setWindowTitle("Erreur");
+        messageBox.setText("Vous n'avez pas enregistré votre scène.");
+        messageBox.setIcon(QMessageBox::Warning);
 
-        QPushButton* saveButton = messageBox->addButton("Enregistrer", QMessageBox::AcceptRole);
-        QPushButton* cancelButton = messageBox->addButton("Annuler", QMessageBox::RejectRole);;
+        QPushButton* saveButton = messageBox.addButton("Enregistrer", QMessageBox::AcceptRole);
+        QPushButton* cancelButton = messageBox.addButton("Ne pas enregistrer", QMessageBox::RejectRole);
 
-        messageBox->exec();
+        messageBox.exec();
 
-        if(messageBox->clickedButton() == saveButton)
+        if (messageBox.clickedButton() == saveButton)
         {
-            qDebug() << "cc";
+            this->saveParty();
         }
-        else if(messageBox->clickedButton() == cancelButton)
-        {
-            qDebug() << "cc bis";
-        }
-        delete messageBox;
     }
+    //reste du code ici
 }
->>>>>>> Stashed changes
+
 void sauvegarder_ou_importer::dialog(dialogType type)
 {
     if(type == import)
@@ -167,5 +161,9 @@ void sauvegarder_ou_importer::dialog(dialogType type)
             this->pathChoose = folder_path;
             //this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
         }
+    }
+    if(type == saveIfOpen)
+    {
+        this->savePartyWhenOpen();
     }
 }

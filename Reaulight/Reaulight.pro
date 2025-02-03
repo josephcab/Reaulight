@@ -12,21 +12,14 @@ SOURCES += \
     Items/salledespectacle.cpp \
     main.cpp \
     mainwindow.cpp \
-<<<<<<< Updated upstream
     projecteur.cpp \
     sauvegarder_ou_importer.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
     mainwindow.h \
-	projecteur.h \
-	global.h \
-=======
-    sauvegarder_ou_importer.cpp
-
-HEADERS += \
-    mainwindow.h \
->>>>>>> Stashed changes
+    projecteur.h \
+    global.h \
     sauvegarder_ou_importer.h
 
 TRANSLATIONS += \

@@ -3,10 +3,7 @@
 
 #include <QtWidgets>
 #include <QList>
-<<<<<<< Updated upstream
 #include "projecteur.h"
-=======
->>>>>>> Stashed changes
 #include "sauvegarder_ou_importer.h"
 
 class MainWindow : public QMainWindow
@@ -22,10 +19,6 @@ private:
     QMenu *menuEdition;
     QMenu *menuAffichage;
 
-<<<<<<< Updated upstream
-    Projecteur *proj1;
-=======
->>>>>>> Stashed changes
     sauvegarder_ou_importer SoI;
 
     QDockWidget *dockWidget;

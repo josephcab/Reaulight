@@ -13,12 +13,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     });
     QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
     QAction *actionEnregistrer = new QAction("&Enregistrer", this);
-<<<<<<< Updated upstream
-=======
-    connect(actionEnregistrer, &QAction::triggered, this, [this](){
-        SoI.dialog(saveIfOpen);
-    });
->>>>>>> Stashed changes
     menuFichier->addAction(actionEnregistrer);
     QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
     menuFichier->addAction(actionEnregistrerSous);
