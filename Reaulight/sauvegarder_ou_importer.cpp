@@ -9,11 +9,57 @@ void sauvegarder_ou_importer::init()
 }
 void sauvegarder_ou_importer::saveParty()
 {
+    QDialog setOtherFileInfo;
+    setOtherFileInfo.resize(500, 200);
+    setOtherFileInfo.setWindowTitle("Autres détails pour l'enregistrement");
+
+    // Texte
+    QLabel* text = new QLabel("Veuillez définir le nom du créateur !", &setOtherFileInfo);
+
+    // Champ de texte
+    QLineEdit* filenameInput = new QLineEdit(&setOtherFileInfo);
+    filenameInput->setMinimumWidth(250);
+    filenameInput->setMaximumHeight(40);
+    filenameInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    // Boutons
+    QPushButton* saveButton = new QPushButton("Sauvegarder", &setOtherFileInfo);
+    QPushButton* cancelButton = new QPushButton("Annuler", &setOtherFileInfo);
+
+
+    QObject::connect(cancelButton, &QPushButton::clicked, &setOtherFileInfo, &QDialog::reject);
+    QObject::connect(saveButton, &QPushButton::clicked, &setOtherFileInfo, &QDialog::accept);
+
+    // Mise en page
+    QHBoxLayout* layout_horizontal = new QHBoxLayout();
+    layout_horizontal->addWidget(saveButton);
+    layout_horizontal->addWidget(cancelButton);
+
+    QVBoxLayout* layout_vertical = new QVBoxLayout(&setOtherFileInfo);
+    layout_vertical->addWidget(text);
+    layout_vertical->addWidget(filenameInput);
+    layout_vertical->addLayout(layout_horizontal);
+
+    // Exécution de la boîte de dialogue
+    if (setOtherFileInfo.exec() == QDialog::Accepted) {
+        if (!filenameInput->text().isEmpty()) {
+            this->creator = filenameInput->text();
+        } else {
+            QMessageBox::warning(&setOtherFileInfo, "Erreur", "Le nom du créateur ne peut pas être vide.");
+        }
+    }else if (setOtherFileInfo.exec() == QDialog::Rejected)
+    {
+        setOtherFileInfo.rejected();
+        return;
+    }
+
+
+
     QString fileSave = this->pathChoose + "/test" + ".json";
     QJsonObject jsonObject;
     QString roomName = "";
     QString saveDateTime = "";
-    QString creator = "";
+    QString creator = this->creator;
 
     QJsonArray Scenes;
     QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
@@ -38,6 +84,10 @@ void sauvegarder_ou_importer::saveParty()
             {"Projecteurs_info", Projecteurs_info},
             {"Programme_du_showProgramme_du_show", Programme_du_show}
         };
+    }
+    else
+    {
+        return;
     }
     QJsonDocument jdoc(jsonObject);
     QFile file(fileSave);
@@ -140,6 +190,13 @@ void sauvegarder_ou_importer::savePartyWhenOpen()
         }
     }
     //reste du code ici
+
+    QFile file(this->pathChoose);
+    file.open(QIODevice::ReadWrite);
+    QByteArray data = file.readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject obj = doc.object();
+
 }
 
 void sauvegarder_ou_importer::dialog(dialogType type)
@@ -159,7 +216,7 @@ void sauvegarder_ou_importer::dialog(dialogType type)
         if(!folder_path.isEmpty())
         {
             this->pathChoose = folder_path;
-            //this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
+            this->saveParty();  //Lancer la fonction pour enregistrer toutes les données.
         }
     }
     if(type == saveIfOpen)

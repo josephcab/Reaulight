@@ -18,6 +18,11 @@
 #include <QSysInfo>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QObject>
 
 enum dialogType {save, import, saveIfOpen};
 
