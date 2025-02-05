@@ -11,7 +11,7 @@ class Projecteur
 {
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
-        /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
+        /// @param pos, positon du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
         /// @param angle, angle d'éclairage du projecteur courant -> type double
@@ -45,11 +45,12 @@ class Projecteur
         /// @param _color, couleur à attribuer -> QVector
         void set_color(QColor _color);
 
+
         /// @brief Accesseur de la couleur du projecteur
         /// @return QColor, couleur du projecteur courant
         QColor get_color();
 
-        /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est reclaculer pour être inférieur à 360 degré
+        /// @brief Mutateur de l'angle d'éclairage du faisceau lumineux du projecteur en degré, l'angle est recalculé pour être inférieur à 360 degrés
         /// @param angle, angle à attribuer au projecteur -> double
         void set_angle(double angle);
 

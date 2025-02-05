@@ -7,6 +7,7 @@
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -30,11 +31,16 @@ public:
     /// @param index, index du projecteur à désintancier -> type int
     void uninstance_projector(int index);
 
+public slots:
+    void ouvrirDialogue();
+
 private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
     QList<Projecteur*> projecteur; // liste d'instance des projecteurs utilisés dans le projet
     sauvegarder_ou_importer SoI;
+    QDockWidget *dockWidget;
+    QWidget *dockWidgetContents;
 };
 #endif // MAINWINDOW_H
