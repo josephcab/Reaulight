@@ -41,65 +41,52 @@ void sauvegarder_ou_importer::saveParty()
     layout_vertical->addLayout(layout_horizontal);
 
     // Exécution de la boîte de dialogue
-    if (setOtherFileInfo.exec() == QDialog::Accepted) {
+    int result = setOtherFileInfo.exec();
+    if (result == QDialog::Accepted) {
         if (!filenameInput->text().isEmpty()) {
             this->creator = filenameInput->text();
         } else {
             QMessageBox::warning(&setOtherFileInfo, "Erreur", "Le nom du créateur ne peut pas être vide.");
+            return;
         }
-    }else if (setOtherFileInfo.exec() == QDialog::Rejected)
-    {
-        setOtherFileInfo.rejected();
-        return;
+    } else {
+        return; // Annuler la sauvegarde si l'utilisateur clique sur "Annuler"
     }
 
-
-
-    QString fileSave = this->pathChoose + "/test" + ".json";
     QJsonObject jsonObject;
-    QString roomName = "";
-    QString saveDateTime = "";
-    QString creator = this->creator;
-
-    QJsonArray Scenes;
-    QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
-    QJsonArray Structures;
-    QJsonArray Structures_info;
-    QJsonArray Projecteurs;
-    QJsonArray Projecteurs_info;
-    QJsonArray Programme_du_show;
-
+    roomName = this->roomName.isEmpty() ? "Room name has been not define" : this->roomName;
+    saveDateTime = "";
+    fileSave = this->pathChoose + "/"+ roomName + ".json";
 
     if(!roomName.isEmpty() && !creator.isEmpty()) // si le nom de la salle n'est pas vide et que le nom du créateur n'est pas vide
     {
         jsonObject = QJsonObject{
-            {"Nom_de_la_salle", roomName},
-            {"Date_de_sauvegarde", saveDateTime},
-            {"Createur", creator},
-            {"Scenes", Scenes},
-            {"Scenes_info", Scenes_info},
-            {"Structures", Structures},
-            {"Structures_info", Structures_info},
-            {"Projecteurs", Projecteurs},
-            {"Projecteurs_info", Projecteurs_info},
-            {"Programme_du_showProgramme_du_show", Programme_du_show}
+            {"Nom_de_la_salle", this->roomName},
+            {"Date_de_sauvegarde", this->saveDateTime},
+            {"Createur", this->creator},
+            {"Scenes", this->Scenes},
+            {"Scenes_info", this->Scenes_info},
+            {"Structures", this->Structures},
+            {"Structures_info", this->Structures_info},
+            {"Projecteurs", this->Projecteurs},
+            {"Projecteurs_info", this->Projecteurs_info},
+            {"Programme_du_show", this->Programme_du_show}
         };
     }
     else
     {
         return;
     }
+
     QJsonDocument jdoc(jsonObject);
+
     QFile file(fileSave);
-    if(file.open(QIODevice::WriteOnly))
-    {
+
+    if (file.open(QIODevice::WriteOnly)) {
         file.write(jdoc.toJson(QJsonDocument::Indented));
         file.close();
-        qDebug() << "fichier créer";
-    }
-    else
-    {
-        qDebug() << "Erreur";
+    } else {
+        qDebug() << "Erreur lors de l'ouverture du fichier pour écriture :" << file.errorString();
     }
 }
 void sauvegarder_ou_importer::importParty(QString path)
@@ -223,4 +210,11 @@ void sauvegarder_ou_importer::dialog(dialogType type)
     {
         this->savePartyWhenOpen();
     }
+}
+
+
+//seter
+QString sauvegarder_ou_importer::setRoomName(QString name)
+{
+    this->roomName = name;
 }

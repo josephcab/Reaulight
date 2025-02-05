@@ -36,14 +36,26 @@ public:
     void importParty(QString path);
     void dialog(dialogType type);
 
+    //geter
+    //seter
+    QString setRoomName(QString name);
+
 private:
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
+
     QString roomName;
-    QString date; // date de sauvegarde
-    QString creator; //nom du créateur de la salle
-    QList<QJsonArray> room; // stocker les infos concernant la salle
-    QList<QJsonArray> projector; // liste des projecteurs
+    QString saveDateTime;
+    QString creator;
+    QString fileSave;
+
+    QJsonArray Scenes;
+    QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
+    QJsonArray Structures;
+    QJsonArray Structures_info;
+    QJsonArray Projecteurs;
+    QJsonArray Projecteurs_info;
+    QJsonArray Programme_du_show;
 };
 
 #endif // SAUVEGARDER_OU_IMPORTER_H
