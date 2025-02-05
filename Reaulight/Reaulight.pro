@@ -1,6 +1,7 @@
     QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += openglwidgets
 
 CONFIG += c++17
 
@@ -10,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     Items/salledespectacle.cpp \
+    OpenGL/openglwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     projecteur.cpp \
@@ -17,10 +19,14 @@ SOURCES += \
 
 HEADERS += \
     Items/salledespectacle.h \
+    OpenGL/openglwidget.h \
     mainwindow.h \
-	projecteur.h \
-	global.h \
+    projecteur.h \
+    global.h \
     sauvegarder_ou_importer.h
+
+RESOURCES += \
+    OpenGL/res.qrc \
 
 TRANSLATIONS += \
     Reaulight_fr_FR.ts
@@ -31,3 +37,7 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    OpenGL/shapes.frag \
+    OpenGL/shapes.vert

@@ -6,6 +6,7 @@
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

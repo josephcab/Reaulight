@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "OpenGL/openglwidget.h"
 
 void MainWindow::ouvrirDialogue()
 {
