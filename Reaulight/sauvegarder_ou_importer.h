@@ -30,15 +30,14 @@ public:
     void importParty(QString path);
     void dialog(dialogType type);
 
-
 private:
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
     QString roomName;
     QString date; // date de sauvegarde
-    QString creator; //nom du créateur de la sallle
-    QList<QJsonArray> room; // stocker les infos conscernant la salle
-    QList<QJsonArray> projector; // liste des projecteur
+    QString creator; //nom du créateur de la salle
+    QList<QJsonArray> room; // stocker les infos concernant la salle
+    QList<QJsonArray> projector; // liste des projecteurs
 };
 
 #endif // SAUVEGARDER_OU_IMPORTER_H

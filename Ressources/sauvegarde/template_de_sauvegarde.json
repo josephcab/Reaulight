@@ -2,8 +2,18 @@
     "Nom_de_la_salle" : "",
     "Date_de_sauvegarde" : "",
     "Createur": "",
-    "Salle": [],
-    "Objet_fixe": [],
-    "Projecteur": [],
+    "Salle": {},
+    "Scenes":[],
+    "Scenes_info": [
+        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+    ],
+    "Structures": [],
+    "Structures_info":[
+        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+    ],
+    "Projecteurs": [],
+    "Projecteurs_info":[
+        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+    ],
     "Programme_du_show": []
 }

@@ -1,4 +1,4 @@
-QT       += core gui
+    QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += openglwidgets
@@ -14,8 +14,8 @@ SOURCES += \
     OpenGL/openglwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    sauvegarder_ou_importer.cpp \
-    projecteur.cpp
+    projecteur.cpp \
+    sauvegarder_ou_importer.cpp
 
 HEADERS += \
     Items/salledespectacle.h \
