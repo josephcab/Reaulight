@@ -1,11 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMainWindow>
 #include <QtWidgets>
+#include <QTreeView>
+#include <QFileSystemModel>
+#include <QDockWidget>
+#include <QDir>
+#include <QDesktopServices>
 #include <QList>
+#include <QTabWidget>
+#include <QStandardItemModel>
+#include <QVBoxLayout>
+#include <QLabel>
 #include <QDebug>
+
 #include "projecteur.h"
 #include "sauvegarder_ou_importer.h"
+#include "arborescence_projet.h"
 
 
 class MainWindow : public QMainWindow
@@ -32,15 +44,19 @@ public:
     void uninstance_projector(int index);
 
 public slots:
-    void ouvrirDialogue();
+    QString ouvrirDialogue();
 
 private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+    QMenu *menuAide;
+
+    QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
+    arborescence_projet *arborescence;
+    QTabWidget *tabWidget; // Onglets
+    QDockWidget *dockGauche; // Panneau latéral
     QList<Projecteur*> projecteur; // liste d'instance des projecteurs utilisés dans le projet
     sauvegarder_ou_importer SoI;
-    QDockWidget *dockWidget;
-    QWidget *dockWidgetContents;
 };
 #endif // MAINWINDOW_H

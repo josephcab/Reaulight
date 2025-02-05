@@ -4,10 +4,10 @@ sauvegarder_ou_importer::sauvegarder_ou_importer() {}
 
 void sauvegarder_ou_importer::init()
 {
-    // Récupérer le chemin du dossier Documents de l'utilisateur.
-    this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    this->defaultpath.append("/Documents");
+    // Récupère directement le chemin du dossier Documents
+    this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
+
 void sauvegarder_ou_importer::saveParty()
 {
     QString fileSave = this->pathChoose + "/test" + ".json";
