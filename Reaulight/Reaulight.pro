@@ -13,7 +13,6 @@ SOURCES += \
     Items/salledespectacle.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
-
     main.cpp \
     mainwindow.cpp \
     projecteur.cpp \
