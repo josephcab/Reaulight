@@ -1,11 +1,6 @@
 #include "mainwindow.h"
 #include "OpenGL/openglwidget.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
-{
-    this->window()->setGeometry(0,0,1000,600);
-    SoI.init(); // initialisation de SoI
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -31,9 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
         fichiersRecents->addAction("Fichier bidon 3.txt");
     QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
         menuFichier->addAction(actionSauvegarder);
-        connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
+        connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::saveIfOpen);});
     QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
         menuFichier->addAction(actionEnregistrerSous);
+        connect(actionEnregistrerSous, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
     QAction *actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
