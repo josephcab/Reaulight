@@ -41,5 +41,6 @@ private:
     arborescence_projet *arborescence;
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
+    QDockWidget *dockBas; // Panneau complémentaire
 };
 #endif // MAINWINDOW_H

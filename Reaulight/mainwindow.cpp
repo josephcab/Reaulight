@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(actionDiscussionGithub, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/discussions/10"));});
         QAction *actionDiscord = new QAction("&Serveur Discord", this);
             menuAide->addAction(actionDiscord);
-            connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/WmrxwnUY89"));});
+            connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/H7wEZ8mUKc"));});
         QAction *actionQt = new QAction("&À propos de Qt", this);
             menuAide->addAction(actionQt);
             connect(actionQt, &QAction::triggered, this, [this] () {QMessageBox::aboutQt(this);});
@@ -81,8 +81,8 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche = new QDockWidget("Panneau latéral", this);
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
-        dockGauche->setMinimumWidth(425);
-        dockGauche->setMaximumWidth(425);
+        dockGauche->setMinimumWidth(250);
+        dockGauche->setMaximumWidth(450);
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Exemple d'ajout d'éléments à l'arborescence
@@ -93,6 +93,13 @@ MainWindow::MainWindow(QWidget *parent)
             QStandardItem *univers1 = spectacle1->child(0); // Récupère le premier univers<
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
+
+    // Création d'un QDockWidget bas
+    dockBas = new QDockWidget("Panneau complémentaire", this);
+    addDockWidget(Qt::BottomDockWidgetArea, dockBas);
+    dockBas->setMinimumWidth(250);
+    dockBas->setMaximumWidth(450);
+    dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
 }
 
 MainWindow::~MainWindow() {}
