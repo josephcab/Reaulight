@@ -7,14 +7,6 @@ enum Modes
 
 };
 
-// structure gérant les couleurs sous le format rgb de 0 à 255
-struct Color
-{
-    int r;
-    int g;
-    int b;
-};
-
 // Taille du projecteur en mm
 struct Size
 {
