@@ -54,4 +54,4 @@ compile_commands.json
 *_qmlcache.qrc
 
 # Exclude the reaulight/build folder
-reaulight/build/
+Reaulight/build/
