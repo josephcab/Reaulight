@@ -19,10 +19,14 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QObject>
+#include <QDate>
+
+#include <projecteur.h>
 
 enum dialogType {save, import, saveIfOpen};
 
@@ -37,13 +41,15 @@ public:
     void dialog(dialogType type);
 
     //geter
+
     //seter
     QString setRoomName(QString name);
+    QList<Projecteur*> setProjecteurList(QList<Projecteur*> proj);
 
 private:
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
-
+    QDialog setOtherFileInfo; // boite de dialog pour choisir le nom du créateur
     QString roomName;
     QString saveDateTime;
     QString creator;
@@ -56,6 +62,16 @@ private:
     QJsonArray Projecteurs;
     QJsonArray Projecteurs_info;
     QJsonArray Programme_du_show;
+
+
+    QList<Projecteur*> proj_list; // list des projecteurs.
+
+    bool savehasRun = false;
+
+
+    //btn
+    QPushButton* saveButton; // btn msgBox;
+    QPushButton* cancelButton;
 };
 
 #endif // SAUVEGARDER_OU_IMPORTER_H

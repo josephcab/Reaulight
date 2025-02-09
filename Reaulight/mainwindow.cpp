@@ -75,12 +75,13 @@ MainWindow::MainWindow(QWidget *parent)
         tabWidget = new QTabWidget(this);
         tabWidget->addTab(treeExplorer, "Explorateur");
         tabWidget->addTab(treeArborescence, "Arborescence");
+        tabWidget->setCurrentIndex(tabWidget->indexOf(treeArborescence));
 
     // Ajouter les onglets dans un QDockWidget
         dockGauche = new QDockWidget("Panneau latéral", this);
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
-        dockGauche->setMinimumWidth(425);
+        dockGauche->setMinimumWidth(250);
         dockGauche->setMaximumWidth(425);
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
@@ -92,6 +93,10 @@ MainWindow::MainWindow(QWidget *parent)
             QStandardItem *univers1 = spectacle1->child(0); // Récupère le premier univers<
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
+
+
+
+    //recup les données pour l'enregristrer du fichier .json
 }
 
 MainWindow::~MainWindow() {}

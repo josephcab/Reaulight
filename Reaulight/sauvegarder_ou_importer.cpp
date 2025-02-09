@@ -1,6 +1,8 @@
 #include "sauvegarder_ou_importer.h"
 
-sauvegarder_ou_importer::sauvegarder_ou_importer() {}
+sauvegarder_ou_importer::sauvegarder_ou_importer() : saveButton(nullptr), cancelButton(nullptr) {
+    saveButton = new QPushButton("Sauvegarder");
+}
 
 void sauvegarder_ou_importer::init()
 {
@@ -10,7 +12,6 @@ void sauvegarder_ou_importer::init()
 
 void sauvegarder_ou_importer::saveParty()
 {
-    QDialog setOtherFileInfo;
     setOtherFileInfo.resize(500, 200);
     setOtherFileInfo.setWindowTitle("Autres détails pour l'enregistrement");
 
@@ -24,8 +25,8 @@ void sauvegarder_ou_importer::saveParty()
     filenameInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     // Boutons
-    QPushButton* saveButton = new QPushButton("Sauvegarder", &setOtherFileInfo);
-    QPushButton* cancelButton = new QPushButton("Annuler", &setOtherFileInfo);
+    saveButton = new QPushButton("Sauvegarder", &setOtherFileInfo);
+    cancelButton = new QPushButton("Annuler", &setOtherFileInfo);
 
 
     QObject::connect(cancelButton, &QPushButton::clicked, &setOtherFileInfo, &QDialog::reject);
@@ -56,7 +57,7 @@ void sauvegarder_ou_importer::saveParty()
 
     QJsonObject jsonObject;
     roomName = this->roomName.isEmpty() ? "Room name has been not define" : this->roomName;
-    saveDateTime = "";
+    saveDateTime = QDate::currentDate().toString() + " at " + QTime::currentTime().toString(); // date de l'enregistrement
     fileSave = this->pathChoose + "/"+ roomName + ".json";
 
     if(!roomName.isEmpty() && !creator.isEmpty()) // si le nom de la salle n'est pas vide et que le nom du créateur n'est pas vide
@@ -219,3 +220,10 @@ QString sauvegarder_ou_importer::setRoomName(QString name)
 {
     this->roomName = name;
 }
+QList<Projecteur*> sauvegarder_ou_importer::setProjecteurList(QList<Projecteur*> proj)
+{
+    this->proj_list = proj;
+}
+
+//geter
+
