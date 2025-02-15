@@ -53,6 +53,7 @@ private:
     QMenu *menuAide;
 
     Projecteur *proj1;
+    QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
     sauvegarder_ou_importer SoI;
 
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
@@ -60,7 +61,5 @@ private:
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
     QDockWidget *dockBas; // Panneau complémentaire
-
-    QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
 };
 #endif // MAINWINDOW_H
