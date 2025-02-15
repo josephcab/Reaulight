@@ -44,7 +44,7 @@ public:
     void uninstance_projector(int index);
 
 public slots:
-    QString ouvrirDialogue();
+
 
 private:
     QMenu *menuFichier;
@@ -52,10 +52,15 @@ private:
     QMenu *menuAffichage;
     QMenu *menuAide;
 
+    Projecteur *proj1;
+    sauvegarder_ou_importer SoI;
+
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
     arborescence_projet *arborescence;
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
     QDockWidget *dockBas; // Panneau complémentaire
+
+    QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
 };
 #endif // MAINWINDOW_H

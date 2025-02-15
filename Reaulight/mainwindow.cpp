@@ -1,40 +1,34 @@
 #include "mainwindow.h"
 #include "OpenGL/openglwidget.h"
 
-QString MainWindow::ouvrirDialogue()
-{
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
-    QMessageBox::information(this, "Fichier", "Vous avez sélectionné : \n" + fichier); //Ouvre une fenêtre d'information concernant le fichier sélectionné
-    return fichier;
-}
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     modelExplorer(nullptr),
     arborescence(new arborescence_projet(this)), // Initialisation de la classe arborescence_projet
     tabWidget(nullptr),
-    dockGauche(nullptr)
+    dockGauche(nullptr),
+    projecteur()
 {
     SoI.init();
     this->window()->setGeometry(0, 0, 1000, 600); // Taille de la fenêtre (L=1'000 ; l=600) à la position X=0 ; Y=0
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
-    QAction *actionImporter = new QAction("&Importer", this);
-        menuFichier->addAction(actionImporter);
-        connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
-    QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
-        fichiersRecents->addAction("Fichier bidon 1.txt");
-        fichiersRecents->addAction("Fichier bidon 2.txt");
-        fichiersRecents->addAction("Fichier bidon 3.txt");
-    QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
-        menuFichier->addAction(actionSauvegarder);
-        connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
-    QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
-        menuFichier->addAction(actionEnregistrerSous);
-    QAction *actionQuitter = new QAction("&Quitter", this);
-        menuFichier->addAction(actionQuitter);
-        connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
+        QAction *actionImporter = new QAction("&Importer", this);
+            menuFichier->addAction(actionImporter);
+            connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
+        QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
+            fichiersRecents->addAction("Fichier bidon 1.txt");
+            fichiersRecents->addAction("Fichier bidon 2.txt");
+            fichiersRecents->addAction("Fichier bidon 3.txt");
+        QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
+            menuFichier->addAction(actionSauvegarder);
+            connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
+        QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
+            menuFichier->addAction(actionEnregistrerSous);
+        QAction *actionQuitter = new QAction("&Quitter", this);
+            menuFichier->addAction(actionQuitter);
+            connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
 
     menuEdition = menuBar()->addMenu("&Edition");
 
@@ -128,3 +122,4 @@ void MainWindow::uninstance_projector(int index)
         qDebug() << "List index out of range, vous ne pouvez pas supprimer un projecteur à un emplacement mémoire indéfinie";
     }
 }
+
