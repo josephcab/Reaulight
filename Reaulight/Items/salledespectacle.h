@@ -7,13 +7,20 @@
 #include <QJsonDocument>
 #include <QFile>
 
-
+/**
+ * @brief The SalleDeSpectacle class
+ * @details La classe SalleDeSpectacle est un classe permettant de représenter une salle de spectacle.
+ *          Pour ce faire, elle définit au moins deux couches de points (sol et plafond).
+ *          Elle peut prendre en paramètre de création un fichier de définition de salle, ou un QJsonDocument
+ *          représentant la salle.
+ */
 class SalleDeSpectacle : public QObject
 {
     Q_OBJECT
 public:
     explicit SalleDeSpectacle(QObject *parent = nullptr);
     SalleDeSpectacle(QString fileName, QObject *parent = nullptr);
+    SalleDeSpectacle(QJsonDocument document, QObject *parent = nullptr);
 
     QList<QVector3D> get_ground();
     QList<QVector3D> get_roof();
