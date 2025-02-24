@@ -23,9 +23,7 @@ SalleDeSpectacle::SalleDeSpectacle(QString fileName, QObject *parent)
 {
     //Initialisations
     this->layers = new QList<QList<QVector3D>>();
-
     this->load(fileName);
-
 }
 
 /**
@@ -98,6 +96,7 @@ void SalleDeSpectacle::set_roof(QList<QVector3D> roof_points)
  * @param layer la couche à modifier
  */
 void SalleDeSpectacle::set_layer(QList<QVector3D> layer_points, int layer)
+
 {
     if(layer < this->layers->size())
         this->layers->replace(layer, layer_points);

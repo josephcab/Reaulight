@@ -1,6 +1,6 @@
 #include "projecteur.h"
 
-Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotation)
+Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotation, double angle)
 {
     // Attribution de la position
     this->pos = pos;
@@ -9,6 +9,7 @@ Projecteur::Projecteur(QVector3D pos, int address, double distance_attache_rotat
     this->address = address;
 
     this->distance_attache_rotation = distance_attache_rotation;
+    this->angle = angle;
 }
 
 QVector3D Projecteur::get_pos()
@@ -41,19 +42,12 @@ Modes Projecteur::get_mode()
     return this->mode;
 }
 
-void Projecteur::set_color(int r, int g, int b)
+void Projecteur::set_color(QColor _color)
 {
-    if (r >= 0 && r <= 255)
-        this->color.r = r;
-
-    if (g >= 0 && g <= 255)
-        this->color.g = g;
-
-    if (b >= 0 && b <= 255)
-        this->color.b = b;
+    this->color = _color;
 }
 
-Color Projecteur::get_color()
+QColor Projecteur::get_color()
 {
     return this->color;
 }
@@ -79,7 +73,7 @@ double Projecteur::get_angle()
 
 void Projecteur::set_size(int height, int width, int dimension)
 {
-    // si les tailles sont négatives ou nul, on n'attribut pas
+    // si les tailles sont négatives ou nulles, on n'attribut pas
     if (height > 0)
         this->size.height = height;
     if (width > 0)
@@ -101,4 +95,14 @@ void Projecteur::set_distance_attache_rotation(double distance)
 double Projecteur::get_distance_attache_rotation()
 {
     return this->distance_attache_rotation;
+}
+
+QString Projecteur::get_name()
+{
+    return this->name;
+}
+
+void Projecteur::set_name(QString name)
+{
+    this->name = name;
 }
