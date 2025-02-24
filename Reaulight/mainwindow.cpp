@@ -50,23 +50,26 @@ MainWindow::~MainWindow()
 {
 }
 
-QList<Projecteur*> MainWindow::get_instanced_projector()
+Projector* MainWindow::get_instanced_projector(int index)
 {
-    return this->projecteur;
+    if ((int)(this->projector.size()) > index && index >= 0)
+        return this->projector[index];
+    else
+        return nullptr;
 }
 
 void MainWindow::instance_projector(QVector3D pos, int adress, double distance_attache_rotation, double angle)
 {
-    this->projecteur.append(new Projecteur(pos, adress, distance_attache_rotation, angle));
+    this->projector.append(new Projector(pos, adress, distance_attache_rotation, angle));
 }
 
 void MainWindow::uninstance_projector(int index)
 {
     // on regarde si on a un index out of range
-    if ((int)(this->projecteur.size()) > index && index >= 0)
+    if ((int)(this->projector.size()) > index && index >= 0)
     {
-        delete this->projecteur[index]; // désintancie le projecteur
-        this->projecteur.erase(this->projecteur.begin() + index); // supprime un élément à un index
+        delete this->projector[index]; // désintancie le projecteur
+        this->projector.erase(this->projector.begin() + index); // supprime un élément à un index
     }
     else // si oui, on lève une erreur
     {
