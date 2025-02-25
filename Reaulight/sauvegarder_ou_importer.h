@@ -30,10 +30,12 @@
 
 enum dialogType {save, import, saveIfOpen};
 
-class sauvegarder_ou_importer
+class Save_or_import : public QObject
 {
+    Q_OBJECT
+
 public:
-    sauvegarder_ou_importer();
+    explicit Save_or_import(QObject *parent = nullptr);
     void init();
     void saveParty(); // sauvegarder tout dans un seul fichier.
     void savePartyWhenOpen();
@@ -44,8 +46,10 @@ public:
 
     //seter
     QString setRoomName(QString name);
-    QList<Projecteur*> setProjecteurList(QList<Projecteur*> proj);
+    void setProjectorList(QList<Projecteur*> proj);
 
+signals:
+    void isSavingAccept(bool accepted);
 private:
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
@@ -59,12 +63,9 @@ private:
     QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
     QJsonArray Structures;
     QJsonArray Structures_info;
-    QJsonArray Projecteurs;
-    QJsonArray Projecteurs_info;
+    QJsonArray Projector;
+    QJsonArray Projector_info;
     QJsonArray Programme_du_show;
-
-
-    QList<Projecteur*> proj_list; // list des projecteurs.
 
     bool savehasRun = false;
 
@@ -73,5 +74,6 @@ private:
     QPushButton* saveButton; // btn msgBox;
     QPushButton* cancelButton;
 };
+
 
 #endif // SAUVEGARDER_OU_IMPORTER_H

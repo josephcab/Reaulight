@@ -55,6 +55,6 @@ private:
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
     QList<Projecteur*> projecteur; // liste d'instance des projecteurs utilisés dans le projet
-    sauvegarder_ou_importer SoI;
+    Save_or_import *SoI;
 };
 #endif // MAINWINDOW_H

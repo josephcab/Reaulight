@@ -1,16 +1,19 @@
 #include "sauvegarder_ou_importer.h"
 
-sauvegarder_ou_importer::sauvegarder_ou_importer() : saveButton(nullptr), cancelButton(nullptr) {
+Save_or_import::Save_or_import(QObject *parent)
+    : QObject(parent), saveButton(nullptr), cancelButton(nullptr)
+{
     saveButton = new QPushButton("Sauvegarder");
+    cancelButton = new QPushButton("Annuler");
 }
 
-void sauvegarder_ou_importer::init()
+void Save_or_import::init()
 {
     // Récupère directement le chemin du dossier Documents
     this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
 
-void sauvegarder_ou_importer::saveParty()
+void Save_or_import::saveParty()
 {
     setOtherFileInfo.resize(500, 200);
     setOtherFileInfo.setWindowTitle("Autres détails pour l'enregistrement");
@@ -55,8 +58,9 @@ void sauvegarder_ou_importer::saveParty()
         return; // Annuler la sauvegarde si l'utilisateur clique sur "Annuler"
     }
 
+    emit isSavingAccept(true);
     QJsonObject jsonObject;
-    roomName = this->roomName.isEmpty() ? "Room name has been not define" : this->roomName;
+    roomName = this->roomName.isEmpty() ? "Room name has not been defined" : this->roomName;
     saveDateTime = QDate::currentDate().toString() + " at " + QTime::currentTime().toString(); // date de l'enregistrement
     fileSave = this->pathChoose + "/"+ roomName + ".json";
 
@@ -70,8 +74,8 @@ void sauvegarder_ou_importer::saveParty()
             {"Scenes_info", this->Scenes_info},
             {"Structures", this->Structures},
             {"Structures_info", this->Structures_info},
-            {"Projecteurs", this->Projecteurs},
-            {"Projecteurs_info", this->Projecteurs_info},
+            {"Projecteurs", this->Projector},
+            {"Projecteurs_info", this->Projector_info},
             {"Programme_du_show", this->Programme_du_show}
         };
     }
@@ -79,7 +83,6 @@ void sauvegarder_ou_importer::saveParty()
     {
         return;
     }
-
     QJsonDocument jdoc(jsonObject);
 
     QFile file(fileSave);
@@ -91,7 +94,8 @@ void sauvegarder_ou_importer::saveParty()
         qDebug() << "Erreur lors de l'ouverture du fichier pour écriture :" << file.errorString();
     }
 }
-void sauvegarder_ou_importer::importParty(QString path)
+
+void Save_or_import::importParty(QString path)
 {
     QFile file(path);
     file.open(QIODevice::ReadOnly);
@@ -128,10 +132,6 @@ void sauvegarder_ou_importer::importParty(QString path)
         {
             qDebug() << key << ": " << arr;
         }
-        else if(key == "Scenes")
-        {
-            qDebug() << key << ": " << arr;
-        }
         else if(key == "Scenes_info")
         {
             qDebug() << key << ": " << arr;
@@ -159,7 +159,7 @@ void sauvegarder_ou_importer::importParty(QString path)
     }
 }
 
-void sauvegarder_ou_importer::savePartyWhenOpen()
+void Save_or_import::savePartyWhenOpen()
 {
     if (this->pathChoose.isEmpty()) // si l'utisilateur n'a pas enregistrer avant alors lui afficher cette msgbox
     {
@@ -188,7 +188,7 @@ void sauvegarder_ou_importer::savePartyWhenOpen()
 
 }
 
-void sauvegarder_ou_importer::dialog(dialogType type)
+void Save_or_import::dialog(dialogType type)
 {
     if(type == import)
     {
@@ -216,13 +216,55 @@ void sauvegarder_ou_importer::dialog(dialogType type)
 
 
 //seter
-QString sauvegarder_ou_importer::setRoomName(QString name)
+QString Save_or_import::setRoomName(QString name)
 {
-    this->roomName = name;
+    return this->roomName = name;
 }
-QList<Projecteur*> sauvegarder_ou_importer::setProjecteurList(QList<Projecteur*> proj)
+void Save_or_import::setProjectorList(QList<Projecteur*> proj)
 {
-    this->proj_list = proj;
+    QJsonArray convertQlistToArray;
+
+    for (const auto& key : proj)
+    {
+        QJsonObject obj;
+
+        //Enregistrer le nom du projecteur.
+        obj["Name"] = key->get_name();
+
+        //Enregistrer les coordonnées du projecteur.
+        QJsonArray pos;
+        pos.append(key->get_pos().x());
+        pos.append(key->get_pos().y());
+        pos.append(key->get_pos().z());
+        obj["Position"] = pos;
+
+        //Enregistrer l'address du projecteur.
+        obj["Address"] = key->get_address();
+
+        //Enregistrer le mode du projecteur.
+        obj["Mode"] = key->get_mode();
+
+        //Enregistrer la couleur du projecteur.
+        obj["Color"] = key->get_color().name();
+
+        //Enregistrer l'angle du faisceau du projecteur.
+        obj["Angle"] = key->get_angle();
+
+        //Enregistrer la taille du projecteur.
+        QJsonArray sizeArray;
+        sizeArray.append(key->get_size().height); // largeur
+        sizeArray.append(key->get_size().width); // longeur
+        sizeArray.append(key->get_size().dimension); //hauteur
+        obj["Size"] = sizeArray;
+
+        //distance entre l'axe de rotation et le projecteur
+        obj["Distance_attache_rotation"] = key->get_distance_attache_rotation();
+
+
+        convertQlistToArray.append(obj);
+    }
+
+    this->Projector = convertQlistToArray;
 }
 
 //geter
