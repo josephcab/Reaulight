@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
-
     menuEdition = menuBar()->addMenu("&Edition");
 
     menuAffichage = menuBar()->addMenu("&Affichage 3D");
@@ -91,7 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
         dockGauche->setMinimumWidth(250);
-        dockGauche->setMaximumWidth(425);
+        dockGauche->setMaximumWidth(450);
+        dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Exemple d'ajout d'éléments à l'arborescence
         arborescence->addSpectacle("Spectacle 1");
@@ -101,7 +101,6 @@ MainWindow::MainWindow(QWidget *parent)
             QStandardItem *univers1 = spectacle1->child(0); // Récupère le premier univers<
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
-
 
     //recup les données pour l'enregristrer du fichier .json
     connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
