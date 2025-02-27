@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
     /// @brief Accesseur de la liste des instances de projecteur
     /// @return liste de projecteur instancié
     QList<Projecteur*> get_instanced_projector();
@@ -42,11 +43,8 @@ public:
     /// @param index, index du projecteur à désintancier -> type int
     void uninstance_projector(int index);
 
-<<<<<<< HEAD
-=======
 public slots:
 
->>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 
 private:
     QMenu *menuFichier;
@@ -56,17 +54,12 @@ private:
 
     Projecteur *proj1;
     QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
-    sauvegarder_ou_importer SoI;
+    Save_or_import* SoI;
 
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
     arborescence_projet *arborescence;
     QTabWidget *tabWidget; // Onglets
     QDockWidget *dockGauche; // Panneau latéral
-<<<<<<< HEAD
-    QList<Projecteur*> projecteur; // liste d'instance des projecteurs utilisés dans le projet
-    Save_or_import *SoI;
-=======
     QDockWidget *dockBas; // Panneau complémentaire
->>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 };
 #endif // MAINWINDOW_H

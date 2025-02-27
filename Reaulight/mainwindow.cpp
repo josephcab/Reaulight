@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
-<<<<<<< HEAD
 
     QAction *actionImporter = new QAction("&Importer", this);
         menuFichier->addAction(actionImporter);
@@ -43,23 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
-=======
-        QAction *actionImporter = new QAction("&Importer", this);
-            menuFichier->addAction(actionImporter);
-            connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
-        QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
-            fichiersRecents->addAction("Fichier bidon 1.txt");
-            fichiersRecents->addAction("Fichier bidon 2.txt");
-            fichiersRecents->addAction("Fichier bidon 3.txt");
-        QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
-            menuFichier->addAction(actionSauvegarder);
-            connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
-        QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
-            menuFichier->addAction(actionEnregistrerSous);
-        QAction *actionQuitter = new QAction("&Quitter", this);
-            menuFichier->addAction(actionQuitter);
-            connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
->>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 
     menuEdition = menuBar()->addMenu("&Edition");
 
@@ -109,12 +91,7 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
         dockGauche->setMinimumWidth(250);
-<<<<<<< HEAD
         dockGauche->setMaximumWidth(425);
-=======
-        dockGauche->setMaximumWidth(450);
->>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
-        dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Exemple d'ajout d'éléments à l'arborescence
         arborescence->addSpectacle("Spectacle 1");
@@ -125,8 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
 
-<<<<<<< HEAD
-
 
     //recup les données pour l'enregristrer du fichier .json
     connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
@@ -135,14 +110,13 @@ MainWindow::MainWindow(QWidget *parent)
             SoI->setProjectorList(this->get_instanced_projector()); //envoyer tout les projecteurs pour la sauvegarde
         }
     });
-=======
+
     // Création d'un QDockWidget bas
     dockBas = new QDockWidget("Panneau complémentaire", this);
     addDockWidget(Qt::BottomDockWidgetArea, dockBas);
     dockBas->setMinimumWidth(250);
     dockBas->setMaximumWidth(450);
     dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
->>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 }
 
 MainWindow::~MainWindow() {}
