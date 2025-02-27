@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "OpenGL/openglwidget.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     modelExplorer(nullptr),
@@ -10,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     dockGauche(nullptr)
 {
     SoI = new Save_or_import();
-    SoI->init();
-
+    SoI->init(window());
 
     //test avec la création de proj
     this->instance_projector(QVector3D(10,10,10),1,25,0);

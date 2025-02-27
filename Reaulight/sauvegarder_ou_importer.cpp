@@ -1,98 +1,143 @@
 #include "sauvegarder_ou_importer.h"
 
 Save_or_import::Save_or_import(QObject *parent)
-    : QObject(parent), saveButton(nullptr), cancelButton(nullptr)
+    : QObject(parent), saveButton(nullptr), creatorNameInput(nullptr), roomNameInput(nullptr)
 {
-    saveButton = new QPushButton("Sauvegarder");
-    cancelButton = new QPushButton("Annuler");
+    saveButton = new QPushButton("Save");
+    creatorNameInput = new QLineEdit();
+    roomNameInput = new QLineEdit();
 }
 
-void Save_or_import::init()
+void Save_or_import::init(QWidget *window)
 {
+    this->MainWindow = window;
     // Récupère directement le chemin du dossier Documents
     this->defaultpath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
 
 void Save_or_import::saveParty()
 {
-    setOtherFileInfo.resize(500, 200);
-    setOtherFileInfo.setWindowTitle("Autres détails pour l'enregistrement");
+    QWidget *enterLastData_window = new QWidget();
+    enterLastData_window->setGeometry(MainWindow->width() / 2 - 250, MainWindow->height() / 2 - 100, 500, 200);
+    enterLastData_window->setMaximumSize(500, 200);
+    enterLastData_window->setMinimumSize(500, 200);
+    enterLastData_window->setWindowTitle("Autres détails pour l'enregistrement");
+    enterLastData_window->setWindowIcon(MainWindow->windowIcon());
 
-    // Texte
-    QLabel* text = new QLabel("Veuillez définir le nom du créateur !", &setOtherFileInfo);
+    QFont text_font;
+    text_font.setPointSize(10);
+    QFont input_font;
+    input_font.setPointSize(9);
 
-    // Champ de texte
-    QLineEdit* filenameInput = new QLineEdit(&setOtherFileInfo);
-    filenameInput->setMinimumWidth(250);
-    filenameInput->setMaximumHeight(40);
-    filenameInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QLabel* title = new QLabel(enterLastData_window);
+    title->setText("Reaulight");
+    title->move(217, 8);
 
-    // Boutons
-    saveButton = new QPushButton("Sauvegarder", &setOtherFileInfo);
-    cancelButton = new QPushButton("Annuler", &setOtherFileInfo);
+    QFont title_font;
+    title_font.setPointSize(15);
+    title->setFont(title_font);
 
+    QLabel* text1 = new QLabel(enterLastData_window);
+    text1->setText("Your Creator Name :");
+    text1->move(26,70);
+    text1->setFont(text_font);
 
-    QObject::connect(cancelButton, &QPushButton::clicked, &setOtherFileInfo, &QDialog::reject);
-    QObject::connect(saveButton, &QPushButton::clicked, &setOtherFileInfo, &QDialog::accept);
+    creatorNameInput = new QLineEdit(enterLastData_window);
+    creatorNameInput->setGeometry(26,90, 248, 30);
+    creatorNameInput->setFont(input_font);
+    QLabel* text2 = new QLabel(enterLastData_window);
+    text2->setText("Your Room Name :");
+    text2->move(26,130);
+    text2->setFont(text_font);
 
-    // Mise en page
-    QHBoxLayout* layout_horizontal = new QHBoxLayout();
-    layout_horizontal->addWidget(saveButton);
-    layout_horizontal->addWidget(cancelButton);
+    roomNameInput = new QLineEdit(enterLastData_window);
+    roomNameInput->setGeometry(26,150, 248, 30);
+    roomNameInput->setFont(input_font);
 
-    QVBoxLayout* layout_vertical = new QVBoxLayout(&setOtherFileInfo);
-    layout_vertical->addWidget(text);
-    layout_vertical->addWidget(filenameInput);
-    layout_vertical->addLayout(layout_horizontal);
+    saveButton = new QPushButton(enterLastData_window);
+    saveButton->setText("Save");
+    saveButton->setGeometry(400, 165, 90, 25);
+    saveButton->setStyleSheet(
+        "QPushButton {"
+        "background: rgba(17, 0, 255, 1);"
+        "color: rgba(255, 255, 255, 1);"
+        "border-radius: 10px;"
+        "}"
+        );
+    QFont saveButton_font;
+    saveButton_font.setPointSize(15);
+    saveButton->setFont(saveButton_font);
+    saveButton->setCursor(Qt::PointingHandCursor);
 
-    // Exécution de la boîte de dialogue
-    int result = setOtherFileInfo.exec();
-    if (result == QDialog::Accepted) {
-        if (!filenameInput->text().isEmpty()) {
-            this->creator = filenameInput->text();
-        } else {
-            QMessageBox::warning(&setOtherFileInfo, "Erreur", "Le nom du créateur ne peut pas être vide.");
-            return;
+    enterLastData_window->show();
+
+    connect(saveButton, &QPushButton::clicked, [this, enterLastData_window](){
+        bool rNi = false;
+        bool cNi = false;
+        if(roomNameInput->text().isEmpty())
+        {
+            QMessageBox::warning(&setOtherFileInfo, "Error", "Room name cannot be empty.");
         }
-    } else {
-        return; // Annuler la sauvegarde si l'utilisateur clique sur "Annuler"
-    }
+        else
+        {
+            rNi = true;
+        }
+        if(creatorNameInput->text().isEmpty())
+        {
+            QMessageBox::warning(&setOtherFileInfo, "Erreur", "The creator name is empty so your name is 'anonymous'");
+            creatorNameInput->setText("anonymous");
+            cNi = true;
+        }
+        else
+        {
+            cNi = true;
+        }
+        if(cNi && rNi)
+        {
+            this->roomName = roomNameInput->text();
+            this->creator = creatorNameInput->text();
 
-    emit isSavingAccept(true);
-    QJsonObject jsonObject;
-    roomName = this->roomName.isEmpty() ? "Room name has not been defined" : this->roomName;
-    saveDateTime = QDate::currentDate().toString() + " at " + QTime::currentTime().toString(); // date de l'enregistrement
-    fileSave = this->pathChoose + "/"+ roomName + ".json";
+            emit isSavingAccept(true);
 
-    if(!roomName.isEmpty() && !creator.isEmpty()) // si le nom de la salle n'est pas vide et que le nom du créateur n'est pas vide
-    {
-        jsonObject = QJsonObject{
-            {"Nom_de_la_salle", this->roomName},
-            {"Date_de_sauvegarde", this->saveDateTime},
-            {"Createur", this->creator},
-            {"Scenes", this->Scenes},
-            {"Scenes_info", this->Scenes_info},
-            {"Structures", this->Structures},
-            {"Structures_info", this->Structures_info},
-            {"Projecteurs", this->Projector},
-            {"Projecteurs_info", this->Projector_info},
-            {"Programme_du_show", this->Programme_du_show}
-        };
-    }
-    else
-    {
-        return;
-    }
-    QJsonDocument jdoc(jsonObject);
+            QJsonObject jsonObject;
+            roomName = this->roomName.isEmpty() ? "Room name has not been defined" :  "Reaulight_" + this->roomName;
+            saveDateTime = QDate::currentDate().toString() + " at " + QTime::currentTime().toString(); // date de l'enregistrement
+            fileSave = this->pathChoose + "/"+ roomName + ".json";
 
-    QFile file(fileSave);
+            if(!roomName.isEmpty() && !creator.isEmpty()) // si le nom de la salle n'est pas vide et que le nom du créateur n'est pas vide
+            {
+                jsonObject = QJsonObject{
+                    {"Nom_de_la_salle", this->roomName},
+                    {"Date_de_sauvegarde", this->saveDateTime},
+                    {"Createur", this->creator},
+                    {"Scenes", this->Scenes},
+                    {"Scenes_info", this->Scenes_info},
+                    {"Structures", this->Structures},
+                    {"Structures_info", this->Structures_info},
+                    {"Projecteurs", this->Projector},
+                    {"Projecteurs_info", this->Projector_info},
+                    {"Programme_du_show", this->Programme_du_show}
+                };
+            }
+            else
+            {
+                return;
+            }
+            QJsonDocument jdoc(jsonObject);
 
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(jdoc.toJson(QJsonDocument::Indented));
-        file.close();
-    } else {
-        qDebug() << "Erreur lors de l'ouverture du fichier pour écriture :" << file.errorString();
-    }
+            QFile file(fileSave);
+
+            if (file.open(QIODevice::WriteOnly)) {
+                file.write(jdoc.toJson(QJsonDocument::Indented));
+                file.close();
+            } else {
+                qDebug() << "Erreur lors de l'ouverture du fichier pour écriture :" << file.errorString();
+            }
+
+
+            enterLastData_window->deleteLater();
+        }
+    });
 }
 
 void Save_or_import::importParty(QString path)
@@ -179,13 +224,6 @@ void Save_or_import::savePartyWhenOpen()
         }
     }
     //reste du code ici
-
-    QFile file(this->pathChoose);
-    file.open(QIODevice::ReadWrite);
-    QByteArray data = file.readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    QJsonObject obj = doc.object();
-
 }
 
 void Save_or_import::dialog(dialogType type)
@@ -213,7 +251,6 @@ void Save_or_import::dialog(dialogType type)
         this->savePartyWhenOpen();
     }
 }
-
 
 //seter
 QString Save_or_import::setRoomName(QString name)

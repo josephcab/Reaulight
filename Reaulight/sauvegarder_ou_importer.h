@@ -20,11 +20,10 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QList>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QObject>
 #include <QDate>
+#include <QWidget>
 
 #include <projecteur.h>
 
@@ -36,7 +35,7 @@ class Save_or_import : public QObject
 
 public:
     explicit Save_or_import(QObject *parent = nullptr);
-    void init();
+    void init(QWidget *window);
     void saveParty(); // sauvegarder tout dans un seul fichier.
     void savePartyWhenOpen();
     void importParty(QString path);
@@ -51,6 +50,8 @@ public:
 signals:
     void isSavingAccept(bool accepted);
 private:
+    QWidget *MainWindow; //variable pour le widget de la window principale
+
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
     QDialog setOtherFileInfo; // boite de dialog pour choisir le nom du créateur
@@ -70,9 +71,10 @@ private:
     bool savehasRun = false;
 
 
-    //btn
-    QPushButton* saveButton; // btn msgBox;
-    QPushButton* cancelButton;
+    //dialog box for more information
+    QPushButton* saveButton;
+    QLineEdit* creatorNameInput;
+    QLineEdit* roomNameInput;
 };
 
 

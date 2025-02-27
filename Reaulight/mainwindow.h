@@ -27,7 +27,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
     /// @brief Accesseur de la liste des instances de projecteur
     /// @return liste de projecteur instancié
     QList<Projecteur*> get_instanced_projector();
