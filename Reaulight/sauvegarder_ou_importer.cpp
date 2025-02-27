@@ -21,32 +21,39 @@ void Save_or_import::saveParty()
     enterLastData_window->setGeometry(MainWindow->width() / 2 - 250, MainWindow->height() / 2 - 100, 500, 200);
     enterLastData_window->setMaximumSize(500, 200);
     enterLastData_window->setMinimumSize(500, 200);
-    enterLastData_window->setWindowTitle("Autres détails pour l'enregistrement");
+    enterLastData_window->setWindowTitle("Other details for save");
     enterLastData_window->setWindowIcon(MainWindow->windowIcon());
 
+    // font commune au input ainsi qu'au texte
     QFont text_font;
     text_font.setPointSize(10);
     QFont input_font;
     input_font.setPointSize(9);
 
+    //titre
     QLabel* title = new QLabel(enterLastData_window);
     title->setText("Reaulight");
     title->move(217, 8);
 
+    //font du titre
     QFont title_font;
     title_font.setPointSize(15);
     title->setFont(title_font);
 
+    //text associé a l'input si dessous (entrer le nom du créateur)
     QLabel* text1 = new QLabel(enterLastData_window);
-    text1->setText("Your Creator Name :");
+    text1->setText("Creator Name :");
     text1->move(26,70);
     text1->setFont(text_font);
 
+    //input
     creatorNameInput = new QLineEdit(enterLastData_window);
     creatorNameInput->setGeometry(26,90, 248, 30);
     creatorNameInput->setFont(input_font);
+
+    //text associé a l'input si dessous (entrer le nom de la salle)
     QLabel* text2 = new QLabel(enterLastData_window);
-    text2->setText("Your Room Name :");
+    text2->setText("Room Name :");
     text2->move(26,130);
     text2->setFont(text_font);
 
@@ -54,6 +61,7 @@ void Save_or_import::saveParty()
     roomNameInput->setGeometry(26,150, 248, 30);
     roomNameInput->setFont(input_font);
 
+    //bouton de sauvegarde
     saveButton = new QPushButton(enterLastData_window);
     saveButton->setText("Save");
     saveButton->setGeometry(400, 165, 90, 25);
@@ -69,11 +77,13 @@ void Save_or_import::saveParty()
     saveButton->setFont(saveButton_font);
     saveButton->setCursor(Qt::PointingHandCursor);
 
+    //afficher le widget "enterLastData_window"
     enterLastData_window->show();
 
     connect(saveButton, &QPushButton::clicked, [this, enterLastData_window](){
-        bool rNi = false;
-        bool cNi = false;
+        bool rNi = false; // room Name input
+        bool cNi = false; // creator Name input
+
         if(roomNameInput->text().isEmpty())
         {
             QMessageBox::warning(&setOtherFileInfo, "Error", "Room name cannot be empty.");
@@ -84,8 +94,8 @@ void Save_or_import::saveParty()
         }
         if(creatorNameInput->text().isEmpty())
         {
-            QMessageBox::warning(&setOtherFileInfo, "Erreur", "The creator name is empty so your name is 'anonymous'");
-            creatorNameInput->setText("anonymous");
+            QMessageBox::warning(&setOtherFileInfo, "Error", "The creator name is empty so your name is 'Anonymous'");
+            creatorNameInput->setText("Anonymous"); // mettre le nom du créateur en anonyme
             cNi = true;
         }
         else
@@ -100,9 +110,14 @@ void Save_or_import::saveParty()
             emit isSavingAccept(true);
 
             QJsonObject jsonObject;
-            roomName = this->roomName.isEmpty() ? "Room name has not been defined" :  "Reaulight_" + this->roomName;
             saveDateTime = QDate::currentDate().toString() + " at " + QTime::currentTime().toString(); // date de l'enregistrement
-            fileSave = this->pathChoose + "/"+ roomName + ".json";
+
+            QString filename = roomName;
+            if(filename.contains(" "))
+            {
+                filename.replace(" ", "_");
+            }
+            fileSave = this->pathChoose + "/"+ "Reaulight_" + filename + ".json";
 
             if(!roomName.isEmpty() && !creator.isEmpty()) // si le nom de la salle n'est pas vide et que le nom du créateur n'est pas vide
             {
@@ -134,7 +149,7 @@ void Save_or_import::saveParty()
                 qDebug() << "Erreur lors de l'ouverture du fichier pour écriture :" << file.errorString();
             }
 
-
+            // detruire "enterLastData_window" plutard
             enterLastData_window->deleteLater();
         }
     });
@@ -148,7 +163,7 @@ void Save_or_import::importParty(QString path)
 
     QJsonDocument doc = QJsonDocument::fromJson(sBuf);
     if (doc.isNull()) {
-        qWarning() << "Le contenu du fichier n'est pas un JSON valide.";
+        qWarning() << "The content of the file is not a valid JSON.";
         return;
     }
     QJsonObject Obj = doc.object();
@@ -209,12 +224,12 @@ void Save_or_import::savePartyWhenOpen()
     if (this->pathChoose.isEmpty()) // si l'utisilateur n'a pas enregistrer avant alors lui afficher cette msgbox
     {
         QMessageBox messageBox;
-        messageBox.setWindowTitle("Erreur");
-        messageBox.setText("Vous n'avez pas enregistré votre scène.");
+        messageBox.setWindowTitle("Error");
+        messageBox.setText("You didn't record your scene.");
         messageBox.setIcon(QMessageBox::Warning);
 
-        QPushButton* saveButton = messageBox.addButton("Enregistrer", QMessageBox::AcceptRole);
-        QPushButton* cancelButton = messageBox.addButton("Ne pas enregistrer", QMessageBox::RejectRole);
+        QPushButton* saveButton = messageBox.addButton("Save", QMessageBox::AcceptRole);
+        QPushButton* cancelButton = messageBox.addButton("Cancel", QMessageBox::RejectRole);
 
         messageBox.exec();
 

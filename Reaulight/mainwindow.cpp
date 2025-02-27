@@ -6,7 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     modelExplorer(nullptr),
     arborescence(new arborescence_projet(this)), // Initialisation de la classe arborescence_projet
     tabWidget(nullptr),
-    dockGauche(nullptr)
+    dockGauche(nullptr),
+    projecteur()
 {
     SoI = new Save_or_import();
     SoI->init(window());
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
+<<<<<<< HEAD
 
     QAction *actionImporter = new QAction("&Importer", this);
         menuFichier->addAction(actionImporter);
@@ -41,6 +43,23 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
+=======
+        QAction *actionImporter = new QAction("&Importer", this);
+            menuFichier->addAction(actionImporter);
+            connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
+        QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
+            fichiersRecents->addAction("Fichier bidon 1.txt");
+            fichiersRecents->addAction("Fichier bidon 2.txt");
+            fichiersRecents->addAction("Fichier bidon 3.txt");
+        QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
+            menuFichier->addAction(actionSauvegarder);
+            connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
+        QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
+            menuFichier->addAction(actionEnregistrerSous);
+        QAction *actionQuitter = new QAction("&Quitter", this);
+            menuFichier->addAction(actionQuitter);
+            connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
+>>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 
     menuEdition = menuBar()->addMenu("&Edition");
 
@@ -58,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(actionDiscussionGithub, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/discussions/10"));});
         QAction *actionDiscord = new QAction("&Serveur Discord", this);
             menuAide->addAction(actionDiscord);
-            connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/WmrxwnUY89"));});
+            connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/H7wEZ8mUKc"));});
         QAction *actionQt = new QAction("&À propos de Qt", this);
             menuAide->addAction(actionQt);
             connect(actionQt, &QAction::triggered, this, [this] () {QMessageBox::aboutQt(this);});
@@ -90,7 +109,11 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
         dockGauche->setMinimumWidth(250);
+<<<<<<< HEAD
         dockGauche->setMaximumWidth(425);
+=======
+        dockGauche->setMaximumWidth(450);
+>>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Exemple d'ajout d'éléments à l'arborescence
@@ -102,15 +125,24 @@ MainWindow::MainWindow(QWidget *parent)
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
 
+<<<<<<< HEAD
 
 
     //recup les données pour l'enregristrer du fichier .json
     connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
         if(accepted == true)
         {
-            SoI->setProjectorList(this->get_instanced_projector());
+            SoI->setProjectorList(this->get_instanced_projector()); //envoyer tout les projecteurs pour la sauvegarde
         }
     });
+=======
+    // Création d'un QDockWidget bas
+    dockBas = new QDockWidget("Panneau complémentaire", this);
+    addDockWidget(Qt::BottomDockWidgetArea, dockBas);
+    dockBas->setMinimumWidth(250);
+    dockBas->setMaximumWidth(450);
+    dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
+>>>>>>> 74600b0276e99e14c4aa5a9e8dcb0d4aefaa174c
 }
 
 MainWindow::~MainWindow() {}
@@ -138,3 +170,4 @@ void MainWindow::uninstance_projector(int index)
         qDebug() << "List index out of range, vous ne pouvez pas supprimer un projecteur à un emplacement mémoire indéfinie";
     }
 }
+
