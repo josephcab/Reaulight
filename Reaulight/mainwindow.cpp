@@ -9,27 +9,39 @@ MainWindow::MainWindow(QWidget *parent)
     dockGauche(nullptr),
     projecteur()
 {
-    SoI.init();
+    SoI = new Save_or_import();
+    SoI->init(window());
+
+    //test avec la création de proj
+    this->instance_projector(QVector3D(10,10,10),1,25,0);
+    this->instance_projector(QVector3D(10,10,10),2,25,0);
+    this->instance_projector(QVector3D(10,10,10),3,25,0);
+    this->instance_projector(QVector3D(10,10,10),4,25,0);
+    this->instance_projector(QVector3D(10,10,10),5,25,0);
+    this->instance_projector(QVector3D(10,10,10),6,25,0);
+
     this->window()->setGeometry(0, 0, 1000, 600); // Taille de la fenêtre (L=1'000 ; l=600) à la position X=0 ; Y=0
+
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
-        QAction *actionImporter = new QAction("&Importer", this);
-            menuFichier->addAction(actionImporter);
-            connect(actionImporter, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::import);});
-        QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
-            fichiersRecents->addAction("Fichier bidon 1.txt");
-            fichiersRecents->addAction("Fichier bidon 2.txt");
-            fichiersRecents->addAction("Fichier bidon 3.txt");
-        QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
-            menuFichier->addAction(actionSauvegarder);
-            connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI.dialog(dialogType::save);});
-        QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
-            menuFichier->addAction(actionEnregistrerSous);
-        QAction *actionQuitter = new QAction("&Quitter", this);
-            menuFichier->addAction(actionQuitter);
-            connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
 
+    QAction *actionImporter = new QAction("&Importer", this);
+        menuFichier->addAction(actionImporter);
+        connect(actionImporter, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::import);});
+    QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
+        fichiersRecents->addAction("Fichier bidon 1.txt");
+        fichiersRecents->addAction("Fichier bidon 2.txt");
+        fichiersRecents->addAction("Fichier bidon 3.txt");
+    QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
+        menuFichier->addAction(actionSauvegarder);
+        connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::saveIfOpen);});
+    QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
+        menuFichier->addAction(actionEnregistrerSous);
+        connect(actionEnregistrerSous, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::save);});
+    QAction *actionQuitter = new QAction("&Quitter", this);
+        menuFichier->addAction(actionQuitter);
+        connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
     menuEdition = menuBar()->addMenu("&Edition");
 
     menuAffichage = menuBar()->addMenu("&Affichage 3D");
@@ -71,6 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
         tabWidget = new QTabWidget(this);
         tabWidget->addTab(treeExplorer, "Explorateur");
         tabWidget->addTab(treeArborescence, "Arborescence");
+        tabWidget->setCurrentIndex(tabWidget->indexOf(treeArborescence));
 
     // Ajouter les onglets dans un QDockWidget
         dockGauche = new QDockWidget("Panneau latéral", this);
@@ -88,6 +101,14 @@ MainWindow::MainWindow(QWidget *parent)
             QStandardItem *univers1 = spectacle1->child(0); // Récupère le premier univers<
                 arborescence->addMaterielDMX(univers1, "Matériel DMX 1");
         treeArborescence->expandAll();
+
+    //recup les données pour l'enregristrer du fichier .json
+    connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
+        if(accepted == true)
+        {
+            SoI->setProjectorList(this->get_instanced_projector()); //envoyer tout les projecteurs pour la sauvegarde
+        }
+    });
 
     // Création d'un QDockWidget bas
     dockBas = new QDockWidget("Panneau complémentaire", this);

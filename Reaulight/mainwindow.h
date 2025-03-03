@@ -54,7 +54,7 @@ private:
 
     Projecteur *proj1;
     QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
-    sauvegarder_ou_importer SoI;
+    Save_or_import* SoI;
 
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"
     arborescence_projet *arborescence;

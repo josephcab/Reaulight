@@ -5,15 +5,15 @@
     "Salle": {},
     "Scenes":[],
     "Scenes_info": [
-        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+        {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
     ],
     "Structures": [],
     "Structures_info":[
-        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+        {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
     ],
     "Projecteurs": [],
     "Projecteurs_info":[
-        // {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
+        {"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}
     ],
     "Programme_du_show": []
 }

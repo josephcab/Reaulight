@@ -8,7 +8,6 @@
 class arborescence_projet : public QObject
 {
     Q_OBJECT
-
 public:
     arborescence_projet(QObject *parent = nullptr);
     ~arborescence_projet();
