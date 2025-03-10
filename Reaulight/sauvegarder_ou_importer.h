@@ -18,26 +18,64 @@
 #include <QSysInfo>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QLineEdit>
+#include <QList>
+#include <QLabel>
+#include <QObject>
+#include <QDate>
+#include <QWidget>
 
-enum dialogType {save, import};
+#include <projecteur.h>
 
-class sauvegarder_ou_importer
+enum dialogType {save, import, saveIfOpen};
+
+class Save_or_import : public QObject
 {
+    Q_OBJECT
+
 public:
-    sauvegarder_ou_importer();
-    void init();
+    explicit Save_or_import(QObject *parent = nullptr);
+    void init(QWidget *window);
     void saveParty(); // sauvegarder tout dans un seul fichier.
+    void savePartyWhenOpen();
     void importParty(QString path);
     void dialog(dialogType type);
 
+    //geter
+
+    //seter
+    QString setRoomName(QString name);
+    void setProjectorList(QList<Projecteur*> proj);
+
+signals:
+    void isSavingAccept(bool accepted);
 private:
+    QWidget *MainWindow; //variable pour le widget de la window principale
+
     QString defaultpath;
     QString pathChoose; // path choisi par l'utilisateur.
+    QDialog setOtherFileInfo; // boite de dialog pour choisir le nom du créateur
     QString roomName;
-    QString date; // date de sauvegarde
-    QString creator; //nom du créateur de la salle
-    QList<QJsonArray> room; // stocker les infos concernant la salle
-    QList<QJsonArray> projector; // liste des projecteurs
+    QString saveDateTime;
+    QString creator;
+    QString fileSave;
+
+    QJsonArray Scenes;
+    QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
+    QJsonArray Structures;
+    QJsonArray Structures_info;
+    QJsonArray Projector;
+    QJsonArray Projector_info;
+    QJsonArray Programme_du_show;
+
+    bool savehasRun = false;
+
+
+    //dialog box for more information
+    QPushButton* saveButton;
+    QLineEdit* creatorNameInput;
+    QLineEdit* roomNameInput;
 };
+
 
 #endif // SAUVEGARDER_OU_IMPORTER_H
