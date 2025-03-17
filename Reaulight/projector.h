@@ -2,20 +2,23 @@
 #define PROJECTOR_H
 
 #include "global.h"
+#include "qobject.h"
 #include <QString>
 #include <QVector3D>
 #include <QColor>
 
 /// @brief Classe permettant de gérer le fonctionnement général d'un projecteur.
-class Projector
+class Projector : public QObject
 {
+    Q_OBJECT
+
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
         /// @param pos, position du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
         /// @param angle, angle d'éclairage du projecteur courant -> type double
-        Projector(QVector3D pos, int adress, double distance_attache_rotation, double angle);
+        Projector(QVector3D pos, int adress, double distance_attache_rotation, double angle, QObject *parent=nullptr);
 
         /// @brief Accesseur de la position du projecteur dans la scène 3d
         /// @return Position 3d du projecteur sous forme de triplet (x,y,z)

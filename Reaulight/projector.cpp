@@ -1,6 +1,7 @@
 #include "projector.h"
 
-Projector::Projector(QVector3D pos, int address, double distance_attache_rotation, double angle)
+Projector::Projector(QVector3D pos, int address, double distance_attache_rotation, double angle, QObject *parent)
+    : QObject{parent}
 {
     // Attribution de la position
     this->pos = pos;

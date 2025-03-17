@@ -25,7 +25,7 @@
 #include <QDate>
 #include <QWidget>
 
-#include <projecteur.h>
+#include "projector.h"
 
 enum dialogType {save, import, saveIfOpen};
 
@@ -33,48 +33,49 @@ class Save_or_import : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit Save_or_import(QObject *parent = nullptr);
-    void init(QWidget *window);
-    void saveParty(); // sauvegarder tout dans un seul fichier.
-    void savePartyWhenOpen();
-    void importParty(QString path);
-    void dialog(dialogType type);
+    public:
+        explicit Save_or_import(QObject *parent = nullptr);
+        void init(QWidget *window);
+        void saveParty(); // sauvegarder tout dans un seul fichier.
+        void savePartyWhenOpen();
+        void importParty(QString path);
+        void dialog(dialogType type);
 
-    //geter
+        //geter
 
-    //seter
-    QString setRoomName(QString name);
-    void setProjectorList(QList<Projecteur*> proj);
+        //seter
+        QString setRoomName(QString name);
+        void setProjectorList(QList<Projector*> proj);
 
-signals:
-    void isSavingAccept(bool accepted);
-private:
-    QWidget *MainWindow; //variable pour le widget de la window principale
+    signals:
+        void isSavingAccept(bool accepted);
 
-    QString defaultpath;
-    QString pathChoose; // path choisi par l'utilisateur.
-    QDialog setOtherFileInfo; // boite de dialog pour choisir le nom du créateur
-    QString roomName;
-    QString saveDateTime;
-    QString creator;
-    QString fileSave;
+    private:
+        QWidget *MainWindow; //variable pour le widget de la window principale
 
-    QJsonArray Scenes;
-    QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
-    QJsonArray Structures;
-    QJsonArray Structures_info;
-    QJsonArray Projector;
-    QJsonArray Projector_info;
-    QJsonArray Programme_du_show;
+        QString defaultpath;
+        QString pathChoose; // path choisi par l'utilisateur.
+        QDialog setOtherFileInfo; // boite de dialog pour choisir le nom du créateur
+        QString roomName;
+        QString saveDateTime;
+        QString creator;
+        QString fileSave;
 
-    bool savehasRun = false;
+        QJsonArray Scenes;
+        QJsonArray Scenes_info; // exemple d'utilisation: Scenes.append(QJsonObject{{"Hauteur": "", "Largeur": "", "Position": {"x": "", "y": "", "z": ""}, "Oriantations" : {}, "id": ""}});
+        QJsonArray Structures;
+        QJsonArray Structures_info;
+        QJsonArray Projectors;
+        QJsonArray Projector_info;
+        QJsonArray Programme_du_show;
+
+        bool savehasRun = false;
 
 
-    //dialog box for more information
-    QPushButton* saveButton;
-    QLineEdit* creatorNameInput;
-    QLineEdit* roomNameInput;
+        //dialog box for more information
+        QPushButton* saveButton;
+        QLineEdit* creatorNameInput;
+        QLineEdit* roomNameInput;
 };
 
 

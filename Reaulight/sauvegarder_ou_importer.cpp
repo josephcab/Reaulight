@@ -129,7 +129,7 @@ void Save_or_import::saveParty()
                     {"Scenes_info", this->Scenes_info},
                     {"Structures", this->Structures},
                     {"Structures_info", this->Structures_info},
-                    {"Projecteurs", this->Projector},
+                    {"Projecteurs", this->Projectors},
                     {"Projecteurs_info", this->Projector_info},
                     {"Programme_du_show", this->Programme_du_show}
                 };
@@ -272,7 +272,8 @@ QString Save_or_import::setRoomName(QString name)
 {
     return this->roomName = name;
 }
-void Save_or_import::setProjectorList(QList<Projecteur*> proj)
+
+void Save_or_import::setProjectorList(QList<Projector *> proj)
 {
     QJsonArray convertQlistToArray;
 
@@ -316,7 +317,7 @@ void Save_or_import::setProjectorList(QList<Projecteur*> proj)
         convertQlistToArray.append(obj);
     }
 
-    this->Projector = convertQlistToArray;
+    this->Projectors = convertQlistToArray;
 }
 
 //geter

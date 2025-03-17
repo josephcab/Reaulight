@@ -6,8 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     modelExplorer(nullptr),
     arborescence(new arborescence_projet(this)), // Initialisation de la classe arborescence_projet
     tabWidget(nullptr),
-    dockGauche(nullptr),
-    projecteur()
+    dockGauche(nullptr)
 {
     SoI = new Save_or_import();
     SoI->init(window());
@@ -106,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
         if(accepted == true)
         {
-            SoI->setProjectorList(this->get_instanced_projector()); //envoyer tout les projecteurs pour la sauvegarde
+            SoI->setProjectorList(this->projector); //envoyer tout les projecteurs pour la sauvegarde
         }
     });
 
@@ -130,7 +129,7 @@ Projector* MainWindow::get_instanced_projector(int index)
 
 void MainWindow::instance_projector(QVector3D pos, int adress, double distance_attache_rotation, double angle)
 {
-    this->projector.append(new Projector(pos, adress, distance_attache_rotation, angle));
+    this->projector.append(new Projector(pos, adress, distance_attache_rotation, angle, nullptr));
 }
 
 void MainWindow::uninstance_projector(int index)
