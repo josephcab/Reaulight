@@ -14,8 +14,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QDebug>
-
-#include "projecteur.h"
+#include "projector.h"
 #include "sauvegarder_ou_importer.h"
 #include "arborescence_projet.h"
 
@@ -29,8 +28,9 @@ public:
     ~MainWindow();
 
     /// @brief Accesseur de la liste des instances de projecteur
-    /// @return liste de projecteur instancié
-    QList<Projecteur*> get_instanced_projector();
+    /// @param index, index de la liste auquel accéder -> type int
+    /// @return projecteur associé à l'index en paramètre, renvoie un pointeur nulle si index out of range -> type Projecteur
+    Projector* get_instanced_projector(int index);
 
     /// @brief Méthode permettant d'instancier un projecteur dans la scène
     /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
@@ -50,10 +50,12 @@ private:
     QMenu *menuFichier;
     QMenu *menuEdition;
     QMenu *menuAffichage;
+    QList<Projector*> projector; // liste d'instance des projecteurs utilisés dans le projet
+    QDockWidget *dockWidget;
+    QWidget *dockWidgetContents;
     QMenu *menuAide;
 
-    Projecteur *proj1;
-    QList<Projecteur*> projecteur; // Liste des projecteurs instanciés
+    Projector *proj1;
     Save_or_import* SoI;
 
     QFileSystemModel *modelExplorer; // Modèle pour l'onglet "Explorateur"

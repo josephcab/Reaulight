@@ -15,7 +15,7 @@ SOURCES += \
     OpenGL/openglwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    projecteur.cpp \
+    projector.cpp \
     sauvegarder_ou_importer.cpp
 
 HEADERS += \
@@ -23,8 +23,8 @@ HEADERS += \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
     mainwindow.h \
-    projecteur.h \
     global.h \
+    projector.h \
     sauvegarder_ou_importer.h
 
 RESOURCES += \

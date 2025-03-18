@@ -1,21 +1,24 @@
-#ifndef PROJECTEUR_H
-#define PROJECTEUR_H
+#ifndef PROJECTOR_H
+#define PROJECTOR_H
 
 #include "global.h"
+#include "qobject.h"
 #include <QString>
 #include <QVector3D>
 #include <QColor>
 
 /// @brief Classe permettant de gérer le fonctionnement général d'un projecteur.
-class Projecteur
+class Projector : public QObject
 {
+    Q_OBJECT
+
     public:
         /// @brief Constructeur de l'objet, initialise sa position et son identifiant
         /// @param pos, position du projecteur dans la scène 3d -> QVector3D
         /// @param address adresse à modifier -> type int
         /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
         /// @param angle, angle d'éclairage du projecteur courant -> type double
-        Projecteur(QVector3D pos, int adress, double distance_attache_rotation, double angle);
+        Projector(QVector3D pos, int adress, double distance_attache_rotation, double angle, QObject *parent=nullptr);
 
         /// @brief Accesseur de la position du projecteur dans la scène 3d
         /// @return Position 3d du projecteur sous forme de triplet (x,y,z)
@@ -77,12 +80,44 @@ class Projecteur
         double get_distance_attache_rotation();
 
         /// @brief Accesseur du nom du projecteur
-        /// @return nom du projecteur -> type std::string
+        /// @return nom du projecteur -> type QString
         QString get_name();
 
         /// @brief Mutateur du nom du projecteur
-        /// @param name, nom du projecteur -> type std::string
+        /// @param name, nom du projecteur -> type QString
         void set_name(QString name);
+
+        /// @brief Accesseur du poid du projecteur
+        /// @return poid du projecteur -> type double
+        double get_weight();
+
+        /// @brief Mutateur du poid du projecteur
+        /// @param weight, poid du projecteur à attribuer -> type double
+        void set_weight(double weight);
+
+        /// @brief Accesseur du modele du projecteur
+        /// @return modele du projecteur -> type QString
+        QString get_model();
+
+        /// @brief Mutateur du modele du projecteur
+        /// @param model, modele du projecteur à attribuer -> type QString
+        void set_model(QString model);
+
+        /// @brief Accesseur de la marque du projecteur
+        /// @return marque du projecteur -> type QString
+        QString get_brand();
+
+        /// @brief Mutateur de la marque du projecteur
+        /// @return brand, marque du projecteur à attribuer -> type QString
+        void set_brand(QString brand);
+
+        /// @brief Accesseur du nombre de canaux du projecteur courant
+        /// @return nombre de canaux du projecteur courant -> type int
+        int get_nb_channel();
+
+        /// @brief Mutateur du nombre de canaux dmx du projecteur courant
+        /// @param nb_channel, nombre de canaux du projecteur courant -> type int
+        void set_nb_channel(int nb_channel);
 
     private:
         QVector3D pos; // coordonnées du projecteur dans l'espace
@@ -93,6 +128,10 @@ class Projecteur
         Size size; // taille du projecteur
         double distance_attache_rotation;
         QString name; // nom du projecteur dans la scène
+        double weight; // masse du projecteur
+        QString model; // modele du projecteur
+        QString brand; // marque du projecteur
+        int nb_channel; // nb de canaux dmx
 };
 
 #endif // !PROJECTEUR_H
