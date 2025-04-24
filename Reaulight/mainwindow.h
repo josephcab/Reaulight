@@ -1,17 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QtWidgets>
-#include <QTreeView>
-#include <QFileSystemModel>
-#include <QDockWidget>
-#include <QDir>
 #include <QDesktopServices>
-#include <QTabWidget>
-#include <QStandardItemModel>
-#include <QVBoxLayout>
-#include <QLabel>
+
 #include "Items\projector.h"
 #include "sauvegarder_ou_importer.h"
 #include "arborescence_projet.h"
