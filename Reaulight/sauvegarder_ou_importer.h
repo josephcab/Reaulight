@@ -25,7 +25,7 @@
 #include <QDate>
 #include <QWidget>
 
-#include "projector.h"
+#include "Items\projector.h"
 
 enum dialogType {save, import, saveIfOpen};
 

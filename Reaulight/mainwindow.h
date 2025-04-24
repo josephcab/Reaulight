@@ -12,7 +12,7 @@
 #include <QStandardItemModel>
 #include <QVBoxLayout>
 #include <QLabel>
-#include "projector.h"
+#include "Items\projector.h"
 #include "sauvegarder_ou_importer.h"
 #include "arborescence_projet.h"
 
