@@ -11,14 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     SoI = new Save_or_import();
     SoI->init(window());
 
-    //test avec la création de proj
-    this->instance_projector(QVector3D(10,10,10),1,25,0);
-    this->instance_projector(QVector3D(10,10,10),2,25,0);
-    this->instance_projector(QVector3D(10,10,10),3,25,0);
-    this->instance_projector(QVector3D(10,10,10),4,25,0);
-    this->instance_projector(QVector3D(10,10,10),5,25,0);
-    this->instance_projector(QVector3D(10,10,10),6,25,0);
-
     this->window()->setGeometry(0, 0, 1000, 600); // Taille de la fenêtre (L=1'000 ; l=600) à la position X=0 ; Y=0
 
     setCentralWidget(new QWidget);
@@ -105,7 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
         if(accepted == true)
         {
-            SoI->setProjectorList(this->projector); //envoyer tout les projecteurs pour la sauvegarde
+            /** A corriger **/
+            //SoI->setProjectorList(this->projector); //envoyer tout les projecteurs pour la sauvegarde
         }
     });
 
@@ -118,31 +111,3 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {}
-
-Projector* MainWindow::get_instanced_projector(int index)
-{
-    if ((int)(this->projector.size()) > index && index >= 0)
-        return this->projector[index];
-    else
-        return nullptr;
-}
-
-void MainWindow::instance_projector(QVector3D pos, int adress, double distance_attache_rotation, double angle)
-{
-    this->projector.append(new Projector(pos, adress, distance_attache_rotation, angle, nullptr));
-}
-
-void MainWindow::uninstance_projector(int index)
-{
-    // on regarde si on a un index out of range
-    if ((int)(this->projector.size()) > index && index >= 0)
-    {
-        delete this->projector[index]; // désintancie le projecteur
-        this->projector.erase(this->projector.begin() + index); // supprime un élément à un index
-    }
-    else // si oui, on lève une erreur
-    {
-        qDebug() << "List index out of range, vous ne pouvez pas supprimer un projecteur à un emplacement mémoire indéfinie";
-    }
-}
-

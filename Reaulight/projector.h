@@ -48,7 +48,6 @@ class Projector : public QObject
         /// @param _color, couleur à attribuer -> QVector
         void set_color(QColor _color);
 
-
         /// @brief Accesseur de la couleur du projecteur
         /// @return QColor, couleur du projecteur courant
         QColor get_color();

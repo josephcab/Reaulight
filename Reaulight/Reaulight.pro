@@ -11,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     Items/salledespectacle.cpp \
+    Items/structure.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     Items/salledespectacle.h \
+    Items/structure.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
     mainwindow.h \
