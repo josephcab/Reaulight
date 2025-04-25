@@ -11,6 +11,8 @@ Scene::Scene(QObject *parent)
     : QObject{parent}
 {
     this->border = new QList<Triangle>();
+    this->sceneName = QString();
+    this->filename = QString();
 }
 
 /**
@@ -106,8 +108,8 @@ void Scene::load(QJsonDocument document)
     if(document.isObject()) //Ai-je bien une salle de spectacle
     {
         QJsonObject obj = document.object(); //Le tableau de points
-        if(obj.contains("name") && obj.value("name").isString())
-            this->roomName = obj.value("name").toString();
+        if(obj.contains("sceneName") && obj.value("sceneName").isString())
+            this->sceneName = obj.value("sceneName").toString();
 
         if(obj.contains("triangles") && obj.value("triangles").isArray()) //Ai-je bien des triangles
         {
@@ -194,8 +196,8 @@ QJsonDocument Scene::get_JSON()
     }
 
     QJsonObject room;
-    room.insert("layers",triangles);
-    room.insert("name", this->roomName);
+    room.insert("triangles",triangles);
+    room.insert("sceneName",this->sceneName);
 
     QJsonDocument json;
     json.setObject(room);

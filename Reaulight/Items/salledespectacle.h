@@ -28,8 +28,12 @@ public:
     QList<Triangle> get_triangles();
 
     void set_triangle(Triangle trig, int pos);
+    void set_filename(QString filename);
+    void set_roomName(QString roomName);
 
-    QJsonDocument get_JSON();
+    QJsonDocument get_JSON() const;
+    QString get_roomName() const;
+    QString get_filename() const;
 
 signals:
 

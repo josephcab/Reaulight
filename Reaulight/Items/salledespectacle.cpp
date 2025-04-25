@@ -175,7 +175,7 @@ void SalleDeSpectacle::save(QString filename)
  * @brief SalleDeSpectacle::get_JSON retourne un objet JSON représentant la salle de spectacle
  * @return L'objet JSON représentant la salle de spectacle
  */
-QJsonDocument SalleDeSpectacle::get_JSON()
+QJsonDocument SalleDeSpectacle::get_JSON() const
 {
     QJsonArray triangles;
     for(int i=0; i < this->border->size(); i++)
@@ -194,10 +194,46 @@ QJsonDocument SalleDeSpectacle::get_JSON()
     }
 
     QJsonObject room;
-    room.insert("layers",triangles);
+    room.insert("triangles",triangles);
     room.insert("name", this->roomName);
 
     QJsonDocument json;
     json.setObject(room);
     return json;
+}
+
+/**
+ * @brief SalleDeSpectacle::get_roomName retourne le nom de la salle de spectacle
+ * @return Le nom de la salle de spectacle
+ */
+QString SalleDeSpectacle::get_roomName() const
+{
+    return this->roomName;
+}
+
+/**
+ * @brief SalleDeSpectacle::get_fileName retourne le chemin du fichier de la salle de spectacle
+ * @return Le chemin d'enregistrement du fichier de la salle de spectacle
+ */
+QString SalleDeSpectacle::get_filename() const
+{
+    return this->filename;
+}
+
+/**
+ * @brief SalleDeSpectacle::set_roomName Permet de définir le nom de la salle de spectacle
+ * @param Le nom de la salle de spectacle
+ */
+void SalleDeSpectacle::set_roomName(QString roomName)
+{
+    this->roomName = roomName;
+}
+
+/**
+ * @brief SalleDeSpectacle::set_fileName permet de définir le chemin du fichier de la salle de spectacle
+ * @param Le chemin d'enregistrement du fichier de la salle de spectacle
+ */
+void SalleDeSpectacle::set_filename(QString filename)
+{
+    this->filename = filename;
 }

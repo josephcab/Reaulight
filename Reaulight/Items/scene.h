@@ -41,7 +41,7 @@ public slots:
 private:
     QList<Triangle> *border;
     QString filename;
-    QString roomName;
+    QString sceneName;
 
 signals:
 
