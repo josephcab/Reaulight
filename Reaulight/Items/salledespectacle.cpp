@@ -10,7 +10,7 @@
 SalleDeSpectacle::SalleDeSpectacle(QObject *parent)
     : QObject{parent}
 {
-    this->layers = new QList<QList<QVector3D>>();
+    this->border = new QList<Triangle>();
 }
 
 /**
@@ -22,7 +22,7 @@ SalleDeSpectacle::SalleDeSpectacle(QString fileName, QObject *parent)
     : QObject{parent}
 {
     //Initialisations
-    this->layers = new QList<QList<QVector3D>>();
+    this->border = new QList<Triangle>();
     this->load(fileName);
 }
 
@@ -35,73 +35,39 @@ SalleDeSpectacle::SalleDeSpectacle(QJsonDocument document, QObject *parent)
     : QObject{parent}
 {
     //Initialisations
-    this->layers = new QList<QList<QVector3D>>();
+    this->border = new QList<Triangle>();
     this->filename = QString();
 
     this->load(document);
 }
 
-/**
- * @brief SalleDeSpectacle::get_ground Permet de récupérer la liste de points représentant la salle de spectacle.
- * @return Une liste ordonnée de points représentant les coordonnées 3D des points du sol.
- */
-QList<QVector3D> SalleDeSpectacle::get_ground()
-{
-    return this->layers->first();
-}
-
-/**
- * @brief SalleDeSpectacle::get_roof retourne la liste des points définissant le plafond de la salle.
- * @return retourne la liste des points définissant les coordonnées 3D des points du plafond.
- */
-QList<QVector3D> SalleDeSpectacle::get_roof()
-{
-    return this->layers->last();
-}
 
 /**
  * @brief SalleDeSpectacle::get_layer Renvoie le contenu d'une couche  de construction de la salle
- * @param layer numéro de la couche recherchée
+ * @param trig numéro du triangle recherché
  * @return Renvoie la liste des points définissant les coordonnées 3D des points de la couche demandée.
  */
-QList<QVector3D> SalleDeSpectacle::get_layer(int layer)
+Triangle SalleDeSpectacle::get_triangle(int trig)
 {
-    if(this->layers->size() > layer)
-        return this->layers->at(layer);
+    if(this->border->size() > trig)
+        return this->border->at(trig);
     else
-        return QList<QVector3D>();
+        return Triangle();
 }
 
-/**
- * @brief SalleDeSpectacle::set_ground Permet de redéfinir la liste des points du sol
- * @param ground_points La liste des points 3D du sol
- */
-void SalleDeSpectacle::set_ground(QList<QVector3D> ground_points)
-{
-    this->layers->replace(0,ground_points);
-}
-
-/**
- * @brief SalleDeSpectacle::set_roof Permet de redéfinir la liste des points du plafond
- * @param roof_points La liste des points 3D du plafond
- */
-void SalleDeSpectacle::set_roof(QList<QVector3D> roof_points)
-{
-    this->layers->replace(this->layers->size()-1,roof_points);
-}
 
 /**
  * @brief SalleDeSpectacle::set_layer Permet de redéfinir la liste des points d'une couche de données
  * @param layer_points La liste des points 3D de la couche en question
  * @param layer la couche à modifier
  */
-void SalleDeSpectacle::set_layer(QList<QVector3D> layer_points, int layer)
+void SalleDeSpectacle::set_triangle(Triangle trig, int pos)
 
 {
-    if(layer < this->layers->size())
-        this->layers->replace(layer, layer_points);
+    if(pos < this->border->size())
+        this->border->replace(pos, trig);
     else
-        qDebug() << QString("The required layer (") << layer << QString(") isn't exist.");
+        qDebug() << QString("The required layer (") << pos << QString(") isn't exist.");
 }
 
 
@@ -143,37 +109,37 @@ void SalleDeSpectacle::load(QJsonDocument document)
         if(obj.contains("name") && obj.value("name").isString())
             this->roomName = obj.value("name").toString();
 
-        if(obj.contains("layers") && obj.value("layers").isArray()) //Ai-je bien des couches de données
+        if(obj.contains("triangles") && obj.value("triangles").isArray()) //Ai-je bien des triangles
         {
-            QJsonArray all_layer = obj.value("layers").toArray(); //Les couches de données
-            for(int i = 0; i < all_layer.size();i++)
+            QJsonArray all_triangles = obj.value("triangles").toArray(); //Les triangles
+            for(int i = 0; i < all_triangles.size();i++)
             {
-                if(all_layer[i].isArray())
+                if(all_triangles[i].isArray())
                 {
-                    QJsonArray layer = all_layer[i].toArray(); // la couche de donnée
-                    QList<QVector3D> layer_data;
-                    for(int j = 0; j < layer.size(); j++)
+                    QJsonArray triangle = all_triangles[i].toArray(); // le triangle
+                    QList<QVector3D> points;
+                    for(int j = 0; j < triangle.size(); j++)
                     {
-                        if(layer[j].isArray() && layer[j].toArray().size() == 3 &&
-                            layer[j].toArray()[0].isDouble() &&
-                            layer[j].toArray()[1].isDouble() &&
-                            layer[j].toArray()[2].isDouble())
+                        if(triangle[j].isArray() && triangle[j].toArray().size() == 3 &&
+                            triangle[j].toArray()[0].isDouble() &&
+                            triangle[j].toArray()[1].isDouble() &&
+                            triangle[j].toArray()[2].isDouble())
                         {
-                            layer_data.append(QVector3D(layer[j].toArray()[0].toInt(),
-                                                                    layer[j].toArray()[1].toInt(),
-                                                                    layer[j].toArray()[2].toInt()));
+                            points.append(QVector3D(triangle[j].toArray()[0].toInt(),
+                                                                    triangle[j].toArray()[1].toInt(),
+                                                                    triangle[j].toArray()[2].toInt()));
                         }
                         else
                             qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas un nombre");
                     }
-                    this->layers->append(layer_data);
+                    this->border->append(Triangle(points[0], points[1], points[2]));
                 }
                 else
-                    qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas une scène valide - Il n'y a pas de couche horizontale.");
+                    qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas une scène valide - Il n'y a pas de points.");
             }
         }
         else
-            qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas une scène valide - Pas d'élément layers");
+            qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas une scène valide - Pas de triangles");
 
     }
     else
@@ -211,28 +177,24 @@ void SalleDeSpectacle::save(QString filename)
  */
 QJsonDocument SalleDeSpectacle::get_JSON()
 {
-    QJsonArray layers;
-    for(int i=0; i < this->layers->size(); i++)
+    QJsonArray triangles;
+    for(int i=0; i < this->border->size(); i++)
     {
-        qDebug() << this->layers->value(i).size();
-        QJsonArray surface;
-        for(int j=0; j < this->layers->value(i).size(); j++)
+        QJsonArray triangle;
+        for(int j=0; j < 3; j++)
         {
             QJsonArray point;
-            point.append(this->layers->at(i).at(j).x());
-            point.append(this->layers->at(i).at(j).y());
-            point.append(this->layers->at(i).at(j).z());
-            surface.append(point);
+            point.append(this->border->at(i).getPoint(j).x());
+            point.append(this->border->at(i).getPoint(j).y());
+            point.append(this->border->at(i).getPoint(j).z());
+            triangle.append(point);
 
-            QJsonDocument test;
-            test.setArray(point);
-            qDebug() << test.toJson() << this->layers->value(i).value(j).x();
         }
-        layers.append(surface);
+        triangles.append(triangle);
     }
 
     QJsonObject room;
-    room.insert("layers",layers);
+    room.insert("layers",triangles);
     room.insert("name", this->roomName);
 
     QJsonDocument json;

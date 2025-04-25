@@ -7,6 +7,8 @@
 #include <QJsonDocument>
 #include <QFile>
 
+#include "triangle.h"
+
 /**
  * @brief The SalleDeSpectacle class
  * @details La classe SalleDeSpectacle est un classe permettant de représenter une salle de spectacle.
@@ -22,13 +24,10 @@ public:
     SalleDeSpectacle(QString fileName, QObject *parent = nullptr);
     SalleDeSpectacle(QJsonDocument document, QObject *parent = nullptr);
 
-    QList<QVector3D> get_ground();
-    QList<QVector3D> get_roof();
-    QList<QVector3D> get_layer(int layer);
+    Triangle get_triangle(int trig);
+    QList<Triangle> get_triangles();
 
-    void set_ground(QList<QVector3D> ground_points);
-    void set_roof(QList<QVector3D> roof_points);
-    void set_layer(QList<QVector3D> layer_points, int layer);
+    void set_triangle(Triangle trig, int pos);
 
     QJsonDocument get_JSON();
 
@@ -42,7 +41,7 @@ public slots:
     void save(QString filename);
 
 private:
-    QList<QList<QVector3D>> *layers;
+    QList<Triangle> *border;
     QString filename;
     QString roomName;
 };
