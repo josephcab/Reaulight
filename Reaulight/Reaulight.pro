@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     Items/projector.cpp \
     Items/salledespectacle.cpp \
+    Items/scene.cpp \
     Items/structure.cpp \
     Items/triangle.cpp \
     arborescence_projet.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     Items/projector.h \
     Items/salledespectacle.h \
+    Items/scene.h \
     Items/structure.h \
     Items/triangle.h \
     arborescence_projet.h \
