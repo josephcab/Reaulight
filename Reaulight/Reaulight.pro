@@ -13,6 +13,7 @@ SOURCES += \
     Items/projector.cpp \
     Items/salledespectacle.cpp \
     Items/structure.cpp \
+    Items/triangle.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
     main.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     Items/projector.h \
     Items/salledespectacle.h \
     Items/structure.h \
+    Items/triangle.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
     mainwindow.h \

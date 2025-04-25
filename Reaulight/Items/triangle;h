@@ -1,0 +1,25 @@
+#ifndef TRIANGLE
+#define TRIANGLE
+
+#include <QObject>
+#include <QVector3D>
+
+class Triangle : public QObject
+{
+     Q_OBJECT
+public:
+    explicit Triangle(QObject *parent = nullptr);
+    Triangle(QVector3D a, QVector3D b, QVector3D c, QObject *parent = nullptr);
+    Triangle(Triangle &trig, QObject *parent = nullptr);
+
+    void setPoint(int id, QVector3D point);
+    void setTriangle(QVector3D point[3]);
+
+    QVector3D getPoint(int id);
+
+private:
+    QVector3D triangle[3];
+
+};
+
+#endif // TRIANGLE
