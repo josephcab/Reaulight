@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QVector3D>
 
+/**
+     * @brief La classe Triangle
+     * @details La classe Triangle permet d'instancier un triangle (sous forme de 3 points)
+     */
 class Triangle// : public QObject
 {
      //Q_OBJECT

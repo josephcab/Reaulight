@@ -43,9 +43,9 @@ SalleDeSpectacle::SalleDeSpectacle(QJsonDocument document, QObject *parent)
 
 
 /**
- * @brief SalleDeSpectacle::get_layer Renvoie le contenu d'une couche  de construction de la salle
+ * @brief SalleDeSpectacle::get_triangle Renvoie le contenu d'une couche  de construction de la salle
  * @param trig numéro du triangle recherché
- * @return Renvoie la liste des points définissant les coordonnées 3D des points de la couche demandée.
+ * @return Renvoie le triangle demandé.
  */
 Triangle SalleDeSpectacle::get_triangle(int trig)
 {
@@ -57,9 +57,9 @@ Triangle SalleDeSpectacle::get_triangle(int trig)
 
 
 /**
- * @brief SalleDeSpectacle::set_layer Permet de redéfinir la liste des points d'une couche de données
- * @param layer_points La liste des points 3D de la couche en question
- * @param layer la couche à modifier
+ * @brief SalleDeSpectacle::set_triangle Permet de redéfinir un triangle de l'objet
+ * @param trig Le nouveau triangle
+ * @param pos l'identifiant du triangle à modifier
  */
 void SalleDeSpectacle::set_triangle(Triangle trig, int pos)
 
@@ -109,9 +109,9 @@ void SalleDeSpectacle::load(QJsonDocument document)
         if(obj.contains("name") && obj.value("name").isString())
             this->roomName = obj.value("name").toString();
 
-        if(obj.contains("triangles") && obj.value("triangles").isArray()) //Ai-je bien des triangles
+        if(obj.contains("salle") && obj.value("salle").isArray()) //Ai-je bien des triangles
         {
-            QJsonArray all_triangles = obj.value("triangles").toArray(); //Les triangles
+            QJsonArray all_triangles = obj.value("salle").toArray(); //Les triangles
             for(int i = 0; i < all_triangles.size();i++)
             {
                 if(all_triangles[i].isArray())
@@ -194,7 +194,7 @@ QJsonDocument SalleDeSpectacle::get_JSON() const
     }
 
     QJsonObject room;
-    room.insert("triangles",triangles);
+    room.insert("salle",triangles);
     room.insert("name", this->roomName);
 
     QJsonDocument json;

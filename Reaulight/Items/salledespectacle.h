@@ -12,7 +12,7 @@
 /**
  * @brief The SalleDeSpectacle class
  * @details La classe SalleDeSpectacle est un classe permettant de représenter une salle de spectacle.
- *          Pour ce faire, elle définit au moins deux couches de points (sol et plafond).
+ *          Pour ce faire, elle définit un ensemble de triangles représentant la salle de spectacle.
  *          Elle peut prendre en paramètre de création un fichier de définition de salle, ou un QJsonDocument
  *          représentant la salle.
  */
