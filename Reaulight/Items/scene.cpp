@@ -1,24 +1,26 @@
-#include "salledespectacle.h"
+#include "scene.h"
 #include <QJsonObject>
 #include <QJsonArray>
 
 
 /**
- * @brief SalleDeSpectacle::SalleDeSpectacle Constructeur de la classe Salle de Spectacle.
+ * @brief Scene::Scene Constructeur de la classe Scene.
  * @param parent L'objet parent de l'objet créé. Ce paramètre est nul par défaut.
  */
-SalleDeSpectacle::SalleDeSpectacle(QObject *parent)
+Scene::Scene(QObject *parent)
     : QObject{parent}
 {
     this->border = new QList<Triangle>();
+    this->sceneName = QString();
+    this->filename = QString();
 }
 
 /**
- * @brief SalleDeSpectacle::SalleDeSpectacle Constructeur de la classe Salle de Spectacle.
- * @param fileName l'adresse du fichier à charger pour initialiser la SalleDeSpectacle.
+ * @brief Scene::Scene Constructeur de la classe Scene.
+ * @param fileName l'adresse du fichier à charger pour initialiser la Scene.
  * @param parent L'objet parent de l'objet créé. Ce paramètre est nul par défaut.
  */
-SalleDeSpectacle::SalleDeSpectacle(QString fileName, QObject *parent)
+Scene::Scene(QString fileName, QObject *parent)
     : QObject{parent}
 {
     //Initialisations
@@ -27,11 +29,11 @@ SalleDeSpectacle::SalleDeSpectacle(QString fileName, QObject *parent)
 }
 
 /**
- * @brief SalleDeSpectacle::SalleDeSpectacle Constructeur de la classe Salle de Spectacle.
- * @param document l'objet JSON à charger pour initialiser la SalleDeSpectacle.
+ * @brief Scene::Scene Constructeur de la Scene.
+ * @param document l'objet JSON à charger pour initialiser la Scene.
  * @param parent L'objet parent de l'objet créé. Ce paramètre est nul par défaut.
  */
-SalleDeSpectacle::SalleDeSpectacle(QJsonDocument document, QObject *parent)
+Scene::Scene(QJsonDocument document, QObject *parent)
     : QObject{parent}
 {
     //Initialisations
@@ -43,11 +45,11 @@ SalleDeSpectacle::SalleDeSpectacle(QJsonDocument document, QObject *parent)
 
 
 /**
- * @brief SalleDeSpectacle::get_triangle Renvoie le contenu d'une couche  de construction de la salle
+ * @brief Scene::get_triangle Permet de récupérer un triangle de l'objet
  * @param trig numéro du triangle recherché
- * @return Renvoie le triangle demandé.
+ * @return Renvoie la liste des points définissant les coordonnées 3D du triangle demandé.
  */
-Triangle SalleDeSpectacle::get_triangle(int trig)
+Triangle Scene::get_triangle(int trig)
 {
     if(this->border->size() > trig)
         return this->border->at(trig);
@@ -57,24 +59,24 @@ Triangle SalleDeSpectacle::get_triangle(int trig)
 
 
 /**
- * @brief SalleDeSpectacle::set_triangle Permet de redéfinir un triangle de l'objet
+ * @brief Scene::set_layer Permet de redéfinir un triangle de l'objet
  * @param trig Le nouveau triangle
- * @param pos l'identifiant du triangle à modifier
+ * @param pos l'identifiant du triangle à modifier.
  */
-void SalleDeSpectacle::set_triangle(Triangle trig, int pos)
+void Scene::set_triangle(Triangle trig, int pos)
 
 {
     if(pos < this->border->size())
         this->border->replace(pos, trig);
     else
-        qDebug() << QString("The required layer (") << pos << QString(") isn't exist.");
+        qDebug() << QString("The required triangle (") << pos << QString(") isn't exist.");
 }
 
 
 /**
- * @brief SalleDeSpectacle::load Permet de charger les informations de la classe dans le fichier préalablement défini.
+ * @brief Scene::load Permet de charger les informations de la classe dans le fichier préalablement défini.
  */
-void SalleDeSpectacle::load()
+void Scene::load()
 {
     //Récupération du fichier JSON
     QFile data(this->filename);
@@ -88,30 +90,30 @@ void SalleDeSpectacle::load()
 }
 
 /**
- * @brief SalleDeSpectacle::load Permet de charger les informations de la salle de spectacle en spécifiant le fichier à charger
+ * @brief Scene::load Permet de charger les informations de la scène en spécifiant le fichier à charger
  * @param filename le fichier à charger
  */
-void SalleDeSpectacle::load(QString filename)
+void Scene::load(QString filename)
 {
     this->filename = filename;
     this->load();
 }
 
 /**
- * @brief SalleDeSpectacle::load Permet de charger les informations de la salle de spectacle en spécifiant directement un objet à charger
+ * @brief Scene::load Permet de charger les informations de la scène en spécifiant directement un objet à charger
  * @param document le document JSON à traiter
  */
-void SalleDeSpectacle::load(QJsonDocument document)
+void Scene::load(QJsonDocument document)
 {
     if(document.isObject()) //Ai-je bien une salle de spectacle
     {
         QJsonObject obj = document.object(); //Le tableau de points
-        if(obj.contains("name") && obj.value("name").isString())
-            this->roomName = obj.value("name").toString();
+        if(obj.contains("sceneName") && obj.value("sceneName").isString())
+            this->sceneName = obj.value("sceneName").toString();
 
-        if(obj.contains("salle") && obj.value("salle").isArray()) //Ai-je bien des triangles
+        if(obj.contains("scene") && obj.value("scene").isArray()) //Ai-je bien des triangles
         {
-            QJsonArray all_triangles = obj.value("salle").toArray(); //Les triangles
+            QJsonArray all_triangles = obj.value("scene").toArray(); //Les triangles
             for(int i = 0; i < all_triangles.size();i++)
             {
                 if(all_triangles[i].isArray())
@@ -126,8 +128,8 @@ void SalleDeSpectacle::load(QJsonDocument document)
                             triangle[j].toArray()[2].isDouble())
                         {
                             points.append(QVector3D(triangle[j].toArray()[0].toInt(),
-                                                                    triangle[j].toArray()[1].toInt(),
-                                                                    triangle[j].toArray()[2].toInt()));
+                                                    triangle[j].toArray()[1].toInt(),
+                                                    triangle[j].toArray()[2].toInt()));
                         }
                         else
                             qDebug() << QString("SalleDeSpectacle::load : Ceci n'est pas un nombre");
@@ -147,9 +149,9 @@ void SalleDeSpectacle::load(QJsonDocument document)
 }
 
 /**
- * @brief SalleDeSpectacle::save Permet d'enregistrer les données de la salle de spectacle dans le fichier inscrit dans l'objet
+ * @brief Scene::save Permet d'enregistrer les données de la scène dans le fichier inscrit dans l'objet
  */
-void SalleDeSpectacle::save()
+void Scene::save()
 {
     QFile data(this->filename);
     if(data.open(QIODevice::WriteOnly))
@@ -162,20 +164,20 @@ void SalleDeSpectacle::save()
 }
 
 /**
- * @brief SalleDeSpectacle::save Permet d'enregistrer les données de la salle de spectacle dans le fichier fourni en paramètre
+ * @brief Scene::save Permet d'enregistrer les données de la scene dans le fichier fourni en paramètre
  * @param filename le nom du fichier pour l'enregistrement
  */
-void SalleDeSpectacle::save(QString filename)
+void Scene::save(QString filename)
 {
     this->filename = filename;
     this->save();
 }
 
 /**
- * @brief SalleDeSpectacle::get_JSON retourne un objet JSON représentant la salle de spectacle
- * @return L'objet JSON représentant la salle de spectacle
+ * @brief Scene::get_JSON retourne un objet JSON représentant la scène
+ * @return L'objet JSON représentant la scène
  */
-QJsonDocument SalleDeSpectacle::get_JSON() const
+QJsonDocument Scene::get_JSON()
 {
     QJsonArray triangles;
     for(int i=0; i < this->border->size(); i++)
@@ -194,8 +196,8 @@ QJsonDocument SalleDeSpectacle::get_JSON() const
     }
 
     QJsonObject room;
-    room.insert("salle",triangles);
-    room.insert("name", this->roomName);
+    room.insert("scene",triangles);
+    room.insert("sceneName",this->sceneName);
 
     QJsonDocument json;
     json.setObject(room);
@@ -203,37 +205,37 @@ QJsonDocument SalleDeSpectacle::get_JSON() const
 }
 
 /**
- * @brief SalleDeSpectacle::get_roomName retourne le nom de la salle de spectacle
- * @return Le nom de la salle de spectacle
+ * @brief Scene::get_sceneName retourne le nom de la scène
+ * @return Le nom de la scène
  */
-QString SalleDeSpectacle::get_roomName() const
+QString Scene::get_sceneName() const
 {
-    return this->roomName;
+    return this->sceneName;
 }
 
 /**
- * @brief SalleDeSpectacle::get_fileName retourne le chemin du fichier de la salle de spectacle
- * @return Le chemin d'enregistrement du fichier de la salle de spectacle
+ * @brief Scene::get_fileName retourne le chemin du fichier de la scène
+ * @return Le chemin d'enregistrement du fichier de la scène
  */
-QString SalleDeSpectacle::get_filename() const
+QString Scene::get_filename() const
 {
     return this->filename;
 }
 
 /**
- * @brief SalleDeSpectacle::set_roomName Permet de définir le nom de la salle de spectacle
- * @param Le nom de la salle de spectacle
+ * @brief Scene::set_roomName Permet de définir le nom de la scène
+ * @param Le nom de la scène
  */
-void SalleDeSpectacle::set_roomName(QString roomName)
+void Scene::set_sceneName(QString sceneName)
 {
-    this->roomName = roomName;
+    this->sceneName = sceneName;
 }
 
 /**
- * @brief SalleDeSpectacle::set_fileName permet de définir le chemin du fichier de la salle de spectacle
- * @param Le chemin d'enregistrement du fichier de la salle de spectacle
+ * @brief Scene::set_fileName permet de définir le chemin du fichier de la scène
+ * @param Le chemin d'enregistrement du fichier de la scène
  */
-void SalleDeSpectacle::set_filename(QString filename)
+void Scene::set_filename(QString filename)
 {
     this->filename = filename;
 }

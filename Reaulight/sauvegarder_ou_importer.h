@@ -3,29 +3,14 @@
 
 //Sauvegarde des données de spectacle #5
 
-#include <QDir>
-#include <QDebug>
-#include <QFile>
+#include <QtWidgets>
 #include <QJsonParseError>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QStandardPaths>
-#include <QString>
-#include <QSysInfo>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QList>
-#include <QLabel>
-#include <QObject>
-#include <QDate>
-#include <QWidget>
 
-#include "projector.h"
+#include "Items\projector.h"
 
 enum dialogType {save, import, saveIfOpen};
 
