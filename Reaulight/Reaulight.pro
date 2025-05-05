@@ -14,6 +14,7 @@ SOURCES += \
     Items/structure.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
+    canal.cpp \
     main.cpp \
     mainwindow.cpp \
     projector.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     Items/structure.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
+    canal.h \
     mainwindow.h \
     global.h \
     projector.h \
