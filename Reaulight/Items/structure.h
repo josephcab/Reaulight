@@ -1,78 +1,64 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
-#include <qobject.h>
+#include <QObject>
 #include <QList>
 #include <QDebug>
 #include <QString>
+#include <QJsonDocument>
+#include <QVector3D>
+#include <QPair>
 
-#include "projector.h"
 
 class Structure : public QObject
 {
     Q_OBJECT
 
     public:
-        Structure(QObject *parent=nullptr);
+        explicit Structure(QObject *parent=nullptr);
+        Structure(QString fileName, QObject *parent = nullptr);
+        Structure(QJsonDocument document, QObject *parent = nullptr);
 
-        /**
-         * @brief Accesseur de l'identifiant de la structure courante
-         * @return int identifiant de la structure courante
-         */
-        int get_id();
-
-        /**
-         * @brief Renvoie le propriétaire de la structure courante
-         * @return QString Nom du propriétaire
-         */
-        QString get_owner();
 
         /**
          * @brief Renvoie le nom de la structure courante
          * @return QString Nom de la structure
          */
-        QString get_name();
+        QString getName();
+        unsigned int getDiameter();
 
-        /**
-         * @brief Mutateur de l'indentifiant de la structure
-         * @param id:int identifiant de la structure
-         */
-        void set_id(int id);
-
-        /**
-         * @brief Mutateur du propriétaire de la structure
-         * @param owner:QString propriétaire de la structure
-         */
-        void set_owner(QString owner);
 
         /**
          * @brief Mutateur du nom de la structure
          * @param name:QString nom de la structure
          */
-        void set_name(QString name);
+        void setName(QString name);
+        void setFilename(QString filename);
+        void setDiameter(unsigned int diameter);
 
-        /// @brief Accesseur de la liste des instances de projecteur
-        /// @param index, index de la liste auquel accéder -> type int
-        /// @return projecteur associé à l'index en paramètre, renvoie un pointeur nulle si index out of range -> type Projecteur
-        Projector* get_projector(int index);
 
-        /// @brief Méthode permettant d'instancier un projecteur dans la scène
-        /// @param pos, poisiton du projecteur dans la scène 3d -> QVector3D
-        /// @param address adresse à modifier -> type int
-        /// @param distance_attache_rotation distance entre le point d'attache du projecteur et son centre de rotation -> type double
-        /// @param angle, angle d'éclairage du projecteur courant -> type double
-        void add_projector(QVector3D pos, int adress, double distance_attache_rotation, double angle);
+        void setAxes(QList<QPair<QVector3D, QVector3D> > axes);
+        void setAxe(unsigned int id, QVector3D start, QVector3D end);
+        void setAxe(unsigned int id, QPair<QVector3D, QVector3D> axe);
 
-        /// @brief Méthode permettant de désinstancier un projecteur en y accédant via son index
-        /// @param index, index du projecteur à désintancier -> type int
-        void remove_projector(int index);
+        QList<QPair<QVector3D, QVector3D> > getAxes();
+        QPair<QVector3D, QVector3D> getAxe(unsigned int id);
+
+        QJsonDocument getJSON() const;
+        QString getFilename() const;
+
+    public slots:
+        void load();
+        void load(QString filename);
+        void load(QJsonDocument document);
+        void save();
+        void save(QString filename);
 
     private:
-        int id;
-        QString owner; // Propriétaire
         QString name; // Nom de la structure
-        QVector3D position;
-        QList<Projector *> projectors;
+        QString filename; // Référence du fichier
+        QList<QPair<QVector3D, QVector3D> > axes; //Les différents axes de la structure
+        unsigned int diameter; // Diamètre des tubes
 };
 
 #endif // STRUCTURE_H
