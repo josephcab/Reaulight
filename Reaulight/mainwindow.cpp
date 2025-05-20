@@ -108,6 +108,25 @@ MainWindow::MainWindow(QWidget *parent)
     dockBas->setMinimumWidth(250);
     dockBas->setMaximumWidth(450);
     dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
+
+    // Création du widget conteneur pour la grille
+    QWidget *grille = new QWidget();  // Déclaration correcte de la variable
+    dockBas->setWidget(grille);       // Assignation au dock
+
+    // Création des boutons
+    QPushButton *button1 = new QPushButton("One", grille);
+    QPushButton *button2 = new QPushButton("Two", grille);
+    QPushButton *button3 = new QPushButton("Three", grille);
+    QPushButton *button4 = new QPushButton("Four", grille);
+    QPushButton *button5 = new QPushButton("Five", grille);
+
+    // Création du layout en grille
+    QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée
+    layout->addWidget(button1, 0, 0);
+    layout->addWidget(button2, 0, 1);
+    layout->addWidget(button3, 1, 0, 1, 2);
+    layout->addWidget(button4, 2, 0);
+    layout->addWidget(button5, 2, 1);
 }
 
 MainWindow::~MainWindow() {}
