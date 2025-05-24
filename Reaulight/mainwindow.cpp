@@ -10,29 +10,27 @@ MainWindow::MainWindow(QWidget *parent)
 {
     SoI = new Save_or_import();
     SoI->init(window());
-
     this->window()->setGeometry(0, 0, 1000, 600); // Taille de la fenêtre (L=1'000 ; l=600) à la position X=0 ; Y=0
-
     setCentralWidget(new QWidget);
 
     menuFichier = menuBar()->addMenu("&Fichier");
+        QAction *actionImporter = new QAction("&Importer", this);
+            menuFichier->addAction(actionImporter);
+            connect(actionImporter, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::import);});
+        QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
+            fichiersRecents->addAction("Fichier bidon 1.txt");
+            fichiersRecents->addAction("Fichier bidon 2.txt");
+            fichiersRecents->addAction("Fichier bidon 3.txt");
+        QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
+            menuFichier->addAction(actionSauvegarder);
+            connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::saveIfOpen);});
+        QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
+            menuFichier->addAction(actionEnregistrerSous);
+            connect(actionEnregistrerSous, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::save);});
+        QAction *actionQuitter = new QAction("&Quitter", this);
+            menuFichier->addAction(actionQuitter);
+            connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
 
-    QAction *actionImporter = new QAction("&Importer", this);
-        menuFichier->addAction(actionImporter);
-        connect(actionImporter, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::import);});
-    QMenu *fichiersRecents = menuFichier->addMenu("&Fichiers récents");
-        fichiersRecents->addAction("Fichier bidon 1.txt");
-        fichiersRecents->addAction("Fichier bidon 2.txt");
-        fichiersRecents->addAction("Fichier bidon 3.txt");
-    QAction *actionSauvegarder = new QAction("&Sauvegarder", this);
-        menuFichier->addAction(actionSauvegarder);
-        connect(actionSauvegarder, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::saveIfOpen);});
-    QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
-        menuFichier->addAction(actionEnregistrerSous);
-        connect(actionEnregistrerSous, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::save);});
-    QAction *actionQuitter = new QAction("&Quitter", this);
-        menuFichier->addAction(actionQuitter);
-        connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
     menuEdition = menuBar()->addMenu("&Edition");
 
     menuAffichage = menuBar()->addMenu("&Affichage 3D");
@@ -56,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent)
         QAction *actionRéaulight = new QAction("&À propos de Réaulight", this);
             menuAide->addAction(actionRéaulight);
             connect(actionRéaulight, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/blob/main/README.md"));});
+
+    //menuBar()->addAction(toggleTheme);
 
     // Initialisation des modèles
         modelExplorer = new QFileSystemModel(this);
@@ -94,7 +94,8 @@ MainWindow::MainWindow(QWidget *parent)
         treeArborescence->expandAll();
 
     //recup les données pour l'enregristrer du fichier .json
-    connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted){
+    connect(SoI, &Save_or_import::isSavingAccept, this, [this](bool accepted)
+    {
         if(accepted == true)
         {
             /** A corriger **/
@@ -110,23 +111,39 @@ MainWindow::MainWindow(QWidget *parent)
     dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Création du widget conteneur pour la grille
-    QWidget *grille = new QWidget();  // Déclaration correcte de la variable
+    QWidget *grille = new QWidget();  // La grille est déclarée comme un widget lambda
     dockBas->setWidget(grille);       // Assignation au dock
 
     // Création des boutons
-    QPushButton *button1 = new QPushButton("One", grille);
-    QPushButton *button2 = new QPushButton("Two", grille);
-    QPushButton *button3 = new QPushButton("Three", grille);
-    QPushButton *button4 = new QPushButton("Four", grille);
-    QPushButton *button5 = new QPushButton("Five", grille);
+    QLabel *statutType     = new QLabel("Type :", grille);
+    QLabel *statutMarque   = new QLabel("Marque :", grille);
+    QLabel *statutNom      = new QLabel("Nom :", grille);
+    QLabel *statutModele   = new QLabel("Modèle :", grille);
+    QComboBox *comboType   = new QComboBox(grille);
+    QComboBox *comboMarque = new QComboBox(grille);
+    QComboBox *comboNom    = new QComboBox(grille);
+    QComboBox *comboModele = new QComboBox(grille);
 
-    // Création du layout en grille
-    QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée
-    layout->addWidget(button1, 0, 0);
-    layout->addWidget(button2, 0, 1);
-    layout->addWidget(button3, 1, 0, 1, 2);
-    layout->addWidget(button4, 2, 0);
-    layout->addWidget(button5, 2, 1);
+    QSlider *frequence = new QSlider(Qt::Horizontal, grille);
+        frequence->setRange(-100, 100);
+        frequence->setSingleStep(1);
+    QSlider *angle = new QSlider(Qt::Horizontal, grille);
+        angle->setRange(-100, 100);
+        angle->setSingleStep(1);
+    //Qcolor
+
+    // Création du layout en grille et y ajoute les boutons
+    QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée comme QGridLayout
+    layout->addWidget(statutType,   0, 0);
+    layout->addWidget(statutMarque, 1, 0);
+    layout->addWidget(statutNom,    2, 0);
+    layout->addWidget(statutModele, 3, 0);
+    layout->addWidget(comboType,    0, 1);
+    layout->addWidget(comboMarque,  1, 1);
+    layout->addWidget(comboNom,     2, 1);
+    layout->addWidget(comboModele,  3, 1);
+    layout->addWidget(frequence,    0, 2);
+    layout->addWidget(angle,        0, 3);
 }
 
 MainWindow::~MainWindow() {}
