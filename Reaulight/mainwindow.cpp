@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
         QAction *actionEnregistrerSous = new QAction("&Enregistrer sous", this);
             menuFichier->addAction(actionEnregistrerSous);
             connect(actionEnregistrerSous, &QAction::triggered, this, [this]() {SoI->dialog(dialogType::save);});
+    menuFichier->addSeparator();
         QAction *actionQuitter = new QAction("&Quitter", this);
             menuFichier->addAction(actionQuitter);
             connect(actionQuitter, &QAction::triggered, qApp, &QApplication::quit);
@@ -48,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
         QAction *actionDiscord = new QAction("&Serveur Discord", this);
             menuAide->addAction(actionDiscord);
             connect(actionDiscord, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://discord.gg/H7wEZ8mUKc"));});
+    menuAide->addSeparator();
         QAction *actionQt = new QAction("&À propos de Qt", this);
             menuAide->addAction(actionQt);
             connect(actionQt, &QAction::triggered, this, [this] () {QMessageBox::aboutQt(this);});
@@ -55,7 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
             menuAide->addAction(actionRéaulight);
             connect(actionRéaulight, &QAction::triggered, this, []() {QDesktopServices::openUrl(QUrl("https://github.com/josephcab/Reaulight/blob/main/README.md"));});
 
-    //menuBar()->addAction(toggleTheme);
+    QAction *toggleTheme = new QAction("&Changer de thème", this);
+    menuBar()->addAction(toggleTheme);
 
     // Initialisation des modèles
         modelExplorer = new QFileSystemModel(this);
@@ -80,8 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
         dockGauche = new QDockWidget("Panneau latéral", this);
         dockGauche->setWidget(tabWidget);
         addDockWidget(Qt::LeftDockWidgetArea, dockGauche);
-        dockGauche->setMinimumWidth(250);
-        dockGauche->setMaximumWidth(450);
+        dockGauche->setMinimumSize(200, 400);
+        dockGauche->setMaximumSize(300, 500);
         dockGauche->setFeatures(dockGauche->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Exemple d'ajout d'éléments à l'arborescence
@@ -106,8 +109,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Création d'un QDockWidget bas
     dockBas = new QDockWidget("Panneau complémentaire", this);
     addDockWidget(Qt::BottomDockWidgetArea, dockBas);
-    dockBas->setMinimumWidth(250);
-    dockBas->setMaximumWidth(450);
+    dockBas->setMinimumWidth(300);
+    dockBas->setMaximumWidth(600);
     dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Création du widget conteneur pour la grille
@@ -134,16 +137,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Création du layout en grille et y ajoute les boutons
     QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée comme QGridLayout
-    layout->addWidget(statutType,   0, 0);
-    layout->addWidget(statutMarque, 1, 0);
-    layout->addWidget(statutNom,    2, 0);
-    layout->addWidget(statutModele, 3, 0);
-    layout->addWidget(comboType,    0, 1);
-    layout->addWidget(comboMarque,  1, 1);
-    layout->addWidget(comboNom,     2, 1);
-    layout->addWidget(comboModele,  3, 1);
-    layout->addWidget(frequence,    0, 2);
-    layout->addWidget(angle,        0, 3);
+    layout->addWidget(statutType,    0, 0);
+    layout->addWidget(statutMarque,  1, 0);
+    layout->addWidget(statutNom,     2, 0);
+    layout->addWidget(statutModele,  3, 0);
+    layout->addWidget(comboType,     0, 1);
+    layout->addWidget(comboMarque,   1, 1);
+    layout->addWidget(comboNom,      2, 1);
+    layout->addWidget(comboModele,   3, 1);
+    // Ajoute un séparateur vertical
+    QFrame *separator = new QFrame();
+        separator->setFrameShape(QFrame::VLine);
+        separator->setFrameShadow(QFrame::Sunken);
+        layout->addWidget(separator, 0, 2, 4, 1);
+    layout->addWidget(frequence,     0, 3);
+    layout->addWidget(angle,         0, 4);
 }
 
 MainWindow::~MainWindow() {}
