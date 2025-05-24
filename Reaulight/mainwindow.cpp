@@ -118,48 +118,104 @@ MainWindow::MainWindow(QWidget *parent)
     dockBas->setWidget(grille);       // Assignation au dock
 
     // Création des boutons
-    QLabel *statutType     = new QLabel("Type :", grille);
-    QLabel *statutMarque   = new QLabel("Marque :", grille);
-    QLabel *statutNom      = new QLabel("Nom :", grille);
-    QLabel *statutModele   = new QLabel("Modèle :", grille);
+    QLabel *labelType      = new QLabel("Type :", grille);
+    QLabel *labelMarque    = new QLabel("Marque :", grille);
+    QLabel *labelNom       = new QLabel("Nom :", grille);
+    QLabel *labelModele    = new QLabel("Modèle :", grille);
+
     QComboBox *comboType   = new QComboBox(grille);
     QComboBox *comboMarque = new QComboBox(grille);
     QComboBox *comboNom    = new QComboBox(grille);
     QComboBox *comboModele = new QComboBox(grille);
-    comboType->     addItem("");
-    comboType->     addItem("placeholder");
-    comboMarque->   addItem("");
-    comboMarque->   addItem("placeholder");
-    comboNom->      addItem("");
-    comboNom->      addItem("placeholder");
-    comboModele->   addItem("");
-    comboModele->   addItem("placeholder");
+    comboType->   addItem("");
+    comboType->   addItem("placeholder");
+    comboMarque-> addItem("");
+    comboMarque-> addItem("placeholder");
+    comboNom->    addItem("");
+    comboNom->    addItem("placeholder");
+    comboModele-> addItem("");
+    comboModele-> addItem("placeholder");
 
-    QSlider *frequence = new QSlider(Qt::Horizontal, grille);
-        frequence->setRange(-100, 100);
-        frequence->setSingleStep(1);
-    QSlider *angle = new QSlider(Qt::Horizontal, grille);
-        angle->setRange(-100, 100);
-        angle->setSingleStep(1);
-    //Qcolor
+    QLabel *labelCouleur   = new QLabel("Couleur", grille);
+    QLabel *labelR         = new QLabel("R :", grille);
+    QLabel *labelV         = new QLabel("V :", grille);
+    QLabel *labelB         = new QLabel("B :", grille);
+    QSpinBox *editR        = new QSpinBox(grille);
+    QSpinBox *editV        = new QSpinBox(grille);
+    QSpinBox *editB        = new QSpinBox(grille);
+
+    labelCouleur->setFixedWidth(200);
+    labelR->setFixedWidth(20);
+    labelV->setFixedWidth(20);
+    labelB->setFixedWidth(20);
+
+    labelCouleur->setAlignment(Qt::AlignCenter | Qt::AlignHCenter);
+    labelR->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    labelV->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    labelB->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+
+    editR->setFixedWidth(50);
+    editV->setFixedWidth(50);
+    editB->setFixedWidth(50);
+
+    editR->setRange(0, 255);
+    editV->setRange(0, 255);
+    editB->setRange(0, 255);
+
+    QSlider *sliderFrequence = new QSlider(Qt::Horizontal, grille);
+        sliderFrequence->setRange(0, 10);
+        sliderFrequence->setSingleStep(1);
+    QLabel *labelFrequence = new QLabel("Fréquence = OHz", grille);
+        labelFrequence->setAlignment(Qt::AlignCenter | Qt::AlignHCenter);
+        connect(sliderFrequence, &QSlider::valueChanged, this, [labelFrequence](int value)
+            {
+                labelFrequence->setText(QString("Fréquence = %1Hz").arg(value));
+            });
+
+    QSlider *sliderAngle = new QSlider(Qt::Horizontal, grille);
+        sliderAngle->setRange(0, 359);
+        sliderAngle->setSingleStep(1);
+    QLabel *labelAngle = new QLabel("Angle = 0°", grille);
+        labelAngle->setAlignment(Qt::AlignCenter | Qt::AlignHCenter);
+        connect(sliderAngle, &QSlider::valueChanged, this, [labelAngle](int value)
+            {
+                labelAngle->setText(QString(" Angle = %1°").arg(value));
+            });
 
     // Création du layout en grille et y ajoute les boutons
     QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée comme QGridLayout
-    layout->addWidget(statutType,    0, 0, 1, 1);
-    layout->addWidget(statutMarque,  1, 0, 1, 1);
-    layout->addWidget(statutNom,     2, 0, 1, 1);
-    layout->addWidget(statutModele,  3, 0, 1, 1);
-    layout->addWidget(comboType,     0, 1, 1, 1);
-    layout->addWidget(comboMarque,   1, 1, 1, 1);
-    layout->addWidget(comboNom,      2, 1, 1, 1);
-    layout->addWidget(comboModele,   3, 1, 1, 1);
+    layout->addWidget(labelType,       0, 0, 1, 1);
+    layout->addWidget(labelMarque,     1, 0, 1, 1);
+    layout->addWidget(labelNom,        2, 0, 1, 1);
+    layout->addWidget(labelModele,     3, 0, 1, 1);
+
+    layout->addWidget(comboType,       0, 1, 1, 1);
+    layout->addWidget(comboMarque,     1, 1, 1, 1);
+    layout->addWidget(comboNom,        2, 1, 1, 1);
+    layout->addWidget(comboModele,     3, 1, 1, 1);
+
     // Ajoute un séparateur vertical
-    QFrame *separator = new QFrame();
-        separator->setFrameShape(QFrame::VLine);
-        separator->setFrameShadow(QFrame::Sunken);
-        layout->addWidget(separator, 0, 2, 4, 1);
-    layout->addWidget(frequence,     0, 3, 1, 2);
-    layout->addWidget(angle,         0, 5, 1, 2);
+    QFrame *separator1 = new QFrame();
+    separator1->setFrameStyle(QFrame::VLine | QFrame::Sunken);
+    layout->addWidget(separator1,      0, 2, 4, 1);
+
+    layout->addWidget(labelCouleur,    0, 3, 1, 6);
+    layout->addWidget(labelR,          1, 3, 1, 1);
+    layout->addWidget(labelV,          1, 5, 1, 1);
+    layout->addWidget(labelB,          1, 7, 1, 1);
+
+    layout->addWidget(editR,           1, 4, 1, 1);
+    layout->addWidget(editV,           1, 6, 1, 1);
+    layout->addWidget(editB,           1, 8, 1, 1);
+
+    QFrame *separator2 = new QFrame();
+    separator2->setFrameStyle(QFrame::VLine | QFrame::Sunken);
+    layout->addWidget(separator2,      0, 9, 4, 1);
+
+    layout->addWidget(labelFrequence,  0, 10, 1, 2);
+    layout->addWidget(labelAngle,      0, 12, 1, 2);
+    layout->addWidget(sliderFrequence, 1, 10, 1, 2);
+    layout->addWidget(sliderAngle,     1, 12, 1, 2);
 }
 
 MainWindow::~MainWindow() {}
