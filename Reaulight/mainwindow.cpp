@@ -126,6 +126,14 @@ MainWindow::MainWindow(QWidget *parent)
     QComboBox *comboMarque = new QComboBox(grille);
     QComboBox *comboNom    = new QComboBox(grille);
     QComboBox *comboModele = new QComboBox(grille);
+    comboType->     addItem("");
+    comboType->     addItem("placeholder");
+    comboMarque->   addItem("");
+    comboMarque->   addItem("placeholder");
+    comboNom->      addItem("");
+    comboNom->      addItem("placeholder");
+    comboModele->   addItem("");
+    comboModele->   addItem("placeholder");
 
     QSlider *frequence = new QSlider(Qt::Horizontal, grille);
         frequence->setRange(-100, 100);
