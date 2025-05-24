@@ -110,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent)
     dockBas = new QDockWidget("Panneau complémentaire", this);
     addDockWidget(Qt::BottomDockWidgetArea, dockBas);
     dockBas->setMinimumWidth(300);
-    dockBas->setMaximumWidth(600);
+    //dockBas->setMaximumWidth(600);
     dockBas->setFeatures(dockBas->features() & QDockWidget::NoDockWidgetFeatures);
 
     // Création du widget conteneur pour la grille
@@ -145,21 +145,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Création du layout en grille et y ajoute les boutons
     QGridLayout *layout = new QGridLayout(grille);  // Maintenant la grille est déclarée comme QGridLayout
-    layout->addWidget(statutType,    0, 0);
-    layout->addWidget(statutMarque,  1, 0);
-    layout->addWidget(statutNom,     2, 0);
-    layout->addWidget(statutModele,  3, 0);
-    layout->addWidget(comboType,     0, 1);
-    layout->addWidget(comboMarque,   1, 1);
-    layout->addWidget(comboNom,      2, 1);
-    layout->addWidget(comboModele,   3, 1);
+    layout->addWidget(statutType,    0, 0, 1, 1);
+    layout->addWidget(statutMarque,  1, 0, 1, 1);
+    layout->addWidget(statutNom,     2, 0, 1, 1);
+    layout->addWidget(statutModele,  3, 0, 1, 1);
+    layout->addWidget(comboType,     0, 1, 1, 1);
+    layout->addWidget(comboMarque,   1, 1, 1, 1);
+    layout->addWidget(comboNom,      2, 1, 1, 1);
+    layout->addWidget(comboModele,   3, 1, 1, 1);
     // Ajoute un séparateur vertical
     QFrame *separator = new QFrame();
         separator->setFrameShape(QFrame::VLine);
         separator->setFrameShadow(QFrame::Sunken);
         layout->addWidget(separator, 0, 2, 4, 1);
-    layout->addWidget(frequence,     0, 3);
-    layout->addWidget(angle,         0, 4);
+    layout->addWidget(frequence,     0, 3, 1, 2);
+    layout->addWidget(angle,         0, 5, 1, 2);
 }
 
 MainWindow::~MainWindow() {}
