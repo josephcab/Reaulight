@@ -17,6 +17,7 @@ SOURCES += \
     Items/triangle.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
+    canal.cpp \
     main.cpp \
     mainwindow.cpp \
     sauvegarder_ou_importer.cpp
@@ -29,6 +30,7 @@ HEADERS += \
     Items/triangle.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
+    canal.h \
     mainwindow.h \
     global.h \
     sauvegarder_ou_importer.h
