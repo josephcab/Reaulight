@@ -14,10 +14,10 @@ SOURCES += \
     Items/structure.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
-    channel.cpp \
+    Items/channel.cpp \
     main.cpp \
     mainwindow.cpp \
-    projector.cpp \
+    Items/projector.cpp \
     sauvegarder_ou_importer.cpp
 
 HEADERS += \
@@ -25,10 +25,10 @@ HEADERS += \
     Items/structure.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
-    channel.h \
+    Items/channel.h \
     mainwindow.h \
     global.h \
-    projector.h \
+    Items/projector.h \
     sauvegarder_ou_importer.h
 
 RESOURCES += \
