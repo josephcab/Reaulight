@@ -10,8 +10,11 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Items/projector.cpp \
     Items/salledespectacle.cpp \
+    Items/scene.cpp \
     Items/structure.cpp \
+    Items/triangle.cpp \
     arborescence_projet.cpp \
     OpenGL/openglwidget.cpp \
     Items/channel.cpp \
@@ -21,14 +24,20 @@ SOURCES += \
     sauvegarder_ou_importer.cpp
 
 HEADERS += \
+    Items/projector.h \
     Items/salledespectacle.h \
+    Items/scene.h \
     Items/structure.h \
+    Items/triangle.h \
     arborescence_projet.h \
     OpenGL/openglwidget.h \
     Items/channel.h \
     mainwindow.h \
     global.h \
+<<<<<<< HEAD
     Items/projector.h \
+=======
+>>>>>>> 51093e1f362b429b093b9c578de9b327f4287500
     sauvegarder_ou_importer.h
 
 RESOURCES += \
