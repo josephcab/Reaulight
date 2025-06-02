@@ -2,6 +2,7 @@
 #define PROJECTOR_H
 
 #include "global.h"
+#include "channel.h"
 #include "qobject.h"
 #include <QString>
 #include <QVector3D>
@@ -118,6 +119,24 @@ class Projector : public QObject
         /// @param nb_channel, nombre de canaux du projecteur courant -> type int
         void set_nb_channel(int nb_channel);
 
+        /**
+         * @brief Méthode permettant de rajouter un canal en plus au projecteur courant, un projecteur correspond à un univer
+         * @param place:int, place du canal dans les canaux du projecteur, par défaut, l'ajoute à la fin de la QList
+         */
+        void add_channel(int place=-1);
+
+        /**
+         * @brief Méthode permettant de supprimer un canal du projecteur, par défaut, supprime le dernier
+         * @param place:int, place du projecteur à supprimer
+         */
+        void remove_channel(int place=-1);
+
+        /**
+         * @brief Accesseur des canaux du projecteur
+         * @return QList, liste des canaux instanciés
+         */
+        QList<Channel *> get_channels();
+
     private:
         QVector3D pos; // coordonnées du projecteur dans l'espace
         int address; // adresse du projecteur (canaux)
@@ -131,6 +150,7 @@ class Projector : public QObject
         QString model; // modele du projecteur
         QString brand; // marque du projecteur
         int nb_channel; // nb de canaux dmx
+        QList<Channel *> channels; // canaux associés au projecteur
 };
 
 #endif // !PROJECTEUR_H
