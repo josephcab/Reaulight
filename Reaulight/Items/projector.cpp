@@ -148,23 +148,23 @@ void Projector::set_nb_channel(int nb_channel)
     this->nb_channel = nb_channel;
 }
 
-void Projector::add_channel(int place)
+void Projector::add_channel(int place, QList<int> range)
 {
     // Si la place du canal est -1, on l'intancie à la fin de la liste
     if (place == -1)
-        this->channels.push_back(new Channel((int)(this->channels.size()) + 1));
+        this->channels.push_back(new Channel((int)(this->channels.size()) + 1, range));
 
     // sinon, on instancie un canal à la place d'un autre
     // donc on le désintancie et en instancie un autre à la place
     if (place >= 0 && place < (int)(this->channels.size()))
     {
         this->remove_channel(place);
-        this->channels.insert(this->channels.begin() + place, new Channel(place));
+        this->channels.insert(this->channels.begin() + place, new Channel(place, range));
     }
 
     // Ou encore, si on en instancie un à un endroit mémoire où aucun canal n'est défini, on l'intancie
     if (place >= (int)(this->channels.size()) && place <= 255)
-        this->channels.insert(this->channels.begin() + place, new Channel(place));
+        this->channels.insert(this->channels.begin() + place, new Channel(place, range));
 }
 
 void Projector::remove_channel(int place)
