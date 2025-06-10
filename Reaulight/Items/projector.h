@@ -122,8 +122,9 @@ class Projector : public QObject
         /**
          * @brief Méthode permettant de rajouter un canal en plus au projecteur courant, un projecteur correspond à un univer
          * @param place:int, place du canal dans les canaux du projecteur, par défaut, l'ajoute à la fin de la QList
+         * @param range:QList<int>, plage de valeurs du canal courant (par défaut entre 0 et 255)
          */
-        void add_channel(int place=-1);
+        void add_channel(int place=-1, QList<int> range={0,255});
 
         /**
          * @brief Méthode permettant de supprimer un canal du projecteur, par défaut, supprime le dernier
