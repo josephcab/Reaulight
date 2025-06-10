@@ -10,7 +10,7 @@
 #include <QJsonValue>
 #include <QJsonArray>
 
-#include "Items\projector.h"
+#include "items/projector.h"
 
 enum dialogType {save, import, saveIfOpen};
 
