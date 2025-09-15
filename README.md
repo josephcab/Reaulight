@@ -12,6 +12,8 @@ L'ensemble du contenu de ce projet est sous licence CeCILL.
 - Cabrita Joseph
 
 ### Élèves (ou anciens élèves)
+#### 2025-2026
+
 #### 2024 - 2025
 - Binet Maxence
 - Duquesnay Axel
